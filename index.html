@@ -812,8 +812,12 @@ body.com-teclado .app{padding-bottom:56vh;}
   .row-2{grid-template-columns:1fr;}
   .viewbar-right{width:100%; margin-left:0;}
   .viewbar-right #fileBtn{flex:1;}
-  .vswitch{width:100%;}
-  .vswitch button{flex:1; justify-content:center; padding:7px 6px;}
+  /* Quatro abas não cabem numa linha só num celular — "Abastecimento" sozinha
+     já estoura. Viram uma grade 2x2, cada uma com bastante área de toque. */
+  .vswitch{width:100%; flex-wrap:wrap;}
+  .vswitch button{flex:1 1 calc(50% - 5px); min-width:0; justify-content:center; padding:9px 6px;}
+  .vswitch button svg{flex:none;}
+  .vswitch .vsep{display:none;}
 }
 /* Telas de 320px (iPhone SE 1ª geração, celular com zoom de sistema): o título
    em 26px mais o ícone de 42px estouravam a largura e a página ganhava arrasto
@@ -826,7 +830,8 @@ body.com-teclado .app{padding-bottom:56vh;}
   .hero-ic{width:34px; height:34px; border-radius:9px;}
   .hero h1{font-size:21px;}
   .sub{font-size:12.5px;}
-  .vswitch button{font-size:12.5px; padding:7px 4px; gap:5px;}
+  .vswitch button{font-size:12px; padding:8px 4px; gap:4px;}
+  .vswitch button svg{width:13px; height:13px;}
   .viewbar{gap:7px;}
   .viewbar-right{gap:6px;}
   .icon-toggle{width:38px; height:38px;}
@@ -982,6 +987,138 @@ body.com-teclado .app{padding-bottom:56vh;}
   .app .icon-btn{ padding:9px; }
   .app .swatch{ width:30px; height:30px; }
 }
+
+/* ============ ABA CARTÕES ============ */
+.cart-resumo{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin:2px 2px 14px;
+  color:var(--ink-soft); font-size:13px;}
+.cart-resumo b{font-family:var(--mono); font-size:17px; color:var(--ink); font-weight:600;}
+.cart-card{border:1.5px solid var(--line); border-radius:14px; background:var(--card);
+  overflow:hidden; margin-bottom:16px;}
+/* O "cartão" no topo é uma faceta visual: tarja com a cor da categoria, chip e
+   o valor em aberto — dá para reconhecer o cartão de relance. */
+.cart-face{background:linear-gradient(135deg, var(--cc) 0%, color-mix(in srgb, var(--cc) 62%, #000) 100%);
+  color:#fff; padding:16px; display:grid; grid-template-columns:auto 1fr auto;
+  grid-template-areas:'chip id gear' 'aberto aberto aberto'; align-items:center; gap:8px 12px;}
+.cart-chip{grid-area:chip; width:30px; height:22px; border-radius:5px;
+  background:linear-gradient(135deg,#f4d98b,#c9a34e); box-shadow:inset 0 0 0 1px rgba(0,0,0,.15);}
+.cart-id{grid-area:id; min-width:0;}
+.cart-nome{display:block; font-family:var(--serif); font-size:17px; font-weight:500;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.cart-banco{display:block; font-size:11.5px; opacity:.85; margin-top:1px;}
+.cart-gear{grid-area:gear; border:0; background:rgba(255,255,255,.16); color:#fff; border-radius:9px;
+  width:32px; height:32px; display:grid; place-items:center; cursor:pointer; align-self:start;}
+.cart-gear:hover{background:rgba(255,255,255,.28);}
+.cart-aberto{grid-area:aberto; margin-top:10px;}
+.cart-lbl{display:block; font-size:10px; text-transform:uppercase; letter-spacing:.05em; opacity:.8;}
+.cart-num{display:block; font-size:20px; font-weight:600; margin-top:1px;}
+.cart-acts{display:flex; align-items:center; gap:4px;
+  padding:9px 12px; border-bottom:1.5px solid var(--line); background:var(--card);}
+.cart-acts .icon-btn:hover{background:var(--hover);}
+.cart-sec{padding:11px 13px 3px;}
+.cart-sh{display:flex; align-items:center; gap:7px; font-size:11.5px; font-weight:600;
+  text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin:0 2px 7px;}
+.cart-sh .gn{background:var(--wine-tint); color:var(--wine-fg); border-radius:999px;
+  padding:1px 7px; font-size:11px; letter-spacing:0;}
+.cart-vazio{display:flex; align-items:center; gap:8px; padding:12px 13px; color:var(--ink-soft);
+  font-size:13px; background:var(--bg); border:1.5px dashed var(--line); border-radius:11px; margin-bottom:9px;}
+.cart-vazio svg{color:var(--wine-fg);}
+.cart-add{padding:4px 13px 13px;}
+.cart-novo{text-align:center; margin:2px 0 8px;}
+/* Uma fatura: nome/meta à esquerda, valor no meio, situação à direita. */
+.fat{display:grid; grid-template-columns:1fr auto auto; align-items:center; gap:10px;
+  padding:11px 12px; border:1.5px solid var(--line); border-radius:12px; background:var(--bg);
+  margin-bottom:9px;}
+.fat-atual{background:var(--card); border-color:color-mix(in srgb, var(--wine) 40%, var(--line));
+  box-shadow:0 1px 0 color-mix(in srgb, var(--wine) 18%, transparent);}
+.fat.atrasado{border-color:#D9B3AE;}
+.app.dark .fat.atrasado{border-color:#6b4441;}
+.fat-paga{opacity:.62;}
+.fat-main{min-width:0;}
+.fat-nome{font-size:14.5px; color:var(--ink); font-weight:500;}
+.fat-atual .fat-nome{font-family:var(--serif); font-size:16px;}
+.fat-meta{font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
+.fat-meta .late{color:#A23A3A; font-weight:600;}
+.app.dark .fat-meta .late{color:#d9958d;}
+.fat-valor{text-align:right; white-space:nowrap;}
+.fat-valor .valor-lin{font-size:15px;}
+.fat-atual .fat-valor .valor-lin{font-size:17px;}
+.fat-acts{display:flex; align-items:center; gap:2px; white-space:nowrap;}
+
+/* ============ ABA ABASTECIMENTO ============ */
+.ab-teto{border:1.5px solid var(--line); border-radius:13px; background:var(--card);
+  padding:13px 14px; margin-bottom:13px;}
+.ab-teto-top{display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:8px;}
+.ab-teto-top span{font-size:13px; color:var(--ink-soft);}
+.ab-teto-top b{font-size:16px;}
+.ab-teto-msg{font-size:12.5px; color:var(--ink-soft); margin-top:8px;}
+.ab-teto.sem-teto{display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:13.5px; color:var(--ink-soft);}
+.ab-teto.sem-teto b{color:var(--ink); font-family:var(--mono);}
+.ab-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:13px;}
+.ab-stat{border:1.5px solid var(--line); border-radius:12px; background:var(--card); padding:11px 12px; min-width:0;}
+.ab-stat-n{font-family:var(--mono); font-size:15px; font-weight:600; color:var(--ink);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.ab-stat-l{font-size:11px; color:var(--ink-soft); margin-top:3px; line-height:1.3;}
+.ab-add{border:1.5px solid var(--line); border-radius:13px; background:var(--card); padding:13px 14px; margin-bottom:16px;}
+.ab-add-h{display:flex; align-items:center; gap:7px; font-size:13px; font-weight:600; color:var(--ink); margin-bottom:11px;}
+.ab-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:9px;}
+.ab-f{display:flex; flex-direction:column; gap:4px; min-width:0;}
+.ab-f span{font-size:11px; color:var(--ink-soft);}
+.ab-f input{border:1.5px solid var(--line); border-radius:9px; background:var(--bg); color:var(--ink);
+  font:inherit; font-size:14px; padding:9px 10px; min-height:40px; width:100%; box-sizing:border-box;}
+.ab-f input:focus{outline:2px solid var(--wine); outline-offset:-1px; border-color:var(--wine);}
+.ab-add-foot{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:11px; flex-wrap:wrap;}
+.ab-add-foot .hint{margin:0;}
+.ab-log-h{display:flex; align-items:center; gap:8px; font-size:12px; font-weight:600;
+  text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin:0 2px 9px;}
+.ab-log-h .gn{background:var(--wine-tint); color:var(--wine-fg); border-radius:999px; padding:1px 8px; font-size:11px; letter-spacing:0;}
+.ab-mes{margin-bottom:14px;}
+.ab-mes-h{display:flex; justify-content:space-between; align-items:baseline; gap:10px;
+  padding:0 3px 7px; border-bottom:1.5px solid var(--line); margin-bottom:7px;
+  font-size:13px; color:var(--ink); font-weight:500;}
+.ab-mes-tot{font-family:var(--mono); color:var(--ink-soft); font-size:13px;}
+.ab-row{display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:10px; padding:9px 4px;}
+.ab-row + .ab-row{border-top:1px solid color-mix(in srgb, var(--line) 55%, transparent);}
+.ab-date{text-align:center; min-width:52px;}
+.ab-date b{display:block; font-family:var(--mono); font-size:12.5px; color:var(--ink);}
+.ab-date span{display:block; font-size:10px; color:var(--faint);}
+.ab-main{min-width:0;}
+.ab-tipo{font-size:14px; color:var(--ink); font-weight:500;}
+.ab-sub{display:block; font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); margin-top:1px;}
+.ab-val{font-family:var(--mono); font-size:14.5px; color:var(--ink); white-space:nowrap;}
+
+/* ============ SEM VENCIMENTO (no Mês) ============ */
+.sem-venc{margin-top:14px;}
+.sem-venc > summary{font-weight:500;}
+.sv-n{display:inline-block; background:var(--wine-tint); color:var(--wine-fg);
+  border-radius:999px; padding:1px 8px; font-size:11.5px; font-family:var(--mono); margin-left:4px;}
+.sv-corpo{padding-top:6px;}
+.sd-cat{margin-bottom:12px;}
+.sd-cat-h{display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600;
+  color:var(--ink-soft); margin:0 2px 6px;}
+.sd-cat-h .gn{background:var(--thead); color:var(--ink-soft); border-radius:999px; padding:0 7px; font-size:11px; font-family:var(--mono);}
+.witem.sd .wmeta{display:none;}
+
+/* ============ GERENCIADOR DE CATEGORIAS (preferências) ============ */
+.cat-mini{border:1.5px solid var(--line); border-radius:12px; background:var(--bg); padding:7px 9px;}
+.cm-row{display:grid; grid-template-columns:auto 1fr auto auto auto; align-items:center; gap:9px; padding:6px 3px;}
+.cm-row + .cm-row{border-top:1px solid color-mix(in srgb, var(--line) 55%, transparent);}
+.cm-dot{width:11px; height:11px; border-radius:50%; flex:none;}
+.cm-nome{font-size:13.5px; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.cm-tag{font-size:11px; color:var(--ink-soft); background:var(--thead); border-radius:999px; padding:2px 8px; white-space:nowrap;}
+.cm-n{font-family:var(--mono); font-size:11.5px; color:var(--faint); min-width:18px; text-align:right;}
+
+@media (max-width:560px){
+  .ab-grid{grid-template-columns:1fr 1fr;}
+  .ab-stats{grid-template-columns:1fr;}
+  .ab-stat{display:flex; align-items:baseline; justify-content:space-between; gap:10px;}
+  .ab-stat-l{margin-top:0;}
+  .cart-num{font-size:19px;}
+  .fat{grid-template-columns:1fr auto; grid-template-areas:'main valor' 'acts acts';}
+  .fat-main{grid-area:main;} .fat-valor{grid-area:valor;} .fat-acts{grid-area:acts; justify-content:flex-end; margin-top:2px;}
+  .cm-row{grid-template-columns:auto 1fr auto auto;}
+  .cm-n{display:none;}
+}
+
 </style>
 </head>
 <body>
@@ -1144,7 +1281,7 @@ body.com-teclado .app{padding-bottom:56vh;}
      fora do app, onde não existe "modo escuro do app". */
   function acentoIcone(){ return acentoAtual().c[0]; }
 
-  var CFG_PADRAO={ titulo:'Organizador de Contas', periodo:'', metasOn:true, metasNome:'Reservas', acento:'verde' };
+  var CFG_PADRAO={ titulo:'Organizador de Contas', periodo:'', metasOn:true, metasNome:'Porquinho', acento:'verde' };
   var appCfg=normCfg(null);
   function normCfg(c){
     var tem=function(k){ return c && typeof c==='object' && Object.prototype.hasOwnProperty.call(c,k); };
@@ -1193,7 +1330,10 @@ body.com-teclado .app{padding-bottom:56vh;}
     }catch(e){}
   }
   function rotuloMetas(){ return appCfg.metasNome || CFG_PADRAO.metasNome; }
-  function metasLigadas(){ return appCfg.metasOn!==false; }
+  /* O porquinho deixou de ser opcional: é uma das quatro abas fixas. A função
+     continua existindo (muito código a chama) mas agora responde sempre "sim".
+     O metasOn guardado em backups antigos passa a ser ignorado de propósito. */
+  function metasLigadas(){ return true; }
 
   // ---- conteúdo inicial ----
   /* Num navegador novo o app abre com os dados de quem o encomendou (bloco
@@ -1249,7 +1389,9 @@ body.com-teclado .app{padding-bottom:56vh;}
     check:'<path d="M3.2 8.4l3.2 3.2 6.4-7"/>',
     sync:'<path d="M13.2 7.2A5.3 5.3 0 003.6 5.4M2.8 8.8a5.3 5.3 0 009.6 1.8"/><path d="M13.4 3.2v4h-4M2.6 12.8v-4h4"/>',
     esq:'<path d="M9.8 3.4L5.2 8l4.6 4.6"/>',
-    dir:'<path d="M6.2 3.4L10.8 8l-4.6 4.6"/>'
+    dir:'<path d="M6.2 3.4L10.8 8l-4.6 4.6"/>',
+    cartao:'<rect x="1.8" y="3.8" width="12.4" height="8.4" rx="1.4"/><path d="M1.8 6.4h12.4M4.2 9.8h2.4"/>',
+    bomba:'<path d="M3 13.4V3.6c0-.6.5-1 1-1h3.6c.6 0 1 .4 1 1v9.8M2.2 13.4h7.2"/><path d="M3 7.8h5.6"/><path d="M8.6 5.4l2 2v4c0 .6.5 1 1 1s1-.4 1-1V6.9L10.4 4.7"/>'
   };
   function svg(d,size,w){ size=size||16; w=w||1.5; return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="'+w+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+d+'</svg>'; }
   var SVG_TRASH=svg(IC.trash), SVG_PENCIL=svg(IC.pencil), SVG_GEAR=svg(IC.gear,14), SVG_LINK=svg(IC.link,14);
@@ -1378,13 +1520,22 @@ body.com-teclado .app{padding-bottom:56vh;}
          função inteira. Sem ela o app abre vazio, com a tela de
          boas-vindas e o exemplo fictício. <<<
      ============================================================ */
+  /* ============================================================
+     MEUS_DADOS — conteúdo inicial deste aparelho, montado a partir do
+     caderno de contas de 20/08/2026. Só é usado quando NÃO existe nada
+     salvo no navegador; a partir da primeira alteração, quem manda é o
+     que está gravado.
+
+     >>> Se for compartilhar este arquivo com outra pessoa, APAGUE esta
+         função inteira. Sem ela o app abre vazio, com a tela de
+         boas-vindas e o exemplo fictício. <<<
+     ============================================================ */
   function MEUS_DADOS(){ return {
   "cfg": {
     "titulo": "Organizador de Contas",
     "periodo": "agosto/2026",
     "acento": "verde",
-    "metasNome": "Reservas",
-    "metasOn": true
+    "metasNome": "Porquinho"
   },
   "categorias": [
     {
@@ -1396,6 +1547,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       "teto": 0,
       "obs": "confira o dia de cada assinatura",
       "meta": false,
+      "tipo": "",
       "avulsos": []
     },
     {
@@ -1407,6 +1559,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       "teto": 0,
       "obs": "",
       "meta": false,
+      "tipo": "",
       "avulsos": []
     },
     {
@@ -1418,6 +1571,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       "teto": 0,
       "obs": "dia estimado — confira na fatura",
       "meta": false,
+      "tipo": "cartao",
       "avulsos": []
     },
     {
@@ -1429,6 +1583,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       "teto": 0,
       "obs": "dia estimado — confira na fatura",
       "meta": false,
+      "tipo": "cartao",
       "avulsos": []
     },
     {
@@ -1440,6 +1595,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       "teto": 0,
       "obs": "dia estimado — confira na fatura",
       "meta": false,
+      "tipo": "cartao",
       "avulsos": []
     },
     {
@@ -1451,6 +1607,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       "teto": 0,
       "obs": "",
       "meta": false,
+      "tipo": "",
       "avulsos": []
     },
     {
@@ -1462,6 +1619,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       "teto": 0,
       "obs": "",
       "meta": false,
+      "tipo": "",
       "avulsos": []
     },
     {
@@ -1473,6 +1631,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       "teto": 0,
       "obs": "",
       "meta": true,
+      "tipo": "",
       "avulsos": []
     },
     {
@@ -1484,81 +1643,112 @@ body.com-teclado .app{padding-bottom:56vh;}
       "teto": 400,
       "obs": "teto do mês = o que é separado no porquinho",
       "meta": false,
+      "tipo": "combustivel",
       "avulsos": [
         {
           "d": "2026-03-26",
           "v": 250,
-          "o": "Gasolina · R$6,55 · 38,16 L"
+          "o": "Gasolina",
+          "preco": 6.55,
+          "litros": 38.16
         },
         {
           "d": "2026-04-08",
           "v": 50,
-          "o": "Gasolina · R$6,78 · 7,30 L"
+          "o": "Gasolina",
+          "preco": 6.78,
+          "litros": 7.3
         },
         {
           "d": "2026-04-10",
           "v": 278,
-          "o": "Gasolina · R$6,29 · 44,00 L"
+          "o": "Gasolina",
+          "preco": 6.29,
+          "litros": 44.0
         },
         {
           "d": "2026-04-22",
           "v": 187,
-          "o": "Gasolina · R$5,98 · 31,27 L"
+          "o": "Gasolina",
+          "preco": 5.98,
+          "litros": 31.27
         },
         {
           "d": "2026-04-29",
           "v": 213,
-          "o": "Gasolina · R$5,98 · 35,70 L"
+          "o": "Gasolina",
+          "preco": 5.98,
+          "litros": 35.7
         },
         {
           "d": "2026-05-12",
           "v": 50,
-          "o": "Gasolina · R$6,59 · 7,58 L"
+          "o": "Gasolina",
+          "preco": 6.59,
+          "litros": 7.58
         },
         {
           "d": "2026-05-14",
           "v": 200,
-          "o": "Gasolina · R$6,59 · 30,34 L"
+          "o": "Gasolina",
+          "preco": 6.59,
+          "litros": 30.34
         },
         {
           "d": "2026-05-25",
           "v": 100,
-          "o": "Etanol · R$3,89 · 25,70 L"
+          "o": "Etanol",
+          "preco": 3.89,
+          "litros": 25.7
         },
         {
           "d": "2026-06-02",
           "v": 150,
-          "o": "Etanol · R$3,99 · 37,59 L"
+          "o": "Etanol",
+          "preco": 3.99,
+          "litros": 37.59
         },
         {
           "d": "2026-06-19",
           "v": 150,
-          "o": "Etanol · R$4,19 · 35,75 L"
+          "o": "Etanol",
+          "preco": 4.19,
+          "litros": 35.75
         },
         {
           "d": "2026-06-30",
           "v": 184,
-          "o": "Etanol · R$3,98 · 46,38 L"
+          "o": "Etanol",
+          "preco": 3.98,
+          "litros": 46.38
         },
         {
           "d": "2026-07-13",
           "v": 157,
-          "o": "Etanol · R$4,18 · 37,60 L"
+          "o": "Etanol",
+          "preco": 4.18,
+          "litros": 37.6
         },
         {
           "d": "2026-07-24",
           "v": 50,
-          "o": "Etanol · R$4,18 · 11,96 L"
+          "o": "Etanol",
+          "preco": 4.18,
+          "litros": 11.96
         },
         {
           "d": "2026-07-29",
           "v": 190,
-          "o": "Etanol · R$4,18 · 45,60 L"
+          "o": "Etanol",
+          "preco": 4.18,
+          "litros": 45.6
         },
         {
           "d": "2026-08-04",
           "v": 164,
-          "o": "Etanol · R$4,18 · 39,28 L"
+          "o": "Etanol",
+          "preco": 4.18,
+          "litros": 39.28
         }
       ]
     }
@@ -2399,7 +2589,7 @@ body.com-teclado .app{padding-bottom:56vh;}
   var categorias=[], lancamentos=[];
   var metas=null;               // aba Reservas: marcos, conferências e objetivo
   var arquivos=[];              // meses fechados, guardados inteiros
-  var view='cat';
+  var view='mes';
   var cronoModo='gantt';        // 'gantt' | 'lista' — preferência salva
   var catAtualId=null, query="", fTag="", sortKey="date", sortDir="asc";
   var soPendentes=false;   // "falta pagar": esconde o que já está pago
@@ -2421,7 +2611,7 @@ body.com-teclado .app{padding-bottom:56vh;}
      visível, e no celular deitado os botões de adiar e editar sumiam. */
   function isNarrow(){ return window.innerWidth<=950; }
 
-  var app, hero, catsEl, panel, toolbar, tagbar, tw, mesEl, metasEl, foot, searchInput, clearX, importFile, themeBtn;
+  var app, hero, catsEl, panel, toolbar, tagbar, tw, mesEl, cartoesEl, abastEl, metasEl, foot, searchInput, clearX, importFile, themeBtn;
   var searchTimer=null;
 
   /* Marcos da reserva. "doing" existe para o caso comum de duas frentes ao
@@ -2502,17 +2692,26 @@ body.com-teclado .app{padding-bottom:56vh;}
   function normAvulso(a){
     a=ehObjeto(a)?a:{};
     var v=parseMoeda(a.v);
+    /* preco (por litro) e litros só valem para abastecimento; nas outras
+       categorias ficam nulos e ninguém os mostra. */
+    var pr=parseMoeda(a.preco), lt=parseMoeda(a.litros);
     return { d: isoOk(a.d)?a.d:'', v: (v==null||v<0)?0:Math.min(v,9999999),
-             o: txtSeguro(a.o,60) };
+             o: txtSeguro(a.o,60),
+             preco: (pr==null||pr<0)?null:Math.min(pr,99999),
+             litros:(lt==null||lt<0)?null:Math.min(lt,99999) };
   }
   function normCategoria(s){
     var o=Object.assign({id:"",name:"",instituicao:"",color:PALETTE[0],teto:0,avulsos:[],
-      link:"",meta:false,diaVenc:0,obs:""}, ehObjeto(s)?s:null);
+      link:"",meta:false,diaVenc:0,obs:"",tipo:""}, ehObjeto(s)?s:null);
     o.name=txtSeguro(o.name,120); o.instituicao=txtSeguro(o.instituicao,120);
     o.link=txtSeguro(o.link,2000);
     o.obs=txtSeguro(o.obs,300);
     o.diaVenc=diaVencSeguro(o.diaVenc);
     o.meta=!!o.meta;
+    /* O tipo decide em qual aba a categoria mora: 'cartao' vai para Cartões,
+       'combustivel' para Abastecimento. Vazio = categoria comum, aparece só
+       no Mês. Qualquer outro valor é tratado como vazio. */
+    o.tipo = (o.tipo==='cartao' || o.tipo==='combustivel') ? o.tipo : '';
     o.id=idSeguro(o.id,'cat');
     o.color=corSegura(o.color, PALETTE[0]);
     var teto=parseMoeda(o.teto);
@@ -3119,8 +3318,8 @@ body.com-teclado .app{padding-bottom:56vh;}
       if(u.cur) catAtualId=u.cur;
       if(['parcela','date','onde','status','priority','valor'].indexOf(u.sk)>=0) sortKey=u.sk;
       if(u.sd==='desc') sortDir='desc';
-      if(u.view==='mes') view='mes';
-      if(u.view==='metas') view='metas';
+      /* 'cat' virou legado; qualquer preferência antiga salva nele volta ao Mês. */
+      if(['mes','cartoes','abast','metas'].indexOf(u.view)>=0) view=u.view;
       if(u.crono==='lista'||u.crono==='gantt') cronoModo=u.crono;
       soPendentes=!!u.pend;
       if(typeof u.anel==='boolean') contornos=u.anel;
@@ -3531,7 +3730,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     /* A visão escondida guarda o HTML antigo, então o mesmo item pode ter duas
        pills no documento. Procurar só dentro da visão ativa evita medir a
        escondida, que devolve zero e jogava o menu para o canto da tela. */
-    var cont = view==='mes' ? mesEl : (view==='metas' ? metasEl : tw);
+    var cont = view==='mes' ? mesEl : (view==='metas' ? metasEl : (view==='cartoes' ? cartoesEl : tw));
     var btn = (t && cont) ? cont.querySelector('.pill[data-act="pill"][data-id="'+openMenuId+'"]') : null;
     if(!t||!btn){ if(el) el.parentNode.removeChild(el); return; }
     var r0=btn.getBoundingClientRect();
@@ -3917,6 +4116,13 @@ body.com-teclado .app{padding-bottom:56vh;}
       +'</div>';
   }
   function renderMes(){
+    /* Depois de "apagar tudo" não há calendário para mostrar — a tela vira o
+       convite para recomeçar, aqui mesmo no Mês (a antiga aba que o hospedava
+       não existe mais). */
+    if(primeiraVez()){
+      mesEl.innerHTML=bemVindoHtml();
+      foot.innerHTML=selo(); saveUI(); return;
+    }
     var body='';
     if(mesOff===0){
       var g=mesData();
@@ -3951,6 +4157,10 @@ body.com-teclado .app{padding-bottom:56vh;}
         + (g.late.length ? '<div class="wsep"><span>já venceram</span></div>' : '')
         + mesGroup('Vencidas — não contam para o "em dia"', '#8A8073', g.late, null, 'past vencidas-alvo');
       if(!body) body='<div class="wgroup"><div class="wempty">Nenhuma conta com vencimento cadastrado.<br>Adicione datas para vê-las aqui.</div></div>';
+      /* Sem a antiga aba "por categoria", itens sem data (a lista de cuidados,
+         uma vacina a marcar, a anuidade do cartão) não teriam onde aparecer.
+         Ficam aqui embaixo, recolhidos, para não sumirem nem atrapalharem. */
+      body += semVencimentoBloco();
     } else {
       /* Fora do mês de hoje, agrupar por "amanhã" e "próximos 7 dias" seria
          mentira: ali o que importa é a lista do mês inteiro, em ordem de data. */
@@ -3967,10 +4177,285 @@ body.com-teclado .app{padding-bottom:56vh;}
     foot.innerHTML='Visão de todas as categorias · '+esc(mesLabel(mesAtivo()))
       +' · entra '+esc(fmtBRL(d.entra))+', sai '+esc(fmtBRL(d.sai))
       +textoSalvo(false)+'<br>'
-      +atalhos('<span class="kbd">n</span> nova conta · <span class="kbd">s</span> alternar visão'
-      +(metasLigadas()?' · <span class="kbd">r</span> '+esc(rotuloMetas()):'')+' · <span class="kbd">Esc</span> fechar')
+      +atalhos('<span class="kbd">n</span> nova conta · <span class="kbd">s</span> trocar de aba'
+      +' · <span class="kbd">p</span> '+esc(rotuloMetas())+' · <span class="kbd">Esc</span> fechar')
       +selo();
     saveUI();
+  }
+  /* Uma categoria pode ter itens sem data (checklist, lembretes). Eles não
+     entram no calendário, mas também não podem evaporar. */
+  function semData(){
+    return lancamentos.filter(function(t){ return !t.venc; });
+  }
+  function semDataItem(t){
+    var s=findCat(t.catId);
+    var link=safeUrl(t.link);
+    return '<div class="witem sd'+(ehEntrada(t)?' is-entrada':'')+'">'
+      +'<span class="wsub" title="'+esc(s?s.name:'')+'"><span class="sdot" style="background:'+(s?s.color:'#999')+'"></span>'+esc(s?s.name:'—')+'</span>'
+      +'<div class="wmain"><span class="wname">'+esc(t.name)+'</span>'
+        +(link?' <a class="text-link" href="'+esc(link)+'" target="_blank" rel="noopener" data-stop title="Abrir link">'+SVG_LINK+'</a>':'')
+        +entBadge(t)+prioBadge(t)
+        +(t.notes?'<span class="nota" title="'+esc(t.notes)+'">'+svg(IC.nota,11)+' '+esc(t.notes)+'</span>':'')
+        +valorCell(t)+'</div>'
+      +'<div class="wright">'+statusPill(t)
+        +'<button class="icon-btn" data-act="edit" data-id="'+esc(t.id)+'" title="Editar" aria-label="'+esc('Editar '+t.name)+'">'+SVG_PENCIL+'</button></div>'
+      +'</div>';
+  }
+  function semVencimentoBloco(){
+    var lista=semData();
+    if(!lista.length) return '';
+    /* Agrupa por categoria e ordena por prioridade dentro de cada uma, para a
+       lista de cuidados não virar uma pilha aleatória. */
+    var porCat={}, ordemCat=[];
+    lista.forEach(function(t){
+      if(!porCat[t.catId]){ porCat[t.catId]=[]; ordemCat.push(t.catId); }
+      porCat[t.catId].push(t);
+    });
+    var corpo=ordemCat.map(function(cid){
+      var c=findCat(cid);
+      var itens=porCat[cid].slice().sort(function(a,b){ return PRIO_ORDER.indexOf(a.priority)-PRIO_ORDER.indexOf(b.priority); });
+      return '<div class="sd-cat"><div class="sd-cat-h"><span class="sdot" style="background:'+(c?c.color:'#999')+'"></span>'
+        +esc(c?c.name:'—')+'<span class="gn">'+itens.length+'</span></div>'
+        +itens.map(semDataItem).join('')+'</div>';
+    }).join('');
+    return '<details class="recolhe sem-venc"><summary>Sem vencimento · lembretes e listas <span class="sv-n">'+lista.length+'</span></summary>'
+      +'<div class="sv-corpo">'+corpo+'</div></details>';
+  }
+
+  // ---- aba: cartões ----
+  function cartoesLista(){ return categorias.filter(function(c){ return c.tipo==='cartao'; }); }
+  function faturasDe(cartao){
+    /* Cada lançamento de um cartão é uma fatura (ou parcela). A "atual" é a
+       primeira ainda não paga em ordem de vencimento; as outras não pagas são
+       as futuras. As pagas ficam guardadas à parte. */
+    var todas=despesasDe(cartao.id).slice().sort(function(a,b){
+      var va=a.venc||'￿', vb=b.venc||'￿';
+      if(va!==vb) return va<vb?-1:1;
+      return (a.parcela==null?Infinity:a.parcela)-(b.parcela==null?Infinity:b.parcela);
+    });
+    var abertas=todas.filter(function(t){ return t.status!=='pago'; });
+    var pagas=todas.filter(function(t){ return t.status==='pago'; });
+    return { atual: abertas[0]||null, futuras: abertas.slice(1), pagas: pagas, todas: todas };
+  }
+  function faturaItem(t, destaque){
+    var link=safeUrl(t.link);
+    var d=t.venc?dayDiff(t.venc):null;
+    var atrasadaCls=atrasado(t)?' atrasado':'';
+    var meta=[];
+    if(t.parcela!=null) meta.push('parcela '+t.parcela);
+    if(t.venc) meta.push(fmtDate(t.venc)+' · '+(atrasado(t)?'<span class="late">vencida</span>':relLabel(d)));
+    return '<div class="fat'+(destaque?' fat-atual':'')+atrasadaCls+(t.status==='pago'?' fat-paga':'')+'">'
+      +'<div class="fat-main">'
+        +'<div class="fat-topo"><span class="fat-nome">'+esc(t.name)+'</span>'
+          +(link?' <a class="text-link" href="'+esc(link)+'" target="_blank" rel="noopener" data-stop title="Abrir fatura">'+SVG_LINK+'</a>':'')
+          +'</div>'
+        +(meta.length?'<div class="fat-meta">'+meta.join(' · ')+'</div>':'')
+        +(t.notes?'<span class="nota" title="'+esc(t.notes)+'">'+svg(IC.nota,11)+' '+esc(t.notes)+'</span>':'')
+      +'</div>'
+      +'<div class="fat-valor">'+valorCell(t)+progHtml(t)+'</div>'
+      +'<div class="fat-acts">'+statusPill(t)
+        +(t.venc?'<button class="icon-btn" data-act="adiar" data-id="'+esc(t.id)+'" title="Adiar para o próximo mês" aria-label="'+esc('Adiar '+t.name)+'">'+svg(IC.adiar,15)+'</button>':'')
+        +'<button class="icon-btn" data-act="edit" data-id="'+esc(t.id)+'" title="Editar" aria-label="'+esc('Editar '+t.name)+'">'+SVG_PENCIL+'</button></div>'
+      +'</div>';
+  }
+  function cartaoBloco(cartao){
+    var f=faturasDe(cartao);
+    var emAberto=f.atual? (f.futuras.reduce(function(a,t){ return a+(faltaDe(t)||0); }, faltaDe(f.atual)||0)) : 0;
+    var link=safeUrl(cartao.link);
+    var cab='<div class="cart-hero" style="--cc:'+esc(cartao.color)+'">'
+      +'<div class="cart-face">'
+        +'<div class="cart-chip"></div>'
+        +'<div class="cart-id"><span class="cart-nome">'+esc(cartao.name)+'</span>'
+          +(cartao.instituicao?'<span class="cart-banco">'+esc(cartao.instituicao)+'</span>':'')+'</div>'
+        +'<button class="cart-gear" data-act="edit-cat" data-id="'+esc(cartao.id)+'" title="Configurar cartão" aria-label="Configurar cartão">'+svg(IC.gear,15)+'</button>'
+        +'<div class="cart-aberto"><span class="cart-lbl">em aberto</span>'
+          +'<span class="cart-num money">'+esc(fmtBRL(emAberto))+'</span></div>'
+      +'</div>'
+      +(link?'<div class="cart-acts"><a class="chip-btn" href="'+esc(link)+'" target="_blank" rel="noopener">'+svg(IC.link,14)+'<span class="chip-lbl">Abrir no banco</span></a></div>':'')
+      +'</div>';
+
+    var atualHtml = f.atual
+      ? '<div class="cart-sec"><div class="cart-sh">Fatura atual</div>'+faturaItem(f.atual, true)+'</div>'
+      : '<div class="cart-sec"><div class="cart-sh">Fatura atual</div>'
+        +'<div class="cart-vazio">'+svg(IC.check,15)+' Nenhuma fatura em aberto neste cartão.</div></div>';
+
+    var futHtml = f.futuras.length
+      ? '<div class="cart-sec"><div class="cart-sh">Próximas faturas<span class="gn">'+f.futuras.length+'</span></div>'
+        +f.futuras.map(function(t){ return faturaItem(t, false); }).join('')+'</div>'
+      : '';
+
+    var pagasHtml = f.pagas.length
+      ? '<details class="recolhe cart-pagas"><summary>Faturas pagas <span class="sv-n">'+f.pagas.length+'</span></summary>'
+        +'<div class="sv-corpo">'+f.pagas.slice().reverse().map(function(t){ return faturaItem(t, false); }).join('')+'</div></details>'
+      : '';
+
+    var addHtml='<div class="cart-add"><button class="btn-ghost sm" data-act="add-fatura" data-id="'+esc(cartao.id)+'">'+svg(IC.plus,14)+' Lançar uma fatura</button></div>';
+
+    return '<div class="cart-card">'+cab+atualHtml+futHtml+pagasHtml+addHtml+'</div>';
+  }
+  function renderCartoes(){
+    var cards=cartoesLista();
+    var html;
+    if(!cards.length){
+      html='<div class="empty"><p class="empty-big">Nenhum cartão ainda.</p>'
+        +'<p>Crie uma categoria do tipo <b>cartão</b> para acompanhar a fatura atual e as próximas de cada um.</p>'
+        +'<div class="acoes" style="justify-content:center;margin-top:12px"><button class="btn-wine" data-act="novo-cartao">'+svg(IC.plus,15)+' Criar um cartão</button></div></div>';
+    } else {
+      var totalAberto=0;
+      cards.forEach(function(c){ var f=faturasDe(c); if(f.atual){ totalAberto+=faltaDe(f.atual)||0; f.futuras.forEach(function(t){ totalAberto+=faltaDe(t)||0; }); } });
+      var resumo='<div class="cart-resumo"><span>'+cards.length+(cards.length===1?' cartão':' cartões')+'</span>'
+        +'<b class="money">'+esc(fmtBRL(totalAberto))+'</b><span>em aberto no total</span></div>';
+      html=resumo+cards.map(cartaoBloco).join('')
+        +'<div class="cart-novo"><button class="btn-ghost sm" data-act="novo-cartao">'+svg(IC.plus,14)+' Adicionar outro cartão</button></div>';
+    }
+    cartoesEl.innerHTML=html;
+    renderStatusMenu();
+    foot.innerHTML='Cartões · fatura atual e próximas de cada um'
+      +textoSalvo(false)+'<br>'
+      +atalhos('<span class="kbd">s</span> trocar de aba · <span class="kbd">p</span> '+esc(rotuloMetas())+' · <span class="kbd">Esc</span> fechar')
+      +selo();
+    saveUI();
+  }
+
+  // ---- aba: abastecimento ----
+  function fmtLitros(n){ if(n==null) return ''; return (Math.round(n*100)/100).toFixed(2).replace('.',',')+' L'; }
+  function fmtPreco(n){ if(n==null) return ''; return 'R$ '+n.toFixed(2).replace('.',',')+'/L'; }
+  function catCombustivel(){
+    var c=categorias.filter(function(x){ return x.tipo==='combustivel'; });
+    return c[0]||null;
+  }
+  function abastOrd(cat){
+    return (cat.avulsos||[]).slice().sort(function(a,b){ return a.d<b.d?1:(a.d>b.d?-1:0); });
+  }
+  function statsAbast(cat){
+    var reg=cat.avulsos||[];
+    var totV=0, totL=0;
+    reg.forEach(function(a){ totV+=a.v||0; if(a.litros){ totL+=a.litros; } });
+    var medioPond = totL>0 ? totV/totL : null;   // preço médio ponderado pelo litro
+    return { n:reg.length, totV:Math.round(totV*100)/100, totL:Math.round(totL*100)/100, medio: medioPond };
+  }
+  function abastItem(cat, a){
+    var partes=[];
+    if(a.preco!=null) partes.push(fmtPreco(a.preco));
+    if(a.litros!=null) partes.push(fmtLitros(a.litros));
+    return '<div class="ab-row">'
+      +'<div class="ab-date"><b>'+esc(fmtDate(a.d))+'</b><span>'+esc(relLabel(dayDiff(a.d)))+'</span></div>'
+      +'<div class="ab-main">'+(a.o?'<span class="ab-tipo">'+esc(a.o)+'</span>':'')
+        +(partes.length?'<span class="ab-sub">'+partes.join(' · ')+'</span>':'')+'</div>'
+      +'<span class="ab-val money">'+esc(fmtBRL(a.v))+'</span>'
+      +'<button class="icon-btn danger" data-act="delavulso" data-sid="'+esc(cat.id)+'" data-d="'+esc(a.d)+'" data-v="'+a.v+'" title="Remover este abastecimento" aria-label="Remover abastecimento de '+esc(fmtDate(a.d))+'">'+SVG_TRASH+'</button>'
+      +'</div>';
+  }
+  function abastPorMes(cat){
+    var reg=abastOrd(cat), grupos={}, ordem=[];
+    reg.forEach(function(a){ var ym=mesDe(a.d); if(!grupos[ym]){ grupos[ym]=[]; ordem.push(ym); } grupos[ym].push(a); });
+    return ordem.map(function(ym){
+      var itens=grupos[ym];
+      var soma=itens.reduce(function(s,a){ return s+(a.v||0); },0);
+      return '<div class="ab-mes"><div class="ab-mes-h">'+esc(mesLabel(ym))
+        +'<span class="ab-mes-tot money">'+esc(fmtBRL(soma))+'</span></div>'
+        +itens.map(function(a){ return abastItem(cat, a); }).join('')+'</div>';
+    }).join('');
+  }
+  function renderAbast(){
+    var cat=catCombustivel();
+    if(!cat){
+      abastEl.innerHTML='<div class="empty"><p class="empty-big">Sem categoria de combustível.</p>'
+        +'<p>Crie uma categoria do tipo <b>combustível</b> para registrar cada abastecimento e acompanhar o gasto do mês.</p>'
+        +'<div class="acoes" style="justify-content:center;margin-top:12px"><button class="btn-wine" data-act="novo-combustivel">'+svg(IC.plus,15)+' Criar</button></div></div>';
+      foot.innerHTML='Abastecimento'+textoSalvo(false)+selo(); saveUI(); return;
+    }
+    var ym=mesDe(todayISO());
+    var usadoMes=gastoAvulsoMes(cat, ym), teto=cat.teto;
+    var st=statsAbast(cat);
+
+    var tetoBloco='';
+    if(teto){
+      var pct=Math.max(0, Math.min(100, Math.round(usadoMes/teto*100)));
+      var rest=Math.round((teto-usadoMes)*100)/100, estourou=usadoMes>=teto;
+      var tom=tetoTom(usadoMes, teto);
+      tetoBloco='<div class="ab-teto">'
+        +'<div class="ab-teto-top"><span>Gasto de '+esc(mesLabel(ym))+'</span>'
+          +'<b class="money" style="color:'+(dark?tom.textD:tom.text)+'">'+esc(fmtBRL(usadoMes))+' / '+esc(fmtBRL(teto))+'</b></div>'
+        +'<span class="fbar"><span style="width:'+pct+'%;background:'+tom.dot+'"></span></span>'
+        +'<div class="ab-teto-msg">'+(estourou
+            ? 'Passou do teto em <b>'+esc(fmtBRL(usadoMes-teto))+'</b>.'
+            : 'Ainda cabem <b>'+esc(fmtBRL(rest))+'</b> no teto do mês.')
+          +' <button type="button" class="link-btn" data-act="edit-teto" data-sid="'+esc(cat.id)+'">ajustar o teto</button></div>'
+        +'</div>';
+    } else {
+      tetoBloco='<div class="ab-teto sem-teto"><span>Gasto de '+esc(mesLabel(ym))+': <b class="money">'+esc(fmtBRL(usadoMes))+'</b></span>'
+        +' <button type="button" class="link-btn" data-act="edit-teto" data-sid="'+esc(cat.id)+'">definir um teto</button></div>';
+    }
+
+    var cards='<div class="ab-stats">'
+      +'<div class="ab-stat"><div class="ab-stat-n money">'+esc(fmtBRL(st.totV))+'</div><div class="ab-stat-l">total no histórico</div></div>'
+      +'<div class="ab-stat"><div class="ab-stat-n">'+(st.medio!=null?esc(fmtPreco(st.medio)):'—')+'</div><div class="ab-stat-l">preço médio por litro</div></div>'
+      +'<div class="ab-stat"><div class="ab-stat-n">'+(st.totL?esc(fmtLitros(st.totL)):'—')+'</div><div class="ab-stat-l">litros no total</div></div>'
+      +'</div>';
+
+    var hoje=todayISO();
+    var form='<div class="ab-add"><div class="ab-add-h">'+svg(IC.plus,14)+' Registrar um abastecimento</div>'
+      +'<div class="ab-grid">'
+        +'<label class="ab-f"><span>Data</span><input type="date" value="'+hoje+'" data-fdate></label>'
+        +'<label class="ab-f"><span>Combustível</span><input type="text" list="ab-tipos" placeholder="Gasolina" data-fobs maxlength="30"></label>'
+        +'<label class="ab-f"><span>Valor pago</span><input type="text" inputmode="decimal" placeholder="R$ 0,00" data-fval></label>'
+        +'<label class="ab-f"><span>Preço/L</span><input type="text" inputmode="decimal" placeholder="0,00" data-fpreco></label>'
+        +'<label class="ab-f"><span>Litros</span><input type="text" inputmode="decimal" placeholder="cálculo automático" data-flitros></label>'
+      +'</div>'
+      +'<datalist id="ab-tipos"><option value="Gasolina"></option><option value="Etanol"></option><option value="Diesel"></option><option value="GNV"></option></datalist>'
+      +'<div class="ab-add-foot"><span class="hint">Preencha valor e preço/L que os litros saem sozinhos.</span>'
+        +'<button class="btn-wine" data-act="addavulso" data-sid="'+esc(cat.id)+'">'+svg(IC.check,15)+' Registrar</button></div>'
+      +'</div>';
+
+    var lista = st.n ? abastPorMes(cat)
+      : '<div class="cart-vazio">Nenhum abastecimento registrado ainda.</div>';
+
+    abastEl.innerHTML=tetoBloco+cards+form
+      +'<div class="ab-log-h">Histórico<span class="gn">'+st.n+'</span></div>'+lista;
+
+    // liga o cálculo automático de litros a partir de valor ÷ preço
+    var box=abastEl.querySelector('.ab-add');
+    if(box){
+      var gv=function(sel){ return box.querySelector(sel); };
+      var recalc=function(){
+        var val=parseMoeda(gv('[data-fval]').value), pr=parseMoeda(gv('[data-fpreco]').value);
+        var campoL=gv('[data-flitros]');
+        if(val!=null && pr && !campoL.dataset.tocado){ campoL.value=(val/pr).toFixed(2).replace('.',','); }
+      };
+      gv('[data-fval]').addEventListener('input', recalc);
+      gv('[data-fpreco]').addEventListener('input', recalc);
+      gv('[data-flitros]').addEventListener('input', function(){ this.dataset.tocado='1'; });
+    }
+
+    foot.innerHTML='Abastecimento · '+st.n+' registro(s)'
+      +textoSalvo(false)+'<br>'
+      +atalhos('<span class="kbd">n</span> novo abastecimento · <span class="kbd">s</span> trocar de aba · <span class="kbd">p</span> '+esc(rotuloMetas())+' · <span class="kbd">Esc</span> fechar')
+      +selo();
+    saveUI();
+  }
+  function addAbastecimento(sid){
+    var cat=findCat(sid); if(!cat) return;
+    var box=abastEl.querySelector('.ab-add'); if(!box) return;
+    var val=function(sel){ var el=box.querySelector(sel); return el?el.value:''; };
+    var d=val('[data-fdate]'), v=val('[data-fval]'), o=val('[data-fobs]');
+    var pr=parseMoeda(val('[data-fpreco]')), lt=parseMoeda(val('[data-flitros]'));
+    if(!isoOk(d)){ alert('Escolha uma data válida.'); return; }
+    var valor=parseMoeda(v);
+    if(valor==null || valor<=0){ alert('Digite um valor maior que zero.'); return; }
+    if(lt==null && pr) lt=Math.round((valor/pr)*100)/100;   // litros = valor ÷ preço
+    if(pr==null && lt) pr=Math.round((valor/lt)*100)/100;
+    var igual=cat.avulsos.some(function(a){ return a.d===d && a.v===valor; });
+    if(igual && !confirm('Já existe um abastecimento de '+fmtBRL(valor)+' em '+fmtDate(d)+'.\n\nRegistrar mesmo assim?')) return;
+    cat.avulsos.push(normAvulso({d:d, v:valor, o:o, preco:pr, litros:lt}));
+    persist(); renderAll();
+    anunciar('Abastecimento de '+fmtBRL(valor)+' registrado em '+fmtDate(d));
+  }
+  function novoAbastecimento(){
+    var cat=catCombustivel();
+    if(!cat){ view='abast'; applyView(); renderMain(); return; }
+    var campo=abastEl.querySelector('.ab-add [data-fval]');
+    if(campo){ campo.focus(); campo.scrollIntoView({behavior:'smooth', block:'center'}); }
   }
 
   // ---- gastos avulsos ----
@@ -4280,30 +4765,35 @@ body.com-teclado .app{padding-bottom:56vh;}
   }
 
   // ---- estados da barra superior ----
+  var VIEWS=['mes','cartoes','abast','metas'];
   function applyView(){
-    /* Desligar a aba com ela aberta deixaria a tela em branco: a visão volta
-       para a lista antes de qualquer coisa ser escondida. */
-    if(view==='metas' && !metasLigadas()) view='cat';
-    var isCat=view==='cat', isMes=view==='mes', isMetas=view==='metas';
-    catsEl.style.display  = isCat?'':'none';
-    panel.style.display   = isCat?'':'none';
-    tagbar.style.display  = isCat?'':'none';
-    tw.style.display      = isCat?'':'none';
-    mesEl.style.display   = isMes?'':'none';
-    metasEl.style.display = isMetas?'':'none';
-    toolbar.style.display = (isMetas || (isCat && primeiraVez()))?'none':'';
-    document.getElementById('searchWrap').style.display = isCat?'':'none';
-    document.getElementById('sortMob').style.display = (isCat && narrow)?'':'none';
-    var bp=document.getElementById('pend'); if(bp) bp.style.display = isCat?'':'none';
+    /* 'cat' foi aposentada como aba; se algo antigo tentar abri-la, cai no Mês. */
+    if(VIEWS.indexOf(view)<0) view='mes';
+    /* Sem dados nenhum, a tela não é uma aba e sim o convite para começar —
+       e ele mora no Mês agora. */
+    var boasVindas = primeiraVez();
+    var isMes=view==='mes', isCart=view==='cartoes', isAbast=view==='abast', isMetas=view==='metas';
+    // a maquinaria da antiga aba "por categoria" continua no DOM, só nunca aparece
+    catsEl.style.display  = 'none';
+    panel.style.display   = 'none';
+    tagbar.style.display  = 'none';
+    tw.style.display      = 'none';
+    mesEl.style.display    = isMes?'':'none';
+    cartoesEl.style.display= isCart?'':'none';
+    abastEl.style.display  = isAbast?'':'none';
+    metasEl.style.display  = isMetas?'':'none';
+    /* O "+ Adicionar" genérico só faz sentido no Mês. Cartões tem o "lançar
+       fatura" de cada cartão; Abastecimento tem o próprio formulário; o
+       porquinho e as boas-vindas não usam a barra. */
+    toolbar.style.display = (isMes && !boasVindas)?'':'none';
+    document.getElementById('searchWrap').style.display = 'none';
+    document.getElementById('sortMob').style.display = 'none';
+    var bp=document.getElementById('pend'); if(bp) bp.style.display = 'none';
     document.getElementById('sortSel').value = sortKey;
     renderSortDir();
     var vb=document.getElementById('vswitch');
-    var aba=document.getElementById('metasTab'), sep=document.getElementById('vsep');
-    if(aba){
-      aba.style.display = metasLigadas()?'':'none';
-      aba.lastChild.nodeValue = ' '+rotuloMetas();   // o SVG é o primeiro filho
-    }
-    if(sep) sep.style.display = metasLigadas()?'':'none';
+    var aba=document.getElementById('metasTab');
+    if(aba) aba.lastChild.nodeValue = ' '+rotuloMetas();   // o SVG é o primeiro filho
     Array.prototype.forEach.call(vb.querySelectorAll('button'), function(b){
       var on=b.getAttribute('data-v')===view;
       b.classList.toggle('on', on);
@@ -4446,6 +4936,8 @@ body.com-teclado .app{padding-bottom:56vh;}
   function renderMain(){
     var foco=marcaDoFoco();
     if(view==='metas') renderMetas();
+    else if(view==='cartoes') renderCartoes();
+    else if(view==='abast') renderAbast();
     else if(view==='mes') renderMes();
     else renderPanel();
     devolverFoco(foco);
@@ -4486,7 +4978,11 @@ body.com-teclado .app{padding-bottom:56vh;}
     themeBtn.setAttribute('aria-label', themeBtn.title);
     var foco=marcaDoFoco();
     renderHero(); renderCategorias(); renderPendBtn(); renderLembrete(); renderInstalar(); applyView();
-    if(view==='metas') renderMetas(); else if(view==='mes') renderMes(); else renderPanel();
+    if(view==='metas') renderMetas();
+    else if(view==='cartoes') renderCartoes();
+    else if(view==='abast') renderAbast();
+    else if(view==='mes') renderMes();
+    else renderPanel();
     devolverFoco(foco);
   }
 
@@ -4621,7 +5117,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     arquivos.unshift(a);
     categorias=[]; lancamentos=[]; metas=normMetas(null);
     limparFiltros();
-    if(view==='metas') view='cat';
+    if(view==='metas') view='mes';
     return a;
   }
   /* Busca, etiqueta e "falta pagar" são do período que está na tela. Ao trocar
@@ -4683,7 +5179,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     downloadJson(payload(), 'backup-antes-de-apagar-'+stamp()+'.json');
     categorias=[]; lancamentos=[]; metas=normMetas(null); arquivos=[];
     limparFiltros();
-    view='cat';
+    view='mes';
     try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
     dataUpdatedAt=nowISO();
     saveUI(); closeModal(); renderAll();
@@ -4827,23 +5323,32 @@ body.com-teclado .app{padding-bottom:56vh;}
   }
 
   // ---- modal: categoria ----
-  function openCatModal(existing){
+  function openCatModal(existing, tipoPref){
     var s=existing||{};
     var ehMeta=!!s.meta;
+    var tipoAtual = s.tipo || tipoPref || '';
+    var tipoSel='<select id="c_tipo">'
+      +'<option value=""'+(tipoAtual===''?' selected':'')+'>Comum (aparece no Mês)</option>'
+      +'<option value="cartao"'+(tipoAtual==='cartao'?' selected':'')+'>Cartão (aba Cartões)</option>'
+      +'<option value="combustivel"'+(tipoAtual==='combustivel'?' selected':'')+'>Combustível (aba Abastecimento)</option>'
+      +'</select>';
     var html='<div class="modal" role="dialog" aria-modal="true">'
       +'<div class="modal-head"><h2>'+(existing?'Configurar categoria':'Nova categoria')+'</h2>'
       +'<button class="icon-btn" data-x aria-label="Fechar">'+svg(IC.x)+'</button></div>'
       +campo('c_nome','Nome','<input id="c_nome" maxlength="120" value="'+esc(s.name||'')+'" placeholder="Ex.: Cartão Inter">')
       +'<div class="row-2">'
+        +campo('c_tipo','Tipo',tipoSel,'Decide em qual aba a categoria aparece.')
         +campo('c_inst','Onde fica','<input id="c_inst" maxlength="120" value="'+esc(s.instituicao||'')+'" placeholder="Banco, app, loja…">')
+      +'</div>'
+      +'<div class="row-2">'
         +campo('c_dia','Dia do vencimento','<input id="c_dia" type="number" min="0" max="31" step="1" value="'+(s.diaVenc?s.diaVenc:'')+'" placeholder="—">','0 ou vazio = sem dia fixo.')
+        +campo('c_teto','Teto de avulsos / mês','<input id="c_teto" type="text" inputmode="decimal" value="'+esc(s.teto?fmtBRL(s.teto,true).replace('R$ ',''):'')+'" placeholder="0,00">','Usado no combustível e em avulsos. Vazio desliga.')
       +'</div>'
       +campo('c_obs','Observação','<input id="c_obs" maxlength="300" value="'+esc(s.obs||'')+'" placeholder="Ex.: confira o dia certo na fatura">')
-      +campo('c_teto','Teto de gastos avulsos por mês','<input id="c_teto" type="text" inputmode="decimal" value="'+esc(s.teto?fmtBRL(s.teto,true).replace('R$ ',''):'')+'" placeholder="0,00">','Vazio ou 0 desliga o controle de avulsos nesta categoria.')
       +campo('c_link','Link','<input id="c_link" maxlength="2000" value="'+esc(s.link||'')+'" placeholder="Site ou app do banco">')
       +'<label class="opt-check"><input type="checkbox" id="c_meta"'+(ehMeta?' checked':'')+'>'
         +'<span><b>Esta é a categoria da reserva</b>'
-        +'<span class="hint">Ela sai da faixa de categorias e passa a aparecer dentro da aba '+esc(rotuloMetas())+'.</span></span></label>'
+        +'<span class="hint">Passa a aparecer dentro da aba '+esc(rotuloMetas())+'.</span></span></label>'
       +'<div class="field"><span class="fake-label">Cor</span>'+swatchesHtml(s.color||PALETTE[0])+'</div>'
       +'<div class="modal-foot">'
         +(existing?'<button class="btn-ghost" data-del>'+SVG_TRASH+' Apagar</button>':'')
@@ -4883,6 +5388,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       obs:document.getElementById('c_obs').value,
       teto:parseMoeda(document.getElementById('c_teto').value),
       link:document.getElementById('c_link').value,
+      tipo:document.getElementById('c_tipo').value,
       meta:querMeta,
       color:chosen.val
     };
@@ -4897,6 +5403,13 @@ body.com-teclado .app{padding-bottom:56vh;}
     ajustarCategoriaAtual();
     closeModal(); persist(); renderAll();
     anunciar(existing?'Categoria salva':'Categoria criada');
+  }
+  function novoCartao(){ openCatModal(null, 'cartao'); }
+  function novoCombustivel(){
+    /* A aba de abastecimento mostra a primeira categoria de combustível. Se já
+       existe uma, abre para editar em vez de criar uma segunda esquecida. */
+    var existente=catCombustivel();
+    if(existente) openCatModal(existente); else openCatModal(null, 'combustivel');
   }
   function deleteCat(id){
     var s=findCat(id); if(!s) return;
@@ -5131,6 +5644,22 @@ body.com-teclado .app{padding-bottom:56vh;}
   }
 
   // ---- modal: preferências ----
+  function catManagerHtml(){
+    var TIPO_LBL={cartao:'Cartão', combustivel:'Combustível'};
+    var linhas=categorias.map(function(c){
+      var tag = c.meta ? rotuloMetas() : (TIPO_LBL[c.tipo]||'Comum');
+      var n=lancsDe(c.id).length;
+      return '<div class="cm-row">'
+        +'<span class="cm-dot" style="background:'+esc(c.color)+'"></span>'
+        +'<span class="cm-nome">'+esc(c.name)+'</span>'
+        +'<span class="cm-tag">'+esc(tag)+'</span>'
+        +'<span class="cm-n">'+n+'</span>'
+        +'<button class="icon-btn" data-act="cat-edit" data-id="'+esc(c.id)+'" title="Editar" aria-label="'+esc('Editar '+c.name)+'">'+SVG_PENCIL+'</button>'
+        +'</div>';
+    }).join('');
+    return (linhas||'<div class="hint" style="padding:4px 2px">Nenhuma categoria ainda.</div>')
+      +'<button class="btn-ghost sm" data-act="cat-novo" style="margin-top:8px">'+svg(IC.plus,14)+' Nova categoria</button>';
+  }
   function abrirPreferencias(){
     var exemplo=function(pct, grad){
       var fill = grad ? fundoGradiente(pct) : STATUS.agendado.dot;
@@ -5172,13 +5701,11 @@ body.com-teclado .app{padding-bottom:56vh;}
       +'<div class="field"><label for="p_periodo">Período</label>'
         +'<input id="p_periodo" maxlength="40" value="'+esc(appCfg.periodo)+'" placeholder="Ex.: agosto/2026">'
         +'<span class="hint">Deixe vazio para não mostrar nada.</span></div></div>'
-      +'<div class="row-2"><div class="field"><label for="p_meton">Aba de reservas</label>'
-        +'<select id="p_meton"><option value="1"'+(metasLigadas()?' selected':'')+'>Ligada</option>'
-        +'<option value="0"'+(!metasLigadas()?' selected':'')+'>Desligada</option></select>'
-        +'<span class="hint">Marcos, conferências de saldo e objetivo. Desligue se você não guarda nada ainda.</span></div>'
-      +'<div class="field"><label for="p_metnome">Como chamar</label>'
-        +'<input id="p_metnome" maxlength="24" value="'+esc(rotuloMetas())+'" placeholder="Reservas">'
-        +'<span class="hint">Reservas, poupança, porquinho, metas…</span></div></div>'
+      +'<div class="field"><label for="p_metnome">Como chamar o porquinho</label>'
+        +'<input id="p_metnome" maxlength="24" value="'+esc(rotuloMetas())+'" placeholder="Porquinho">'
+        +'<span class="hint">Porquinho, reserva, poupança, metas… É o nome da quarta aba.</span></div>'
+      +'<div class="pref-sep" role="separator"><span>Categorias</span></div>'
+      +'<div class="cat-mini" id="p_cats">'+catManagerHtml()+'</div>'
       +'<div class="pref-sep" role="separator"><span>Períodos</span></div>'
       +'<div class="zona-semestre"><div><b>Fechar o período</b>'
         +'<span class="hint">Guarda tudo o que está aqui e deixa a mesa limpa para o próximo. Nada é apagado.</span></div>'
@@ -5235,10 +5762,12 @@ body.com-teclado .app{padding-bottom:56vh;}
     per.addEventListener('change', function(){ mudarCfg('periodo', per.value); per.value=appCfg.periodo; });
     var tn=document.getElementById('p_metnome');
     tn.addEventListener('change', function(){ mudarCfg('metasNome', tn.value); tn.value=rotuloMetas(); });
-    var to=document.getElementById('p_meton');
-    to.addEventListener('change', function(){
-      mudarCfg('metasOn', to.value==='1');
-      anunciar(metasLigadas()?'Aba '+rotuloMetas()+' ligada':'Aba de reservas desligada');
+    var caixaCats=document.getElementById('p_cats');
+    if(caixaCats) caixaCats.addEventListener('click', function(e){
+      var b=e.target.closest('[data-act]'); if(!b) return;
+      var act=b.getAttribute('data-act');
+      if(act==='cat-edit'){ var c=findCat(b.getAttribute('data-id')); if(c) openCatModal(c); return; }
+      if(act==='cat-novo'){ openCatModal(null); return; }
     });
     var caixaAc=ov.querySelector('.acentos');
     function pintarAcentos(){
@@ -5290,6 +5819,13 @@ body.com-teclado .app{padding-bottom:56vh;}
         '<p><b>Do jeito simples:</b> no aparelho antigo, botão de dados → <b>Baixar uma cópia</b>. Mande o arquivo para você mesma (e-mail, WhatsApp, Drive). No aparelho novo, abra o app → <b>Restaurar de uma cópia</b>.</p>'
         +'<p><b>Do jeito automático:</b> dentro de "Modos automáticos" existe a sincronização por GitHub. Ela mantém os aparelhos iguais sozinha, mas exige criar uma conta e um token — só vale a pena se você usa os dois aparelhos toda semana.</p>')
 
+      +bloco('As quatro abas',
+        '<ul><li><b>Mês</b> — tudo o que vence, em ordem de data: hoje, amanhã, próximos dias e mais adiante. As setas ◂ ▸ passeiam pelos meses. Itens sem data (listas e lembretes) ficam recolhidos no fim.</li>'
+        +'<li><b>Cartões</b> — cada cartão com a <b>fatura atual</b> em destaque e as <b>próximas</b> logo abaixo. O valor em aberto de cada um aparece na tarja colorida.</li>'
+        +'<li><b>Abastecimento</b> — cada vez que você põe combustível: valor, preço por litro e litros. Mostra o gasto do mês contra o teto e o preço médio.</li>'
+        +'<li><b>'+rz+'</b> — o dinheiro que você guarda: objetivo, marcos e as conferências de saldo.</li></ul>'
+        +'<p>No teclado: <span class="kbd">s</span> troca de aba, <span class="kbd">p</span> abre o '+rz+', <span class="kbd">n</span> cria (uma conta, ou um abastecimento na aba de combustível).</p>')
+
       +bloco('O que quer dizer "em dia"?',
         '<p>É o resumo no alto da página. Uma categoria está <b>em dia</b> quando tudo o que vence no <b>próximo vencimento</b> dela (ou hoje, se houver algo hoje) já está pago.</p>'
         +'<p>Contas que <b>já venceram</b> e não foram pagas não entram nessa conta — senão um atraso de março deixaria a categoria vermelha até o fim do ano. Elas continuam aparecendo na lista, mais apagadas, com a data em vermelho e a palavra "vencida".</p>')
@@ -5302,14 +5838,14 @@ body.com-teclado .app{padding-bottom:56vh;}
         +'<p>Numa <b>entrada</b> os mesmos estados aparecem com outros nomes: <i>A receber</i>, <i>Confirmada</i>, <i>Recebida em parte</i> e <i>Recebida</i>.</p>'
         +'<p>Se você preencher o <b>valor</b>, dá para tocar no número na lista e anotar quanto já foi pago. Chegando no total, a conta vira "Paga" sozinha.</p>')
 
-      +bloco('Como funciona a busca?',
-        '<p>A busca olha a <b>categoria aberta</b>: o nome da conta, a descrição, o \"onde/quem\", a observação e as etiquetas.</p>'
-        +'<p>Se o que você procura estiver em <b>outra categoria</b>, o app não finge que não existe: aparece uma faixa dizendo quantos resultados há e em quais categorias. Clique no nome da categoria para ir até lá — a busca continua ativa.</p>'
-        +'<p>Atalho: a tecla <span class=\"kbd\">/</span> pula direto para o campo.</p>')
+      +bloco('Como cadastro um cartão ou um abastecimento?',
+        '<p><b>Cartão:</b> na aba Cartões, use "Adicionar cartão" (ou o ☰ → Categorias → Nova, escolhendo o tipo <b>Cartão</b>). Depois, "Lançar uma fatura" cria cada mês/parcela. A fatura ainda não paga vira a "atual".</p>'
+        +'<p><b>Abastecimento:</b> na aba Abastecimento, preencha o formulário. Se você digitar o valor e o preço por litro, os litros saem sozinhos. O gasto entra no teto do mês.</p>'
+        +'<p>Toda categoria — comum, cartão ou combustível — pode ser editada no ☰ → <b>Categorias</b>.</p>')
 
-      +bloco('Para que serve o teto de gastos avulsos?',
-        '<p>Para o que não tem boleto: abastecer o carro, farmácia, mercado do meio do mês. Você define um <b>teto por mês</b> na categoria (no lápis) e vai registrando cada gasto com data e valor.</p>'
-        +'<p>O botão <b>Avulsos</b> no card da categoria mostra a barrinha do quanto já foi e quanto ainda cabe. Deixar o teto em <b>0</b> desliga o controle naquela categoria.</p>')
+      +bloco('Para que serve o teto?',
+        '<p>Para o que não tem boleto: combustível é o caso principal. Você define um <b>teto por mês</b> na categoria e a aba de Abastecimento mostra o quanto já foi e quanto ainda cabe.</p>'
+        +'<p>Deixar o teto em <b>0</b> ou vazio desliga o controle.</p>')
 
       +bloco('Como funcionam os vencimentos?',
         '<p>Cada conta tem a sua data. A categoria pode ter um <b>dia fixo</b> (no lápis, em "Dia do vencimento") — é ele que o app usa quando você toca no botão <b>↺</b> para adiar uma conta para o mês seguinte.</p>'
@@ -5317,7 +5853,7 @@ body.com-teclado .app{padding-bottom:56vh;}
 
       +bloco('O que é a aba '+rz+'?',
         '<p>Um espaço separado para o dinheiro que você <b>guarda</b>: um objetivo, uma data-alvo, os marcos até lá e as <b>conferências de saldo</b> — a anotação de quanto havia na conta em cada data.</p>'
-        +'<p>Se você ainda não guarda nada, <b>desligue a aba</b> no menu ☰ → Este app. Lá também dá para trocar o nome dela.</p>')
+        +'<p>É uma aba fixa. Se quiser outro nome (reserva, poupança, metas), troque no menu ☰ → Este app.</p>')
 
       +bloco('E quando o mês acaba?',
         '<p>Menu ☰ → <b>Períodos</b> → "Fechar e começar um novo". Tudo o que está na tela é guardado inteiro e a mesa fica limpa para o período seguinte.</p>'
@@ -5581,8 +6117,9 @@ body.com-teclado .app{padding-bottom:56vh;}
       +'<div class="instalar" id="instalar" style="display:none"></div>'
       +'<div class="viewbar">'
         +'<div class="vswitch" id="vswitch">'
-          +'<button data-v="cat" aria-pressed="false">'+svg(IC.list,15)+' Por categoria</button>'
           +'<button data-v="mes" aria-pressed="false">'+svg(IC.cal,15)+' Mês</button>'
+          +'<button data-v="cartoes" aria-pressed="false">'+svg(IC.cartao,15)+' Cartões</button>'
+          +'<button data-v="abast" aria-pressed="false">'+svg(IC.bomba,15)+' Abastecimento</button>'
           +'<span class="vsep" id="vsep" aria-hidden="true"></span>'
           +'<button class="tcc-tab" id="metasTab" data-v="metas" aria-pressed="false">'+svg(IC.porco,15)+' '+esc(rotuloMetas())+'</button>'
         +'</div>'
@@ -5614,6 +6151,8 @@ body.com-teclado .app{padding-bottom:56vh;}
       +'<div class="tagbar" id="tagbar"></div>'
       +'<div class="table-wrap" id="tw"></div>'
       +'<div class="week" id="mes"></div>'
+      +'<div class="cartoes" id="cartoes"></div>'
+      +'<div class="abast" id="abast"></div>'
       +'<div class="tcc" id="metasEl"></div>'
       +'<footer class="foot" id="foot"></footer>';
 
@@ -5624,6 +6163,8 @@ body.com-teclado .app{padding-bottom:56vh;}
     tagbar=document.getElementById('tagbar');
     tw=document.getElementById('tw');
     mesEl=document.getElementById('mes');
+    cartoesEl=document.getElementById('cartoes');
+    abastEl=document.getElementById('abast');
     metasEl=document.getElementById('metasEl');
     metasEl.addEventListener('click', metasActions);
     metasEl.addEventListener('keydown', function(e){
@@ -5751,6 +6292,10 @@ body.com-teclado .app{padding-bottom:56vh;}
       if(act==='pedit'){ e.stopPropagation(); e.preventDefault(); abrirEdicaoPago(el); return; }
       if(act==='tagf'){ e.stopPropagation(); var g=el.getAttribute('data-t'); fTag=(fTag===g?'':g); renderTagbar(); renderTable(); return; }
       if(act==='edit'){ var t=findLanc(id); if(t) openLancModal(t); return; }
+      if(act==='edit-cat'){ var cc=findCat(id); if(cc) openCatModal(cc); return; }
+      if(act==='add-fatura'){ openLancModal(null, id); return; }
+      if(act==='novo-cartao'){ novoCartao(); return; }
+      if(act==='novo-combustivel'){ novoCombustivel(); return; }
       if(act==='adiar'){ e.stopPropagation(); var ta=findLanc(id); if(ta && ta.venc) openAdiarModal(ta); return; }
       if(act==='abrircard'){ var tc=findLanc(id); if(tc) openLancModal(tc); return; }
       if(act==='mes-'){ e.stopPropagation(); mesOff--; renderMes(); return; }
@@ -5765,6 +6310,18 @@ body.com-teclado .app{padding-bottom:56vh;}
     }
     tw.addEventListener('click', rowActions);
     mesEl.addEventListener('click', rowActions);
+    cartoesEl.addEventListener('click', rowActions);
+    /* Abastecimento tem seus próprios botões (registrar, remover, ir para o
+       porquinho); reaproveita addAvulso/delAvulso da mecânica de avulsos. */
+    abastEl.addEventListener('click', function(e){
+      var b=e.target.closest('[data-act]'); if(!b) return;
+      var act=b.getAttribute('data-act');
+      if(act==='addavulso'){ addAbastecimento(b.getAttribute('data-sid')); return; }
+      if(act==='delavulso'){ delAvulso(b.getAttribute('data-sid'), b.getAttribute('data-d'), +b.getAttribute('data-v')); return; }
+      if(act==='ir-porquinho'){ view='metas'; saveUI(); applyView(); renderMain(); return; }
+      if(act==='edit-teto'){ var c=findCat(b.getAttribute('data-sid')); if(c) openCatModal(c); return; }
+      if(act==='novo-combustivel'){ novoCombustivel(); return; }
+    });
 
     document.addEventListener('click', function(){
       var changed=false;
@@ -5786,19 +6343,20 @@ body.com-teclado .app{padding-bottom:56vh;}
       if(e.ctrlKey||e.metaKey||e.altKey) return;
       if(e.key==='n'){ e.preventDefault();
         if(view==='metas'){ openMarcoModal(null); return; }
+        if(view==='abast'){ novoAbastecimento(); return; }
         novoLanc(); return; }
-      // "r" abre e fecha as reservas — fica fora do rodízio da tecla "s"
-      if(e.key==='r'){ e.preventDefault();
-        if(!metasLigadas()) return;
+      // "p" abre e fecha o porquinho — fica fora do rodízio da tecla "s"
+      if(e.key==='p' || e.key==='r'){ e.preventDefault();
         openMenuId=null;
-        view = (view==='metas') ? 'cat' : 'metas';
+        view = (view==='metas') ? 'mes' : 'metas';
         saveUI(); applyView(); renderMain(); return; }
-      if(e.key==='/'){ e.preventDefault(); if(view!=='cat'){ view='cat'; applyView(); renderMain(); } searchInput.focus(); return; }
       if(e.key==='s'){ e.preventDefault();
         openMenuId=null;
-        var ordem=['cat','mes'];
+        /* "s" roda entre as três abas do dia a dia; o porquinho tem a sua
+           própria tecla e não entra no rodízio. */
+        var ordem=['mes','cartoes','abast'];
         var i=ordem.indexOf(view);
-        view = (i<0) ? 'cat' : ordem[(i+1)%ordem.length];
+        view = (i<0) ? 'mes' : ordem[(i+1)%ordem.length];
         saveUI(); applyView(); renderMain(); return; }
     });
 
