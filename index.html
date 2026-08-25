@@ -52,12 +52,12 @@ html,body{margin:0; padding:0; background:#EEF1F5;}
 /* Hero */
 .hero{max-width:1080px; margin:0 auto 14px;}
 .hero-line{display:flex; align-items:center; gap:13px;}
-.hero-ic{width:42px; height:42px; border-radius:11px; background:var(--wine); color:#F6EEDF;
-  display:grid; place-items:center; flex:none; box-shadow:0 3px 10px rgba(41,109,90,.28);}
-.hero h1{font-family:var(--serif); font-weight:600; font-size:clamp(26px,4.4vw,34px);
-  letter-spacing:-.01em; margin:0; line-height:1.05;}
-.sub{margin:2px 0 0; color:var(--ink-soft); font-size:13.5px;}
-.sub b{color:var(--ink);}
+.hero-ic{width:40px; height:40px; border-radius:11px; background:var(--wine); color:#fff;
+  display:grid; place-items:center; flex:none; box-shadow:0 2px 8px rgba(18,128,94,.30);}
+.hero h1{font-family:var(--sans); font-weight:700; font-size:clamp(19px,4.6vw,23px);
+  letter-spacing:-.01em; margin:0; line-height:1.1;}
+.sub{margin:3px 0 0; color:var(--ink-soft); font-size:13px;}
+.sub b{color:var(--ink); font-weight:600;}
 
 /* Barra de visão */
 .viewbar{max-width:1080px; margin:0 auto 14px; display:flex; align-items:center; gap:9px; flex-wrap:wrap;}
@@ -259,9 +259,10 @@ tbody tr.is-ref.com-anel td:first-child{box-shadow:inset 0 1.5px 0 var(--anel),
 
 /* Pill status */
 .pill-wrap{position:relative; display:inline-block;}
-.pill{border:0; border-radius:999px; padding:5px 10px; font-size:12.5px; font-weight:500;
+.pill{border:1px solid rgba(0,0,0,.06); border-radius:999px; padding:5px 10px; font-size:12.5px; font-weight:500;
   display:inline-flex; align-items:center; gap:7px; font-family:inherit; white-space:nowrap;}
 .pill-dot{width:8px; height:8px; border-radius:50%; flex:none;}
+.app.dark .pill{border-color:rgba(255,255,255,.10);}
 .menu{position:fixed; z-index:90; background:var(--pop);
   border:1px solid var(--line); border-radius:11px; padding:5px; min-width:190px;
   box-shadow:0 10px 30px rgba(0,0,0,.22);}
@@ -539,7 +540,11 @@ body.com-teclado .app{padding-bottom:56vh;}
 .empty p{margin:4px 0;}
 
 .foot{max-width:1080px; margin:12px auto 0; color:var(--ink-soft); font-size:12px; text-align:center; line-height:1.7;}
-.versao{font-family:var(--mono); font-size:11px; color:var(--ink-soft); letter-spacing:.02em;}
+.versao{font-family:var(--mono); font-size:11px; color:var(--ink-soft); letter-spacing:.02em; cursor:default;}
+.mudancas{margin:6px 0 0; padding-left:0; list-style:none;}
+.mudancas li{position:relative; padding:5px 0 5px 0; font-size:13px; color:var(--ink-soft); line-height:1.45;}
+.mudancas li + li{border-top:1px solid color-mix(in srgb, var(--line) 55%, transparent);}
+.mudancas li b{font-family:var(--mono); font-size:12px; color:var(--wine-fg); margin-right:4px;}
 .kbd{font-family:var(--mono); font-size:11px; border:1px solid var(--line); border-bottom-width:2px;
   border-radius:4px; padding:1px 5px; color:var(--ink-soft); background:var(--card);}
 
@@ -741,7 +746,7 @@ body.com-teclado .app{padding-bottom:56vh;}
   .zona-risco{flex-direction:column; align-items:stretch; gap:10px;}
   .btn-danger{justify-content:center; min-height:44px;}
   .modal{max-height:94vh;}
-  .hero h1{font-size:26px;}
+  .hero h1{font-size:20px;}
   .wsub{width:100%; order:-1;}
   .witem{flex-wrap:wrap; gap:8px;}
   .wright{width:100%;}
@@ -769,7 +774,7 @@ body.com-teclado .app{padding-bottom:56vh;}
   .dia-btn{font-size:11.5px; height:38px;}
   .hero-line{gap:9px;}
   .hero-ic{width:34px; height:34px; border-radius:9px;}
-  .hero h1{font-size:21px;}
+  .hero h1{font-size:20px;}
   .sub{font-size:12.5px;}
   .vswitch button{font-size:12px; padding:8px 4px; gap:4px;}
   .vswitch button svg{width:13px; height:13px;}
@@ -985,6 +990,21 @@ body.com-teclado .app{padding-bottom:56vh;}
 .fat-atual .fat-valor .valor-lin{font-size:17px;}
 .fat-acts{display:flex; align-items:center; gap:2px; white-space:nowrap;}
 
+/* Faturas futuras/pagas: linha densa, sem cartão por item */
+.fatlist{border:1.5px solid var(--line); border-radius:12px; background:var(--card); overflow:hidden;}
+.fatlin{display:grid; grid-template-columns:1fr auto; gap:2px 12px; align-items:start; padding:11px 13px;}
+.fatlin + .fatlin{border-top:1px solid color-mix(in srgb, var(--line) 60%, transparent);}
+.fatlin.atrasado{background:var(--late-bg,#FBEDEB);}
+.app.dark .fatlin.atrasado{background:#2f2422;}
+.fatlin.fat-paga{opacity:.6;}
+.fatlin-l{min-width:0;}
+.fatlin-parc{font-size:14px; color:var(--ink); font-weight:500;}
+.fatlin-when{display:block; font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
+.fatlin-when .late{color:var(--neg-fg); font-weight:600;}
+.fatlin-r{display:flex; flex-direction:column; align-items:flex-end; gap:7px;}
+.fatlin-val{font-family:var(--mono); font-size:14.5px; color:var(--ink); white-space:nowrap;}
+.fatlin-acts{display:flex; align-items:center; gap:2px;}
+
 /* ============ ABA ABASTECIMENTO ============ */
 .ab-teto{border:1.5px solid var(--line); border-radius:13px; background:var(--card);
   padding:13px 14px; margin-bottom:13px;}
@@ -1152,7 +1172,17 @@ body.com-teclado .app{padding-bottom:56vh;}
   'use strict';
 
   /* Sobe 0.01 a cada versão entregue. Aparece no rodapé, junto dos atalhos. */
-  var APP_VERSAO = '0.1';
+  var APP_VERSAO = '0.6';
+  /* Histórico de versões — a mais recente primeiro. Ao mexer no app, subir o
+     APP_VERSAO e acrescentar uma linha aqui. O rodapé e a Ajuda leem daqui. */
+  var MUDANCAS = [
+    ['0.6', 'Faturas dos cartões em lista compacta, cabeçalho enxuto, ajustes de contraste e correção de um campo duplicado.'],
+    ['0.5', 'Interface repaginada no estilo de apps de finanças: paleta clara e fria, tipografia sem serifa e textos profissionais.'],
+    ['0.4', 'Remoção dos dados de saúde do conteúdo inicial.'],
+    ['0.3', 'Porquinho sem o gráfico de barras; cabeçalho mais limpo.'],
+    ['0.2', 'Novas abas Cartões e Abastecimento; Porquinho fixo; fim da aba "Por categoria".'],
+    ['0.1', 'Primeira versão do organizador.']
+  ];
   var STORAGE_KEY = 'organizador-contas:v1';
   var UI_KEY      = 'organizador-contas:ui';
 
@@ -3711,7 +3741,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       var head='<thead><tr>'
         +headCell('parcela','Parcela','c-num')
         +'<th class="c-text">Conta</th>'
-        +headCell('onde','Descrição','c-author')
+        +headCell('onde','Estabelecimento','c-author')
         +headCell('date','Vencimento','c-date')
         +headCell('valor','Valor','c-valor')
         +headCell('status','Situação','c-status')
@@ -3951,16 +3981,20 @@ body.com-teclado .app{padding-bottom:56vh;}
     var pagas=todas.filter(function(t){ return t.status==='pago'; });
     return { atual: abertas[0]||null, futuras: abertas.slice(1), pagas: pagas, todas: todas };
   }
+  function faturaTitulo(t){
+    /* "Fatura" repetido em cada linha era ruído; a parcela identifica melhor. */
+    if(t.parcela!=null) return 'Parcela '+t.parcela;
+    return t.name || 'Fatura';
+  }
   function faturaItem(t, destaque){
     var link=safeUrl(t.link);
     var d=t.venc?dayDiff(t.venc):null;
     var atrasadaCls=atrasado(t)?' atrasado':'';
     var meta=[];
-    if(t.parcela!=null) meta.push('parcela '+t.parcela);
     if(t.venc) meta.push(fmtDate(t.venc)+' · '+(atrasado(t)?'<span class="late">vencida</span>':relLabel(d)));
     return '<div class="fat'+(destaque?' fat-atual':'')+atrasadaCls+(t.status==='pago'?' fat-paga':'')+'">'
       +'<div class="fat-main">'
-        +'<div class="fat-topo"><span class="fat-nome">'+esc(t.name)+'</span>'
+        +'<div class="fat-topo"><span class="fat-nome">'+esc(faturaTitulo(t))+'</span>'
           +(link?' <a class="text-link" href="'+esc(link)+'" target="_blank" rel="noopener" data-stop title="Abrir fatura">'+SVG_LINK+'</a>':'')
           +'</div>'
         +(meta.length?'<div class="fat-meta">'+meta.join(' · ')+'</div>':'')
@@ -3968,9 +4002,22 @@ body.com-teclado .app{padding-bottom:56vh;}
       +'</div>'
       +'<div class="fat-valor">'+valorCell(t)+progHtml(t)+'</div>'
       +'<div class="fat-acts">'+statusPill(t)
-        +(t.venc?'<button class="icon-btn" data-act="adiar" data-id="'+esc(t.id)+'" title="Adiar para o próximo mês" aria-label="'+esc('Adiar '+t.name)+'">'+svg(IC.adiar,15)+'</button>':'')
-        +'<button class="icon-btn" data-act="edit" data-id="'+esc(t.id)+'" title="Editar" aria-label="'+esc('Editar '+t.name)+'">'+SVG_PENCIL+'</button></div>'
+        +(t.venc?'<button class="icon-btn" data-act="adiar" data-id="'+esc(t.id)+'" title="Adiar para o próximo mês" aria-label="'+esc('Adiar '+faturaTitulo(t))+'">'+svg(IC.adiar,15)+'</button>':'')
+        +'<button class="icon-btn" data-act="edit" data-id="'+esc(t.id)+'" title="Editar" aria-label="'+esc('Editar '+faturaTitulo(t))+'">'+SVG_PENCIL+'</button></div>'
       +'</div>';
+  }
+  /* Faturas futuras e pagas em linha compacta — muitas parcelas iguais não
+     precisam de um cartão inteiro cada. */
+  function faturaLinha(t){
+    var d=t.venc?dayDiff(t.venc):null;
+    var when = t.venc ? (fmtDate(t.venc)+' · '+(atrasado(t)?'<span class="late">vencida</span>':relLabel(d))) : '';
+    return '<div class="fatlin'+(atrasado(t)?' atrasado':'')+(t.status==='pago'?' fat-paga':'')+'">'
+      +'<div class="fatlin-l"><span class="fatlin-parc">'+esc(faturaTitulo(t))+'</span>'
+        +(when?'<span class="fatlin-when">'+when+'</span>':'')+'</div>'
+      +'<div class="fatlin-r"><span class="fatlin-val money">'+esc(fmtBRL(valorDe(t)))+'</span>'
+        +'<div class="fatlin-acts">'+statusPill(t)
+        +'<button class="icon-btn" data-act="edit" data-id="'+esc(t.id)+'" title="Editar" aria-label="'+esc('Editar '+faturaTitulo(t))+'">'+SVG_PENCIL+'</button></div>'
+      +'</div></div>';
   }
   function cartaoBloco(cartao){
     var f=faturasDe(cartao);
@@ -3995,12 +4042,12 @@ body.com-teclado .app{padding-bottom:56vh;}
 
     var futHtml = f.futuras.length
       ? '<div class="cart-sec"><div class="cart-sh">Próximas faturas<span class="gn">'+f.futuras.length+'</span></div>'
-        +f.futuras.map(function(t){ return faturaItem(t, false); }).join('')+'</div>'
+        +'<div class="fatlist">'+f.futuras.map(faturaLinha).join('')+'</div></div>'
       : '';
 
     var pagasHtml = f.pagas.length
       ? '<details class="recolhe cart-pagas"><summary>Faturas pagas <span class="sv-n">'+f.pagas.length+'</span></summary>'
-        +'<div class="sv-corpo">'+f.pagas.slice().reverse().map(function(t){ return faturaItem(t, false); }).join('')+'</div></details>'
+        +'<div class="sv-corpo"><div class="fatlist">'+f.pagas.slice().reverse().map(faturaLinha).join('')+'</div></div></details>'
       : '';
 
     var addHtml='<div class="cart-add"><button class="btn-ghost sm" data-act="add-fatura" data-id="'+esc(cartao.id)+'">'+svg(IC.plus,14)+' Adicionar fatura</button></div>';
@@ -4485,7 +4532,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     if(soSeMudou && txt===ultimoAviso) return;
     ultimoAviso=txt; el.textContent=txt;
   }
-  function selo(){ return ' · <span class="versao">V'+esc(APP_VERSAO)+'</span>'; }
+  function selo(){ return ' · <span class="versao" title="Versão '+esc(APP_VERSAO)+' — '+esc(MUDANCAS[0][1])+'">v'+esc(APP_VERSAO)+'</span>'; }
   /* Lista de atalhos de teclado num aparelho sem teclado é ruído puro. */
   function atalhos(html){ return isNarrow() ? '' : html; }
   // o rodapé para de prometer que está salvo quando não está
@@ -4861,10 +4908,9 @@ body.com-teclado .app{padding-bottom:56vh;}
         +'</div></div>'
       +'<div class="row-3">'
         +campo('f_parc','Parcela','<input id="f_parc" type="number" min="0" step="1" value="'+(t.parcela!=null?t.parcela:'')+'" placeholder="—">')
-        +campo('f_nome','Nome','<input id="f_nome" maxlength="300" value="'+esc(t.name||'')+'" placeholder="Ex.: Fatura de setembro">')
-        +campo('f_onde','Descrição','<input id="f_onde" maxlength="200" value="'+esc(t.onde||'')+'" placeholder="Ex.: Banco Inter">')
+        +campo('f_nome','Descrição','<input id="f_nome" maxlength="300" value="'+esc(t.name||'')+'" placeholder="Ex.: Fatura de setembro">')
+        +campo('f_onde','Estabelecimento','<input id="f_onde" maxlength="200" value="'+esc(t.onde||'')+'" placeholder="Ex.: Banco Inter">')
       +'</div>'
-      +campo('f_desc','Descrição','<input id="f_desc" maxlength="300" value="'+esc(t.descricao||'')+'" placeholder="Opcional">')
       +'<div class="row-2">'
         +campo('f_cat','Categoria','<select id="f_cat">'+catOpts+'</select>')
         +campo('f_venc','Vencimento','<input id="f_venc" type="date" value="'+esc(vencPadrao)+'">')
@@ -4929,14 +4975,14 @@ body.com-teclado .app{padding-bottom:56vh;}
     var campoNome=document.getElementById('f_nome');
     if(!nome){
       campoNome.classList.add('invalid'); campoNome.focus();
-      anunciar('O nome é obrigatório.'); return;
+      anunciar('A descrição é obrigatória.'); return;
     }
     campoNome.classList.remove('invalid');
     var dados={
       catId: document.getElementById('f_cat').value,
       parcela: document.getElementById('f_parc').value,
       name: nome,
-      descricao: document.getElementById('f_desc').value,
+      descricao: existing?existing.descricao||'':'',
       onde: document.getElementById('f_onde').value,
       venc: document.getElementById('f_venc').value,
       valor: parseMoeda(document.getElementById('f_valor').value),
@@ -5015,7 +5061,7 @@ body.com-teclado .app{padding-bottom:56vh;}
   function saveCat(existing, chosen){
     var nome=document.getElementById('c_nome').value.trim();
     var campoNome=document.getElementById('c_nome');
-    if(!nome){ campoNome.classList.add('invalid'); campoNome.focus(); anunciar('O nome é obrigatório.'); return; }
+    if(!nome){ campoNome.classList.add('invalid'); campoNome.focus(); anunciar('A descrição é obrigatória.'); return; }
     campoNome.classList.remove('invalid');
     var querMeta=document.getElementById('c_meta').checked;
     /* Duas categorias marcadas como "a da reserva" fariam uma delas sumir da
@@ -5188,7 +5234,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     function salvar(){
       var nome=document.getElementById('e_nome').value.trim();
       var cn=document.getElementById('e_nome');
-      if(!nome){ cn.classList.add('invalid'); cn.focus(); anunciar('O nome é obrigatório.'); return; }
+      if(!nome){ cn.classList.add('invalid'); cn.focus(); anunciar('A descrição é obrigatória.'); return; }
       var dados={ name:nome, start:document.getElementById('e_ini').value,
         end:document.getElementById('e_fim').value, status:document.getElementById('e_status').value,
         valor:parseMoeda(document.getElementById('e_valor').value),
@@ -5510,6 +5556,12 @@ body.com-teclado .app{padding-bottom:56vh;}
         +'<ul><li><b>iPhone (Safari):</b> botão de compartilhar → <b>Adicionar à Tela de Início</b>.</li>'
         +'<li><b>Android (Chrome):</b> menu (⋮) → <b>Adicionar à tela inicial</b>.</li></ul>'
         +'<p>O app passa a abrir em tela cheia, com ícone próprio. Os dados permanecem os mesmos.</p>')
+
+      +bloco('Versão e novidades',
+        '<p>Versão atual: <b>v'+esc(APP_VERSAO)+'</b>.</p>'
+        +'<ul class="mudancas">'+MUDANCAS.map(function(m){
+          return '<li><b>v'+esc(m[0])+'</b> — '+esc(m[1])+'</li>';
+        }).join('')+'</ul>')
 
       +'<div class="modal-foot"><button class="btn-ghost" data-cancel>Fechar</button></div></div>';
     var ov=buildOverlay(html);
