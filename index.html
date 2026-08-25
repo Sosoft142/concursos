@@ -16,15 +16,19 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-html,body{margin:0; padding:0; background:#EBE7DE;}
+html,body{margin:0; padding:0; background:#EEF1F5;}
 .app{
-  --paper:#EBE7DE; --card:#FCFBF8; --ink:#2A2521; --ink-soft:#726A5F;
-  --line:#DAD4C8; --wine:#296d5a; --wine-dk:#205748; --wine-tint:#e4f1ed; --wine-fg:#2b715d;
-  --thead:#F5F1E9; --hover:#FBF7EF; --refbg:#FBF6EC; --pop:#FFFFFF; --input:#FFFFFF;
-  --faint:#B7AE9F; --chipn:#E9E4DA;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --serif:"Fraunces",Georgia,"Times New Roman",serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  /* Base fria e neutra, no espírito dos apps de finanças: canvas cinza-claro,
+     cartões brancos, tinta quase preta com leve tom azulado, traços discretos.
+     O verde fica só como destaque e, junto do vermelho, para valores. */
+  --paper:#EEF1F5; --card:#FFFFFF; --ink:#141A21; --ink-soft:#5B6672;
+  --line:#E4E8EE; --wine:#12805E; --wine-dk:#0E6B4F; --wine-tint:#E4F4EE; --wine-fg:#0F7A59;
+  --thead:#F4F6F9; --hover:#F5F7FA; --refbg:#F4F6F9; --pop:#FFFFFF; --input:#FFFFFF;
+  --faint:#98A1AD; --chipn:#EEF1F5;
+  --pos:#12805E; --pos-fg:#0F7A59; --neg:#C0392B; --neg-fg:#C0392B;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serif:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Roboto Mono",Menlo,Consolas,monospace;
   font-family:var(--sans); color:var(--ink); background:var(--paper);
   min-height:100vh; box-sizing:border-box;
   /* o meta viewport pede viewport-fit=cover, então sem isto o conteúdo desenha
@@ -34,14 +38,13 @@ html,body{margin:0; padding:0; background:#EBE7DE;}
   -webkit-font-smoothing:antialiased;
 }
 .app.dark{
-  /* Escuro pensado para as duas pontas: em pouca luz, o fundo sai do preto puro
-     e o corpo do texto sai do branco puro (os dois juntos criam halo); em muita
-     luz, tudo o que era fraco demais sobe — texto apagado, traços e os degraus
-     entre superfícies — porque o reflexo na tela come justamente esses tons. */
-  --paper:#1b1713; --card:#2d2822; --ink:#e2ddd5; --ink-soft:#c3baac;
-  --line:#655748; --wine:#2e705d; --wine-dk:#2d7662; --wine-tint:#243c36; --wine-fg:#68caae;
-  --thead:#26211c; --hover:#3a322a; --refbg:#373122; --pop:#37312a; --input:#221e18;
-  --faint:#a99c8b; --chipn:#423b33;
+  /* Escuro frio: fundo grafite-azulado, superfícies em degraus discretos, texto
+     que sai do branco puro para não criar halo em pouca luz. */
+  --paper:#0F141A; --card:#1A212B; --ink:#E6EAF0; --ink-soft:#A3ADBA;
+  --line:#2A333F; --wine:#1F9E76; --wine-dk:#25A87E; --wine-tint:#16302A; --wine-fg:#3FC79B;
+  --thead:#161D26; --hover:#222B36; --refbg:#1c2530; --pop:#222b36; --input:#141A21;
+  --faint:#7C8794; --chipn:#222B33;
+  --pos:#2FB588; --pos-fg:#3FC79B; --neg:#E5695C; --neg-fg:#E5695C;
 }
 .app *{box-sizing:border-box;}
 .app button{font-family:inherit; cursor:pointer;}
@@ -51,7 +54,7 @@ html,body{margin:0; padding:0; background:#EBE7DE;}
 .hero-line{display:flex; align-items:center; gap:13px;}
 .hero-ic{width:42px; height:42px; border-radius:11px; background:var(--wine); color:#F6EEDF;
   display:grid; place-items:center; flex:none; box-shadow:0 3px 10px rgba(41,109,90,.28);}
-.hero h1{font-family:var(--serif); font-weight:500; font-size:clamp(26px,4.4vw,34px);
+.hero h1{font-family:var(--serif); font-weight:600; font-size:clamp(26px,4.4vw,34px);
   letter-spacing:-.01em; margin:0; line-height:1.05;}
 .sub{margin:2px 0 0; color:var(--ink-soft); font-size:13.5px;}
 .sub b{color:var(--ink);}
@@ -88,7 +91,7 @@ html,body{margin:0; padding:0; background:#EBE7DE;}
   border-radius:14px; padding:15px 17px; box-shadow:0 1px 2px rgba(42,37,33,.05), 0 10px 26px rgba(42,37,33,.05);
   position:relative; overflow:hidden;}
 .subj-head::before{content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--c,var(--wine));}
-.subj-head h2{font-family:var(--serif); font-weight:500; font-size:22px; margin:0; letter-spacing:-.01em;}
+.subj-head h2{font-family:var(--serif); font-weight:600; font-size:22px; margin:0; letter-spacing:-.01em;}
 .subj-prof{margin:3px 0 0; font-size:13px; color:var(--ink-soft);}
 .subj-aula{margin:5px 0 0; display:flex; flex-wrap:wrap; gap:4px 14px; font-size:12.5px; color:var(--ink-soft);}
 .subj-aula span{display:inline-flex; align-items:center; gap:5px;}
@@ -102,7 +105,7 @@ html,body{margin:0; padding:0; background:#EBE7DE;}
 .emdia-main{flex:1; min-width:0;}
 .emdia-title{font-size:14px; font-weight:600; letter-spacing:-.005em;}
 .emdia-desc{font-size:12.5px; margin-top:2px; opacity:.9; line-height:1.5;}
-.emdia-desc .refname{font-family:var(--serif); font-style:italic;}
+.emdia-desc .refname{font-family:var(--serif); font-weight:600;}
 .emdia-when{font-family:var(--mono); font-size:12px;}
 .late-note{margin:9px 0 0; font-size:12px; color:var(--faint);}
 .late-note b{color:var(--ink-soft); font-weight:500;}
@@ -219,9 +222,9 @@ tbody tr.com-anel + tr.com-anel td{padding-top:18px;}
 .num-badge{display:inline-grid; place-items:center; min-width:26px; height:26px; padding:0 6px; border-radius:8px;
   font-family:var(--mono); font-size:13px; font-weight:500; color:#fff;}
 .c-text{width:36%;}
-.text-name{font-family:var(--serif); font-weight:500; font-size:15.5px; letter-spacing:-.005em;}
+.text-name{font-family:var(--serif); font-weight:600; font-size:15.5px; letter-spacing:-.005em;}
 .text-link{margin-left:6px; color:var(--wine-fg); display:inline-flex; vertical-align:-2px;}
-.orig{display:block; font-size:12px; color:var(--ink-soft); margin-top:3px; font-style:italic;}
+.orig{display:block; font-size:12px; color:var(--ink-soft); margin-top:3px;}
 .nota{display:block; margin-top:5px; font-size:12px; color:var(--ink-soft); line-height:1.5;
   display:flex; align-items:flex-start; gap:5px;}
 .nota svg{flex:none; margin-top:2px; opacity:.65;}
@@ -293,7 +296,7 @@ tbody tr.is-ref.com-anel td:first-child{box-shadow:inset 0 1.5px 0 var(--anel),
   flex:none; width:170px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 .wsub .sdot{width:9px; height:9px; border-radius:3px; flex:none;}
 .wmain{flex:1; min-width:0;}
-.wname{font-family:var(--serif); font-weight:500; font-size:15px;}
+.wname{font-family:var(--serif); font-weight:600; font-size:15px;}
 .wmeta{font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
 .wright{display:flex; align-items:center; gap:10px; flex:none;}
 .wempty{padding:34px 20px; text-align:center; color:var(--ink-soft); font-size:13.5px;}
@@ -305,7 +308,7 @@ tbody tr.is-ref.com-anel td:first-child{box-shadow:inset 0 1.5px 0 var(--anel),
 .wgroup.past .wgroup-h{background:transparent; border-bottom-style:dashed;}
 .wgroup.past .witem{opacity:.72;}
 .wgroup.past .witem:hover{opacity:1; background:var(--hover);}
-.wgroup.past .wname{color:var(--ink-soft); font-style:italic;}
+.wgroup.past .wname{color:var(--ink-soft);}
 
 /* Gastos avulsos dentro do card da categoria */
 .subj-top{display:flex; align-items:flex-start; gap:12px;}
@@ -459,7 +462,7 @@ body.com-teclado .app{padding-bottom:56vh;}
 /* Primeira vez: o app abre vazio e esta é a única coisa na tela */
 .bemvindo{background:var(--card); border:1.5px solid var(--line); border-radius:14px;
   padding:30px 24px; text-align:center; max-width:560px; margin:8px auto 0;}
-.bemvindo h2{font-family:var(--serif); font-weight:500; font-size:23px; margin:0 0 6px; color:var(--ink);}
+.bemvindo h2{font-family:var(--serif); font-weight:600; font-size:23px; margin:0 0 6px; color:var(--ink);}
 .bemvindo p{margin:0 auto 6px; color:var(--ink-soft); font-size:14px; max-width:44ch;}
 .bemvindo .bv-acoes{display:flex; gap:9px; justify-content:center; flex-wrap:wrap; margin-top:18px;}
 .bemvindo .bv-passos{display:grid; gap:11px; text-align:left; margin:20px auto 0; max-width:42ch;}
@@ -547,7 +550,7 @@ body.com-teclado .app{padding-bottom:56vh;}
   box-shadow:0 24px 60px rgba(0,0,0,.4); max-height:92vh; overflow:auto;}
 .modal.wide{max-width:660px;}
 .modal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; gap:10px;}
-.modal-head h2{font-family:var(--serif); font-weight:500; font-size:21px; margin:0;}
+.modal-head h2{font-family:var(--serif); font-weight:600; font-size:21px; margin:0;}
 .field{margin-bottom:13px; display:flex; flex-direction:column; gap:5px;}
 .field label{font-size:12px; font-weight:600; color:var(--ink-soft); letter-spacing:.02em;}
 .field input, .field select, .field textarea{border:1.5px solid var(--line); border-radius:9px;
@@ -612,8 +615,8 @@ body.com-teclado .app{padding-bottom:56vh;}
 .tcc-htop{display:flex; align-items:flex-start; gap:12px;}
 .tcc-hid{flex:1; min-width:0;}
 .tcc-kicker{font-size:11px; text-transform:uppercase; letter-spacing:.09em; color:var(--faint);}
-.tcc-hero h2{font-family:var(--serif); font-weight:500; font-size:22px; margin:2px 0 0; letter-spacing:-.01em;}
-.tcc-hero h2.vazio{color:var(--faint); font-style:italic;}
+.tcc-hero h2{font-family:var(--serif); font-weight:600; font-size:22px; margin:2px 0 0; letter-spacing:-.01em;}
+.tcc-hero h2.vazio{color:var(--faint);}
 .tcc-orient{margin:3px 0 0; font-size:13px; color:var(--ink-soft);}
 .tcc-orient b{color:var(--ink); font-weight:500;}
 
@@ -641,7 +644,7 @@ body.com-teclado .app{padding-bottom:56vh;}
 /* cabeçalho de bloco */
 .tcc-sec{margin-top:18px;}
 .tcc-sh{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:9px;}
-.tcc-sh h3{font-family:var(--serif); font-weight:500; font-size:17px; margin:0; letter-spacing:-.01em;}
+.tcc-sh h3{font-family:var(--serif); font-weight:600; font-size:17px; margin:0; letter-spacing:-.01em;}
 .tcc-sh .conta{font-family:var(--mono); font-size:12px; color:var(--ink-soft);}
 .tcc-sh .dir{margin-left:auto; display:flex; align-items:center; gap:8px;}
 .seg{display:inline-flex; background:var(--card); border:1.5px solid var(--line); border-radius:9px; padding:2px; gap:2px;}
@@ -660,7 +663,7 @@ body.com-teclado .app{padding-bottom:56vh;}
 .eitem.done{opacity:.72;}
 .edot{width:10px; height:10px; border-radius:50%; flex:none; margin-top:5px;}
 .emain{flex:1; min-width:0;}
-.ename{font-family:var(--serif); font-weight:500; font-size:15px; letter-spacing:-.005em;}
+.ename{font-family:var(--serif); font-weight:600; font-size:15px; letter-spacing:-.005em;}
 .emeta{font-size:12.5px; color:var(--ink-soft); margin-top:3px; line-height:1.5;}
 .emeta .atras{color:#A23A3A; font-weight:600;}
 .emeta .agora{color:#8A5B10; font-weight:600;}
@@ -788,8 +791,8 @@ body.com-teclado .app{padding-bottom:56vh;}
 .c-valor{width:158px;}
 .valor-lin{font-family:var(--mono); font-size:13.5px; font-variant-numeric:tabular-nums;
   white-space:nowrap; display:block;}
-.valor-lin.entrada{color:#3F6A36;}
-.app.dark .valor-lin.entrada{color:#85b474;}
+.valor-lin.entrada{color:var(--pos-fg);}
+
 .valor-lin.saida{color:var(--ink);}
 .valor-rest{display:block; font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-top:2px;}
 
@@ -801,12 +804,12 @@ body.com-teclado .app{padding-bottom:56vh;}
 .rcard-n{font-family:var(--serif); font-size:20px; font-weight:500; line-height:1.15;
   font-variant-numeric:tabular-nums; overflow-wrap:anywhere;}
 .rcard-l{font-size:11.5px; color:var(--ink-soft); margin-top:3px;}
-.rcard.entra .rcard-n{color:#3F6A36;}
-.rcard.sai .rcard-n{color:#8E3532;}
-.app.dark .rcard.entra .rcard-n{color:#85b474;}
-.app.dark .rcard.sai .rcard-n{color:#d9958d;}
-.rcard.sobra.neg .rcard-n{color:#8E3532;}
-.app.dark .rcard.sobra.neg .rcard-n{color:#d9958d;}
+.rcard.entra .rcard-n{color:var(--pos-fg);}
+.rcard.sai .rcard-n{color:var(--neg-fg);}
+
+
+.rcard.sobra.neg .rcard-n{color:var(--neg-fg);}
+
 @media (max-width:520px){
   .resumo{grid-template-columns:1fr 1fr;}
   .resumo .rcard.sobra{grid-column:1 / -1;}
@@ -840,7 +843,7 @@ body.com-teclado .app{padding-bottom:56vh;}
 .fileacts{display:flex; gap:9px; flex-wrap:wrap; margin:12px 0;}
 .fileacts button{flex:1 1 190px; justify-content:center; min-height:42px;}
 .hint2{font-size:12.5px; color:var(--ink-soft); line-height:1.6; margin:8px 0;}
-.fsec{font-family:var(--serif); font-weight:500; font-size:16px; margin:18px 0 6px;}
+.fsec{font-family:var(--serif); font-weight:600; font-size:16px; margin:18px 0 6px;}
 .fsec .hint{display:inline; font-size:11.5px;}
 .fdrive{border:1.5px dashed var(--line); border-radius:11px; padding:11px 13px; margin-top:14px;}
 .fdrive b{font-size:13.5px;}
@@ -2718,7 +2721,7 @@ body.com-teclado .app{padding-bottom:56vh;}
      entra sozinho) ou cria um novo com o que há neste aparelho. */
   function syncConectar(token){
     token=(token||'').trim();
-    if(!token){ alert('Cole o token do GitHub para conectar.'); return; }
+    if(!token){ alert('Informe o token do GitHub para conectar.'); return; }
     syncToken=token; syncBusy=true; syncMsg=''; renderFileBtn();
     return gh('/gists?per_page=100').then(function(lista){
       var achado=null;
@@ -2753,7 +2756,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       syncToken=''; gistId=''; syncState='off';
       syncBusy=false; syncMsg=(e&&e.message)||'Falha ao conectar.';
       renderFileBtn();
-      alert('Não consegui conectar: '+syncMsg);
+      alert('Falha na conexão: '+syncMsg);
     });
   }
   function toastSync(msg){ syncMsg=msg; renderFileBtn(); }
@@ -2825,7 +2828,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       ajustarCategoriaAtual();
       closeModal();
       renderAll();
-      anunciar('Atualizado com o que foi alterado em outra aba');
+      anunciar('Atualizado a partir de outra aba');
     });
   }
   /* Fechar a aba com uma escrita ainda na fila deixava o arquivo e a nuvem
@@ -2850,7 +2853,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       return fmtDate(diaLocal(d))+' '+pad2(d.getHours())+':'+pad2(d.getMinutes());
     };
     var maisVelho = doArquivo && daMemoria && doArquivo < daMemoria;
-    return confirm('Substituir o que está aberto agora pelo conteúdo do arquivo?\n\n'
+    return confirm('Substituir os dados atuais pelo conteúdo do arquivo?\n\n'
       +'Neste aparelho: '+quando(daMemoria)+'\n'
       +'No arquivo: '+quando(doArquivo)
       +(maisVelho?'\n\nATENÇÃO: o arquivo é MAIS ANTIGO. Você perde o que fez desde então.':'')
@@ -2893,7 +2896,7 @@ body.com-teclado .app{padding-bottom:56vh;}
           }
           else if(aplicarConteudo(obj)) persist();
         }
-        else if(txt && txt.trim() && !confirm('Esse arquivo não tem dados do organizador.\n\nQuer mesmo passar a gravar os dados atuais nele? O conteúdo que estiver lá será substituído.')){
+        else if(txt && txt.trim() && !confirm('Este arquivo não contém dados do organizador.\n\nGravar os dados atuais nele? O conteúdo existente será substituído.')){
           fileHandle=null; fileName=''; fileState='off';
           return;
         }
@@ -2905,7 +2908,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       closeModal(); renderAll();
     }).catch(function(e){
       if(e && e.name==='AbortError') return;   // a pessoa cancelou o seletor
-      alert('Não consegui conectar o arquivo: '+((e&&e.message)||e));
+      alert('Falha ao conectar o arquivo: '+((e&&e.message)||e));
     });
   }
   function desconectarArquivo(){
@@ -2952,14 +2955,14 @@ body.com-teclado .app{padding-bottom:56vh;}
   function reconectarArquivo(){
     if(!fileHandle || !fileHandle.requestPermission){ conectarArquivo(true); return; }
     fileHandle.requestPermission({mode:'readwrite'}).then(function(p){
-      if(p!=='granted'){ alert('Sem permissão para gravar no arquivo.'); return; }
+      if(p!=='granted'){ alert('Permissão de gravação negada.'); return; }
       fileState='on'; fileErr='';
       return fileHandle.getFile().then(function(f){ return f.text(); }).then(function(txt){
         var obj=null; try{ obj=JSON.parse(txt); }catch(e){}
         if(obj && conteudoDiferente(obj) && confirmarTroca(obj) && aplicarConteudo(obj)) persist();
         return escreverArquivo();
       }).then(function(){ closeModal(); renderAll(); });
-    }).catch(function(e){ alert('Não consegui reconectar: '+((e&&e.message)||e)); });
+    }).catch(function(e){ alert('Falha ao reconectar: '+((e&&e.message)||e)); });
   }
 
   // ---- persistence ----
@@ -3019,7 +3022,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       /* fileState só vira "precisa" ~400 ms depois, quando a escrita no arquivo
          falha — checar aqui dava um "está tudo bem" que não era verdade. */
       if(!storageWarned){ storageWarned=true;
-        alert('⚠️ Não consegui salvar neste navegador. O armazenamento pode estar cheio ou bloqueado (janela anônima).\n\nO que você fizer a partir de agora se perde ao fechar a aba. Use "Baixar uma cópia" no botão de dados, no topo da tela.');
+        alert('Não foi possível salvar neste navegador. O armazenamento pode estar cheio ou bloqueado (janela anônima).\n\nAs alterações a partir de agora serão perdidas ao fechar a aba. Use "Fazer backup" em Dados e backup, no topo da tela.');
       }
     }
   }
@@ -3375,20 +3378,20 @@ body.com-teclado .app{padding-bottom:56vh;}
   }
   function bemVindoHtml(){
     return '<div class="bemvindo" id="bemvindo">'
-      +'<h2>Vamos começar</h2>'
-      +'<p>Este organizador guarda o que você tem para pagar e receber em cada categoria, quanto já foi pago e o que está por vir.</p>'
-      +'<p class="bv-aviso">'+svg(IC.alert,14)+' Tudo fica <b>só neste navegador</b>: nada é enviado para lugar nenhum, e ninguém além de você vê. Em troca, se você limpar o navegador ou trocar de aparelho, <b>some</b> — por isso o app lembra você de baixar uma cópia de vez em quando.</p>'
+      +'<h2>Bem-vindo</h2>'
+      +'<p>Organize contas a pagar e a receber por categoria, acompanhe o que já foi pago e o que está por vir.</p>'
+      +'<p class="bv-aviso">'+svg(IC.alert,14)+' Os dados ficam <b>apenas neste navegador</b> — nada é enviado a servidores. Ao limpar o navegador ou trocar de aparelho, os dados são perdidos. Faça backup periodicamente.</p>'
       +'<div class="bv-passos">'
-        +'<div class="bv-passo"><span class="bv-n">1</span><span><b>Crie uma categoria</b> — nome, cor e, se quiser, o dia do vencimento.</span></div>'
-        +'<div class="bv-passo"><span class="bv-n">2</span><span><b>Cadastre as contas</b> com o valor e a data em que vencem.</span></div>'
-        +'<div class="bv-passo"><span class="bv-n">3</span><span><b>Marque o que já pagou.</b> O topo da página diz se você está em dia.</span></div>'
+        +'<div class="bv-passo"><span class="bv-n">1</span><span><b>Crie uma categoria</b> — nome, cor e, se desejar, o dia de vencimento.</span></div>'
+        +'<div class="bv-passo"><span class="bv-n">2</span><span><b>Cadastre as contas</b> com valor e data de vencimento.</span></div>'
+        +'<div class="bv-passo"><span class="bv-n">3</span><span><b>Marque os pagamentos.</b> O topo indica a situação do mês.</span></div>'
       +'</div>'
       +'<div class="bv-acoes">'
-        +'<button class="btn-wine" data-act="bv-cat">'+svg(IC.plus,15)+' Criar a primeira categoria</button>'
-        +'<button class="btn-ghost" data-act="bv-importar">'+svg(IC.up,15)+' Tenho um backup</button>'
-        +'<button class="btn-ghost" data-act="bv-exemplo">Ver um exemplo</button>'
+        +'<button class="btn-wine" data-act="bv-cat">'+svg(IC.plus,15)+' Criar categoria</button>'
+        +'<button class="btn-ghost" data-act="bv-importar">'+svg(IC.up,15)+' Restaurar backup</button>'
+        +'<button class="btn-ghost" data-act="bv-exemplo">Ver exemplo</button>'
       +'</div>'
-      +'<p class="hint" style="margin-top:16px">O exemplo é fictício. Dá para apagar tudo depois, no botão de dados lá em cima.</p>'
+      +'<p class="hint" style="margin-top:16px">O exemplo é fictício e pode ser removido depois, em Dados e backup.</p>'
     +'</div>';
   }
   function renderPanel(){
@@ -3706,9 +3709,9 @@ body.com-teclado .app{padding-bottom:56vh;}
       html=dicaOutras()+'<div class="tcards">'+list.map(cardHtml).join('')+'</div>';
     } else {
       var head='<thead><tr>'
-        +headCell('parcela','Parc.','c-num')
+        +headCell('parcela','Parcela','c-num')
         +'<th class="c-text">Conta</th>'
-        +headCell('onde','Onde / quem','c-author')
+        +headCell('onde','Descrição','c-author')
         +headCell('date','Vencimento','c-date')
         +headCell('valor','Valor','c-valor')
         +headCell('status','Situação','c-status')
@@ -3760,19 +3763,19 @@ body.com-teclado .app{padding-bottom:56vh;}
     var nav='<div class="mesnav">'
       +'<button class="mn-seta" data-act="mes-" title="Mês anterior" aria-label="Mês anterior">'+svg(IC.esq,15)+'</button>'
       +'<div class="mn-mid"><span class="mn-mes" aria-live="polite">'+esc(mesLabel(ym))+'</span>'
-      +(mesOff!==0?'<button class="mn-hoje" data-act="mes0">voltar para hoje</button>'
-                  :'<span class="mn-hoje-off">mês de hoje</span>')+'</div>'
+      +(mesOff!==0?'<button class="mn-hoje" data-act="mes0">Ir para o mês atual</button>'
+                  :'<span class="mn-hoje-off">Mês atual</span>')+'</div>'
       +'<button class="mn-seta" data-act="mes+" title="Próximo mês" aria-label="Próximo mês">'+svg(IC.dir,15)+'</button>'
       +'</div>';
     var cards='<div class="resumo">'
-      +'<div class="rcard entra"><div class="rcard-n">'+esc(fmtCurto(d.entra))+'</div><div class="rcard-l">entra</div></div>'
-      +'<div class="rcard sai"><div class="rcard-n">'+esc(fmtCurto(d.sai))+'</div><div class="rcard-l">sai</div></div>'
+      +'<div class="rcard entra"><div class="rcard-n">'+esc(fmtCurto(d.entra))+'</div><div class="rcard-l">Receitas</div></div>'
+      +'<div class="rcard sai"><div class="rcard-n">'+esc(fmtCurto(d.sai))+'</div><div class="rcard-l">Despesas</div></div>'
       +'<div class="rcard sobra'+(negativa?' neg':'')+'"><div class="rcard-n">'+esc(fmtCurto(d.sobra))+'</div>'
-      +'<div class="rcard-l">'+(negativa?'falta para fechar o mês':'sobra no mês')+'</div></div>'
+      +'<div class="rcard-l">Saldo do mês</div></div>'
       +'</div>';
     var linha = d.contas
-      ? '<p class="late-note" style="margin:10px 2px 0"><b>'+d.pagas+' de '+d.contas+'</b> contas pagas'
-        +(d.falta>0?' · ainda falta pagar <b>'+esc(fmtBRL(d.falta))+'</b>':' · tudo quitado')+'</p>'
+      ? '<p class="late-note" style="margin:10px 2px 0"><b>'+d.pagas+' de '+d.contas+'</b> pagas'
+        +(d.falta>0?' · <b>'+esc(fmtBRL(d.falta))+'</b> em aberto':' · tudo quitado')+'</p>'
       : '<p class="late-note" style="margin:10px 2px 0">Nenhuma conta com vencimento neste mês.</p>';
     return nav+cards+linha;
   }
@@ -3851,22 +3854,22 @@ body.com-teclado .app{padding-bottom:56vh;}
       var devo=lateSai.reduce(function(a,t){ return a+(faltaDe(t)||0); },0);
       var esperando=lateEnt.reduce(function(a,t){ return a+(faltaDe(t)||0); },0);
       var partes=[];
-      if(lateSai.length) partes.push('<b>'+lateSai.length+(lateSai.length===1?' conta venceu':' contas venceram')+'</b>'
-        +(devo>0?' ('+esc(fmtBRL(devo))+' em aberto)':''));
-      if(lateEnt.length) partes.push('<b>'+lateEnt.length+(lateEnt.length===1?' entrada não chegou':' entradas não chegaram')+'</b>'
-        +(esperando>0?' ('+esc(fmtBRL(esperando))+')':''));
+      if(lateSai.length) partes.push('<b>'+lateSai.length+(lateSai.length===1?' conta vencida':' contas vencidas')+'</b>'
+        +(devo>0?' · '+esc(fmtBRL(devo))+' em aberto':''));
+      if(lateEnt.length) partes.push('<b>'+lateEnt.length+(lateEnt.length===1?' recebimento pendente':' recebimentos pendentes')+'</b>'
+        +(esperando>0?' · '+esc(fmtBRL(esperando)):''));
       var aviso = g.late.length
         ? '<div class="alerta-atraso"><span class="aa-dot" aria-hidden="true"></span>'
-          +'<span>'+partes.join(' · ')+'.</span>'
-          +'<button type="button" class="aa-ir" data-act="ir-vencidas">ver</button></div>'
+          +'<span>'+partes.join(' — ')+'</span>'
+          +'<button type="button" class="aa-ir" data-act="ir-vencidas">Ver</button></div>'
         : '';
       body=aviso
         + mesGroup('Hoje', EMDIA.todo.dot, g.today)
         + mesGroup('Amanhã', STATUS.agendado.dot, g.tomorrow)
         + mesGroup('Próximos 7 dias', STATUS.parcial.dot, g.soon)
-        + mesGroup('Mais adiante', STATUS.pendente.dot, laterShown, laterNote)
-        + (g.late.length ? '<div class="wsep"><span>já venceram</span></div>' : '')
-        + mesGroup('Vencidas — não contam para o "em dia"', '#8A8073', g.late, null, 'past vencidas-alvo');
+        + mesGroup('A vencer', STATUS.pendente.dot, laterShown, laterNote)
+        + (g.late.length ? '<div class="wsep"><span>Vencidas</span></div>' : '')
+        + mesGroup('Vencidas', '#8A8073', g.late, null, 'past vencidas-alvo');
       if(!body) body='<div class="wgroup"><div class="wempty">Nenhuma conta com vencimento cadastrado.<br>Adicione datas para vê-las aqui.</div></div>';
       /* Sem a antiga aba "por categoria", itens sem data (a lista de cuidados,
          uma vacina a marcar, a anuidade do cartão) não teriam onde aparecer.
@@ -3885,10 +3888,10 @@ body.com-teclado .app{padding-bottom:56vh;}
     mesEl.innerHTML=resumoHtml()+'<div style="height:13px"></div>'+body;
     renderStatusMenu();
     var d=resumoDoMes(mesAtivo());
-    foot.innerHTML='Visão de todas as categorias · '+esc(mesLabel(mesAtivo()))
-      +' · entra '+esc(fmtBRL(d.entra))+', sai '+esc(fmtBRL(d.sai))
+    foot.innerHTML='Visão mensal · '+esc(mesLabel(mesAtivo()))
+      +' · receitas '+esc(fmtBRL(d.entra))+', despesas '+esc(fmtBRL(d.sai))
       +textoSalvo(false)+'<br>'
-      +atalhos('<span class="kbd">n</span> nova conta · <span class="kbd">s</span> trocar de aba'
+      +atalhos('<span class="kbd">n</span> nova transação · <span class="kbd">s</span> trocar de aba'
       +' · <span class="kbd">p</span> '+esc(rotuloMetas())+' · <span class="kbd">Esc</span> fechar')
       +selo();
     saveUI();
@@ -3988,7 +3991,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     var atualHtml = f.atual
       ? '<div class="cart-sec"><div class="cart-sh">Fatura atual</div>'+faturaItem(f.atual, true)+'</div>'
       : '<div class="cart-sec"><div class="cart-sh">Fatura atual</div>'
-        +'<div class="cart-vazio">'+svg(IC.check,15)+' Nenhuma fatura em aberto neste cartão.</div></div>';
+        +'<div class="cart-vazio">'+svg(IC.check,15)+' Sem faturas em aberto.</div></div>';
 
     var futHtml = f.futuras.length
       ? '<div class="cart-sec"><div class="cart-sh">Próximas faturas<span class="gn">'+f.futuras.length+'</span></div>'
@@ -4000,7 +4003,7 @@ body.com-teclado .app{padding-bottom:56vh;}
         +'<div class="sv-corpo">'+f.pagas.slice().reverse().map(function(t){ return faturaItem(t, false); }).join('')+'</div></details>'
       : '';
 
-    var addHtml='<div class="cart-add"><button class="btn-ghost sm" data-act="add-fatura" data-id="'+esc(cartao.id)+'">'+svg(IC.plus,14)+' Lançar uma fatura</button></div>';
+    var addHtml='<div class="cart-add"><button class="btn-ghost sm" data-act="add-fatura" data-id="'+esc(cartao.id)+'">'+svg(IC.plus,14)+' Adicionar fatura</button></div>';
 
     return '<div class="cart-card">'+cab+atualHtml+futHtml+pagasHtml+addHtml+'</div>';
   }
@@ -4015,13 +4018,13 @@ body.com-teclado .app{padding-bottom:56vh;}
       var totalAberto=0;
       cards.forEach(function(c){ var f=faturasDe(c); if(f.atual){ totalAberto+=faltaDe(f.atual)||0; f.futuras.forEach(function(t){ totalAberto+=faltaDe(t)||0; }); } });
       var resumo='<div class="cart-resumo"><span>'+cards.length+(cards.length===1?' cartão':' cartões')+'</span>'
-        +'<b class="money">'+esc(fmtBRL(totalAberto))+'</b><span>em aberto no total</span></div>';
+        +'<b class="money">'+esc(fmtBRL(totalAberto))+'</b><span>em aberto</span></div>';
       html=resumo+cards.map(cartaoBloco).join('')
-        +'<div class="cart-novo"><button class="btn-ghost sm" data-act="novo-cartao">'+svg(IC.plus,14)+' Adicionar outro cartão</button></div>';
+        +'<div class="cart-novo"><button class="btn-ghost sm" data-act="novo-cartao">'+svg(IC.plus,14)+' Adicionar cartão</button></div>';
     }
     cartoesEl.innerHTML=html;
     renderStatusMenu();
-    foot.innerHTML='Cartões · fatura atual e próximas de cada um'
+    foot.innerHTML='Cartões · fatura atual e próximas'
       +textoSalvo(false)+'<br>'
       +atalhos('<span class="kbd">s</span> trocar de aba · <span class="kbd">p</span> '+esc(rotuloMetas())+' · <span class="kbd">Esc</span> fechar')
       +selo();
@@ -4071,9 +4074,9 @@ body.com-teclado .app{padding-bottom:56vh;}
   function renderAbast(){
     var cat=catCombustivel();
     if(!cat){
-      abastEl.innerHTML='<div class="empty"><p class="empty-big">Sem categoria de combustível.</p>'
-        +'<p>Crie uma categoria do tipo <b>combustível</b> para registrar cada abastecimento e acompanhar o gasto do mês.</p>'
-        +'<div class="acoes" style="justify-content:center;margin-top:12px"><button class="btn-wine" data-act="novo-combustivel">'+svg(IC.plus,15)+' Criar</button></div></div>';
+      abastEl.innerHTML='<div class="empty"><p class="empty-big">Nenhuma categoria de combustível.</p>'
+        +'<p>Crie uma categoria do tipo <b>combustível</b> para registrar abastecimentos e acompanhar o gasto mensal.</p>'
+        +'<div class="acoes" style="justify-content:center;margin-top:12px"><button class="btn-wine" data-act="novo-combustivel">'+svg(IC.plus,15)+' Criar categoria</button></div></div>';
       foot.innerHTML='Abastecimento'+textoSalvo(false)+selo(); saveUI(); return;
     }
     var ym=mesDe(todayISO());
@@ -4086,41 +4089,41 @@ body.com-teclado .app{padding-bottom:56vh;}
       var rest=Math.round((teto-usadoMes)*100)/100, estourou=usadoMes>=teto;
       var tom=tetoTom(usadoMes, teto);
       tetoBloco='<div class="ab-teto">'
-        +'<div class="ab-teto-top"><span>Gasto de '+esc(mesLabel(ym))+'</span>'
+        +'<div class="ab-teto-top"><span>Gasto em '+esc(mesLabel(ym))+'</span>'
           +'<b class="money" style="color:'+(dark?tom.textD:tom.text)+'">'+esc(fmtBRL(usadoMes))+' / '+esc(fmtBRL(teto))+'</b></div>'
         +'<span class="fbar"><span style="width:'+pct+'%;background:'+tom.dot+'"></span></span>'
         +'<div class="ab-teto-msg">'+(estourou
-            ? 'Passou do teto em <b>'+esc(fmtBRL(usadoMes-teto))+'</b>.'
-            : 'Ainda cabem <b>'+esc(fmtBRL(rest))+'</b> no teto do mês.')
-          +' <button type="button" class="link-btn" data-act="edit-teto" data-sid="'+esc(cat.id)+'">ajustar o teto</button></div>'
+            ? 'Limite excedido em <b>'+esc(fmtBRL(usadoMes-teto))+'</b>.'
+            : 'Disponível: <b>'+esc(fmtBRL(rest))+'</b>.')
+          +' <button type="button" class="link-btn" data-act="edit-teto" data-sid="'+esc(cat.id)+'">Ajustar limite</button></div>'
         +'</div>';
     } else {
-      tetoBloco='<div class="ab-teto sem-teto"><span>Gasto de '+esc(mesLabel(ym))+': <b class="money">'+esc(fmtBRL(usadoMes))+'</b></span>'
-        +' <button type="button" class="link-btn" data-act="edit-teto" data-sid="'+esc(cat.id)+'">definir um teto</button></div>';
+      tetoBloco='<div class="ab-teto sem-teto"><span>Gasto em '+esc(mesLabel(ym))+': <b class="money">'+esc(fmtBRL(usadoMes))+'</b></span>'
+        +' <button type="button" class="link-btn" data-act="edit-teto" data-sid="'+esc(cat.id)+'">Definir limite</button></div>';
     }
 
     var cards='<div class="ab-stats">'
-      +'<div class="ab-stat"><div class="ab-stat-n money">'+esc(fmtBRL(st.totV))+'</div><div class="ab-stat-l">total no histórico</div></div>'
-      +'<div class="ab-stat"><div class="ab-stat-n">'+(st.medio!=null?esc(fmtPreco(st.medio)):'—')+'</div><div class="ab-stat-l">preço médio por litro</div></div>'
-      +'<div class="ab-stat"><div class="ab-stat-n">'+(st.totL?esc(fmtLitros(st.totL)):'—')+'</div><div class="ab-stat-l">litros no total</div></div>'
+      +'<div class="ab-stat"><div class="ab-stat-n money">'+esc(fmtBRL(st.totV))+'</div><div class="ab-stat-l">Total acumulado</div></div>'
+      +'<div class="ab-stat"><div class="ab-stat-n">'+(st.medio!=null?esc(fmtPreco(st.medio)):'—')+'</div><div class="ab-stat-l">Preço médio/litro</div></div>'
+      +'<div class="ab-stat"><div class="ab-stat-n">'+(st.totL?esc(fmtLitros(st.totL)):'—')+'</div><div class="ab-stat-l">Litros no total</div></div>'
       +'</div>';
 
     var hoje=todayISO();
-    var form='<div class="ab-add"><div class="ab-add-h">'+svg(IC.plus,14)+' Registrar um abastecimento</div>'
+    var form='<div class="ab-add"><div class="ab-add-h">'+svg(IC.plus,14)+' Novo abastecimento</div>'
       +'<div class="ab-grid">'
         +'<label class="ab-f"><span>Data</span><input type="date" value="'+hoje+'" data-fdate></label>'
         +'<label class="ab-f"><span>Combustível</span><input type="text" list="ab-tipos" placeholder="Gasolina" data-fobs maxlength="30"></label>'
-        +'<label class="ab-f"><span>Valor pago</span><input type="text" inputmode="decimal" placeholder="R$ 0,00" data-fval></label>'
+        +'<label class="ab-f"><span>Valor</span><input type="text" inputmode="decimal" placeholder="R$ 0,00" data-fval></label>'
         +'<label class="ab-f"><span>Preço/L</span><input type="text" inputmode="decimal" placeholder="0,00" data-fpreco></label>'
-        +'<label class="ab-f"><span>Litros</span><input type="text" inputmode="decimal" placeholder="cálculo automático" data-flitros></label>'
+        +'<label class="ab-f"><span>Litros</span><input type="text" inputmode="decimal" placeholder="automático" data-flitros></label>'
       +'</div>'
       +'<datalist id="ab-tipos"><option value="Gasolina"></option><option value="Etanol"></option><option value="Diesel"></option><option value="GNV"></option></datalist>'
-      +'<div class="ab-add-foot"><span class="hint">Preencha valor e preço/L que os litros saem sozinhos.</span>'
+      +'<div class="ab-add-foot"><span class="hint">Informe valor e preço/L para calcular os litros.</span>'
         +'<button class="btn-wine" data-act="addavulso" data-sid="'+esc(cat.id)+'">'+svg(IC.check,15)+' Registrar</button></div>'
       +'</div>';
 
     var lista = st.n ? abastPorMes(cat)
-      : '<div class="cart-vazio">Nenhum abastecimento registrado ainda.</div>';
+      : '<div class="cart-vazio">Nenhum abastecimento registrado.</div>';
 
     abastEl.innerHTML=tetoBloco+cards+form
       +'<div class="ab-log-h">Histórico<span class="gn">'+st.n+'</span></div>'+lista;
@@ -4151,9 +4154,9 @@ body.com-teclado .app{padding-bottom:56vh;}
     var val=function(sel){ var el=box.querySelector(sel); return el?el.value:''; };
     var d=val('[data-fdate]'), v=val('[data-fval]'), o=val('[data-fobs]');
     var pr=parseMoeda(val('[data-fpreco]')), lt=parseMoeda(val('[data-flitros]'));
-    if(!isoOk(d)){ alert('Escolha uma data válida.'); return; }
+    if(!isoOk(d)){ alert('Informe uma data válida.'); return; }
     var valor=parseMoeda(v);
-    if(valor==null || valor<=0){ alert('Digite um valor maior que zero.'); return; }
+    if(valor==null || valor<=0){ alert('Informe um valor maior que zero.'); return; }
     if(lt==null && pr) lt=Math.round((valor/pr)*100)/100;   // litros = valor ÷ preço
     if(pr==null && lt) pr=Math.round((valor/lt)*100)/100;
     var igual=cat.avulsos.some(function(a){ return a.d===d && a.v===valor; });
@@ -4174,9 +4177,9 @@ body.com-teclado .app{padding-bottom:56vh;}
      silêncio — e é esse número que decide se o teto do mês estourou. */
   function addAvulso(sid, d, v, o){
     var cat=findCat(sid); if(!cat) return;
-    if(!isoOk(d)){ alert('Escolha uma data válida para o gasto.'); return; }
+    if(!isoOk(d)){ alert('Informe uma data válida.'); return; }
     var val=parseMoeda(v);
-    if(val==null || val<=0){ alert('Digite um valor maior que zero.'); return; }
+    if(val==null || val<=0){ alert('Informe um valor maior que zero.'); return; }
     var igual=cat.avulsos.some(function(a){ return a.d===d && a.v===val; });
     if(igual && !confirm('Já existe um gasto de '+fmtBRL(val)+' em '+fmtDate(d)+'.\n\nRegistrar mesmo assim?')) return;
     cat.avulsos.push(normAvulso({d:d, v:val, o:o}));
@@ -4190,7 +4193,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       if(cat.avulsos[i].d===d && cat.avulsos[i].v===val){ cat.avulsos.splice(i,1); break; }
     }
     persist(); renderAll();
-    anunciar('Gasto de '+fmtDate(d)+' removido');
+    anunciar('Registro de '+fmtDate(d)+' removido');
   }
 
   // ---- aba: reservas ----
@@ -4250,8 +4253,8 @@ body.com-teclado .app{padding-bottom:56vh;}
   }
   function renderMarcos(){
     if(!metas.marcos.length){
-      return '<div class="tcc-vazio"><p>Nenhum marco por enquanto.</p>'
-        +'<span class="hint">Marcos são os passos da sua reserva: separar a emergência, juntar metade, chegar ao objetivo.</span>'
+      return '<div class="tcc-vazio"><p>Nenhum marco cadastrado.</p>'
+        +'<span class="hint">Marcos são as etapas da reserva: reserva de emergência, metade do objetivo, objetivo final.</span>'
         +'<div class="acoes"><button class="btn-wine" data-act="novomarco">'+svg(IC.plus,15)+' Criar um marco</button>'
         +'<button class="btn-ghost" data-act="marcossugeridos">Usar uma sugestão</button></div></div>';
     }
@@ -4262,8 +4265,8 @@ body.com-teclado .app{padding-bottom:56vh;}
   function renderConferencias(){
     var lista=confOrd().slice().reverse();
     if(!lista.length){
-      return '<div class="tcc-vazio"><p>Nenhuma conferência de saldo.</p>'
-        +'<span class="hint">Anote o saldo de vez em quando: é assim que dá para ver se a reserva está crescendo.</span>'
+      return '<div class="tcc-vazio"><p>Nenhum registro de saldo.</p>'
+        +'<span class="hint">Registre o saldo periodicamente para acompanhar a evolução da reserva.</span>'
         +'<div class="acoes"><button class="btn-wine" data-act="novaconf">'+svg(IC.plus,15)+' Anotar o saldo de hoje</button></div></div>';
     }
     var ordem=confOrd();
@@ -4307,8 +4310,8 @@ body.com-teclado .app{padding-bottom:56vh;}
       desc = metas.prazo
         ? esc(metas.prazoLabel)+' em '+esc(fmtDate(metas.prazo))
         : (saldo!=null
-            ? 'Saldo da última conferência, em '+esc(fmtDate((ultimaConf()||{}).date||''))
-              +'. <button type="button" class="link-btn" data-act="editmetas">definir um objetivo</button>'
+            ? 'Saldo apurado em '+esc(fmtDate((ultimaConf()||{}).date||''))
+              +'. <button type="button" class="link-btn" data-act="editmetas">Definir objetivo</button>'
             : 'Sem objetivo definido.');
     }
     return '<div class="prazo '+cls+'">'
@@ -4325,8 +4328,8 @@ body.com-teclado .app{padding-bottom:56vh;}
     var cab='<div class="tcc-hero">'
       +'<div class="tcc-htop"><div class="tcc-hid">'
         +'<div class="tcc-kicker">'+esc(rotuloMetas())+'</div>'
-        +'<h2'+(metas.titulo?'':' class="vazio"')+'>'+esc(metas.titulo||'Sem nome ainda')+'</h2>'
-        +(metas.instituicao?'<p class="tcc-orient">Onde: <b>'+esc(metas.instituicao)+'</b></p>':'')
+        +'<h2'+(metas.titulo?'':' class="vazio"')+'>'+esc(metas.titulo||'Reserva sem nome')+'</h2>'
+        +(metas.instituicao?'<p class="tcc-orient">Instituição: <b>'+esc(metas.instituicao)+'</b></p>':'')
       +'</div>'
       +'<button class="icon-btn" data-act="editmetas" title="Configurar reserva" aria-label="Configurar reserva">'+SVG_GEAR+'</button></div>'
       +renderObjetivo()
@@ -4334,8 +4337,8 @@ body.com-teclado .app{padding-bottom:56vh;}
       +'</div>';
     if(!temAlgo){
       metasEl.innerHTML=cab
-        +'<div class="tcc-sec"><div class="tcc-vazio"><p>Configure a sua reserva</p>'
-        +'<span class="hint">Dê um nome, diga onde o dinheiro está guardado e, se quiser, um objetivo e uma data.</span>'
+        +'<div class="tcc-sec"><div class="tcc-vazio"><p>Configure a reserva</p>'
+        +'<span class="hint">Defina um nome, a instituição e, opcionalmente, um objetivo e um prazo.</span>'
         +'<div class="acoes"><button class="btn-wine" data-act="editmetas">'+svg(IC.gear,15)+' Configurar</button></div></div></div>';
       foot.innerHTML=rodapeMetas(); saveUI(); return;
     }
@@ -4344,13 +4347,13 @@ body.com-teclado .app{padding-bottom:56vh;}
       +'<div class="dir">'
         +'<button class="btn-ghost sm" data-act="novomarco">'+svg(IC.plus,14)+' Marco</button>'
       +'</div></div>'+renderMarcos()+'</div>';
-    var secConf='<div class="tcc-sec"><div class="tcc-sh"><h3>Conferências de saldo</h3>'
+    var secConf='<div class="tcc-sec"><div class="tcc-sh"><h3>Histórico de saldo</h3>'
       +'<span class="conta">'+metas.conferencias.length+'</span>'
-      +'<div class="dir"><button class="btn-ghost sm" data-act="novaconf">'+svg(IC.plus,14)+' Conferência</button></div>'
+      +'<div class="dir"><button class="btn-ghost sm" data-act="novaconf">'+svg(IC.plus,14)+' Registro</button></div>'
       +'</div>'+renderConferencias()+'</div>';
     var cat=catMeta();
     var secCat = cat
-      ? '<div class="tcc-mat">'+svg(IC.wallet,15)+' <span>Categoria ligada à reserva: <b>'+esc(cat.name)+'</b> — '+lancsDe(cat.id).length+' lançamento(s).</span>'
+      ? '<div class="tcc-mat">'+svg(IC.wallet,15)+' <span>Categoria vinculada: <b>'+esc(cat.name)+'</b> — '+lancsDe(cat.id).length+' lançamento(s).</span>'
         +'<button class="btn-ghost sm" data-act="editcatmeta" data-id="'+esc(cat.id)+'">'+svg(IC.gear,14)+' Configurar</button></div>'
       : '';
     metasEl.innerHTML=cab+secMarcos+secConf+secCat;
@@ -4458,21 +4461,21 @@ body.com-teclado .app{padding-bottom:56vh;}
     var t;
     /* Nada importa mais do que isto: se a gravação está falhando, o botão para
        de falar de sincronia e passa a dizer o que está acontecendo. */
-    if(naoSalva)                    t={txt:'Não estou salvando', ic:IC.alert, cls:'warn'};
+    if(naoSalva)                    t={txt:'Não está salvando', ic:IC.alert, cls:'warn'};
     else if(syncBusy)               t={txt:'Sincronizando…',   ic:IC.sync,  cls:''};
     else if(syncState==='conflito') t={txt:'Versões diferentes',ic:IC.alert, cls:'warn'};
-    else if(syncState==='erro')     t={txt:'Erro de sincronia', ic:IC.alert, cls:'warn'};
+    else if(syncState==='erro')     t={txt:'Erro de sincronização', ic:IC.alert, cls:'warn'};
     else if(syncState==='on')       t={txt:'Sincronizado'+(syncAt?' · '+quandoTxt(syncAt):''), ic:IC.check, cls:'ok'};
     else if(fileState==='on')       t={txt:(fileName||'arquivo')+' · salvando', ic:IC.check, cls:'ok'};
     else if(fileState==='precisa')  t={txt:'Reconectar arquivo', ic:IC.alert, cls:'warn'};
-    else if(precisaLembrete())      t={txt:'Guardar uma cópia', ic:IC.alert, cls:'warn'};
-    else                            t={txt:'Seus dados',        ic:IC.save,  cls:''};
+    else if(precisaLembrete())      t={txt:'Fazer backup', ic:IC.alert, cls:'warn'};
+    else                            t={txt:'Dados e backup',    ic:IC.save,  cls:''};
     b.className='btn-ghost sm file-btn '+t.cls;
     b.innerHTML=svg(t.ic,14)+' <span class="file-lbl">'+esc(t.txt)+'</span>';
     anunciar(t.txt, true);
     b.title = naoSalva ? 'O navegador está recusando gravar. Baixe uma cópia para não perder o que fez.'
-            : (syncState==='on' ? 'Sincronizando com o GitHub automaticamente'
-            : (fileState==='on' ? 'Gravando em '+fileName : 'Cópia de segurança, sincronização e apagar tudo'));
+            : (syncState==='on' ? 'Sincronizado com o GitHub'
+            : (fileState==='on' ? 'Gravando em '+fileName : 'Backup, sincronização e exclusão'));
   }
   /* Muda de texto = leitor de tela fala. "sóSeMudou" evita repetir o mesmo
      aviso a cada re-render. */
@@ -4487,8 +4490,8 @@ body.com-teclado .app{padding-bottom:56vh;}
   function atalhos(html){ return isNarrow() ? '' : html; }
   // o rodapé para de prometer que está salvo quando não está
   function textoSalvo(comDica){
-    if(naoSalva) return ' · <b class="nao-salvo">NÃO estou conseguindo salvar — baixe uma cópia</b>';
-    return ' · salvo <b>só neste navegador</b>'
+    if(naoSalva) return ' · <b class="nao-salvo">Falha ao salvar — faça backup</b>';
+    return ' · armazenado <b>neste navegador</b>'
       +(comDica?' · <button type="button" class="link-btn" data-act="bkp-rodape">baixar uma cópia</button>':'');
   }
   function renderPendBtn(){
@@ -4528,14 +4531,14 @@ body.com-teclado .app{padding-bottom:56vh;}
     var el=document.getElementById('lembrete'); if(!el) return;
     if(!precisaLembrete()){ el.innerHTML=''; el.style.display='none'; return; }
     var d=diasDesde(backupEm);
-    var quando = d==null ? 'Você ainda não guardou nenhuma cópia.'
-                         : 'Sua última cópia é de '+d+' dias atrás.';
+    var quando = d==null ? 'Nenhum backup realizado.'
+                         : 'Último backup há '+d+' dias.';
     el.style.display='';
     el.innerHTML='<div class="lembrete-in">'+svg(IC.alert,15)
-      +'<span><b>'+esc(quando)+'</b> Tudo isto vive só neste navegador — se ele for limpo, some.</span>'
+      +'<span><b>'+esc(quando)+'</b> Os dados ficam apenas neste navegador.</span>'
       +'<span class="lembrete-acoes">'
-      +'<button class="btn-wine sm" data-act="bkp-agora">'+svg(IC.down,14)+' Baixar cópia</button>'
-      +'<button class="btn-ghost sm" data-act="bkp-depois">Depois</button></span></div>';
+      +'<button class="btn-wine sm" data-act="bkp-agora">'+svg(IC.down,14)+' Fazer backup</button>'
+      +'<button class="btn-ghost sm" data-act="bkp-depois">Agora não</button></span></div>';
   }
   /* Convite para instalar. Aparece só no celular, só a partir da segunda
      visita, só se já houver conteúdo, e some para sempre depois de dispensado. */
@@ -4569,12 +4572,12 @@ body.com-teclado .app{padding-bottom:56vh;}
     if(!podeConvidarInstalar()){ el.innerHTML=''; el.style.display='none'; return; }
     var iOS = /iphone|ipad|ipod/i.test(navigator.userAgent||'');
     var como = iOS
-      ? 'toque em <b>Compartilhar</b> e escolha <b>Adicionar à Tela de Início</b>'
-      : 'abra o menu do navegador (⋮) e escolha <b>Adicionar à tela inicial</b>';
+      ? 'toque em <b>Compartilhar</b> e selecione <b>Adicionar à Tela de Início</b>'
+      : 'abra o menu do navegador (⋮) e selecione <b>Adicionar à tela inicial</b>';
     el.style.display='';
     el.innerHTML='<div class="instalar-in">'+svg(IC.wallet,15)
-      +'<span>Para abrir mais rápido, '+como+'. Vira um ícone e abre em tela cheia.</span>'
-      +'<button class="btn-ghost sm" data-act="inst-nao">Não, obrigada</button></div>';
+      +'<span>Para acesso rápido, '+como+'. O app abre em tela cheia, com ícone próprio.</span>'
+      +'<button class="btn-ghost sm" data-act="inst-nao">Dispensar</button></div>';
   }
   function renderMain(){
     var foco=marcaDoFoco();
@@ -4778,7 +4781,7 @@ body.com-teclado .app{padding-bottom:56vh;}
   function restaurarArquivo(id){
     var a=acharArquivo(id); if(!a) return;
     var vivo=temConteudoVivo();
-    if(!confirm('Trazer "'+a.nome+'" de volta para a tela?'
+    if(!confirm('Restaurar "'+a.nome+'"?'
       +(vivo?'\n\nO que está aberto agora será guardado antes, com o nome do período atual — nada se perde.':'')
       +'\n\nContinuar?')) return;
     if(vivo) arquivarAtual(periodoSugerido());
@@ -4790,11 +4793,11 @@ body.com-teclado .app{padding-bottom:56vh;}
     appCfg=normCfg(Object.assign({}, appCfg, {periodo:alvo.nome}));
     limparFiltros(); ajustarCategoriaAtual();
     persist(); saveUI(); aplicarCfgNaPagina(); closeModal(); renderAll();
-    avisoNaTela('"'+alvo.nome+'" está de volta na tela.');
+    avisoNaTela('"'+alvo.nome+'" restaurado.');
   }
   function removerArquivo(id){
     var a=acharArquivo(id); if(!a) return;
-    if(!confirm('Apagar o período "'+a.nome+'" para sempre?\n\n'+contaArquivo(a)+'\n\nIsto não pode ser desfeito.')) return;
+    if(!confirm('Excluir o período "'+a.nome+'" permanentemente?\n\n'+contaArquivo(a)+'\n\nIsto não pode ser desfeito.')) return;
     for(var i=0;i<arquivos.length;i++) if(arquivos[i].id===id){ arquivos.splice(i,1); break; }
     persist(); abrirArquivos(); renderAll();
     anunciar('Período apagado');
@@ -4804,7 +4807,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     downloadJson({versao:1, updatedAt:nowISO(), cfg:Object.assign({}, appCfg, {periodo:a.nome}),
       categorias:a.categorias, lancamentos:a.lancamentos, metas:a.metas, arquivos:[]},
       'organizador-'+a.nome.replace(/[^\w-]+/g,'-').toLowerCase()+'.json');
-    avisoNaTela('Cópia de "'+a.nome+'" baixada.');
+    avisoNaTela('Backup de "'+a.nome+'" concluído.');
   }
   function carregarExemplo(){
     var ex=exemploData();
@@ -4814,11 +4817,11 @@ body.com-teclado .app{padding-bottom:56vh;}
       prazo:'', conferencias:[{date:todayISO(), saldo:1200, obs:'Saldo do exemplo.'}]});
     catAtualId=categorias[0]?categorias[0].id:null;
     persist(); renderAll();
-    avisoNaTela('Exemplo carregado. É tudo fictício — apague quando quiser.');
+    avisoNaTela('Exemplo carregado. Dados fictícios — podem ser removidos.');
   }
   function apagarTudo(){
-    if(!confirm('Apagar TODAS as categorias, contas, entradas, reservas e períodos guardados deste navegador?\n\nIsto não pode ser desfeito.')) return;
-    if(!confirm('Tem certeza mesmo? Uma cópia de segurança será baixada antes.')) return;
+    if(!confirm('Excluir TODAS as categorias, contas, receitas, reservas e períodos deste navegador?\n\nAção irreversível.')) return;
+    if(!confirm('Confirmar exclusão? Um backup será baixado antes.')) return;
     downloadJson(payload(), 'backup-antes-de-apagar-'+stamp()+'.json');
     categorias=[]; lancamentos=[]; metas=normMetas(null); arquivos=[];
     limparFiltros();
@@ -4826,7 +4829,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
     dataUpdatedAt=nowISO();
     saveUI(); closeModal(); renderAll();
-    avisoNaTela('Tudo apagado. A cópia de segurança está na sua pasta de downloads.');
+    avisoNaTela('Dados excluídos. O backup foi salvo na pasta de downloads.');
   }
 
   // ---- modal: lançamento ----
@@ -4853,13 +4856,13 @@ body.com-teclado .app{padding-bottom:56vh;}
       +'<button class="icon-btn" data-x aria-label="Fechar">'+svg(IC.x)+'</button></div>'
       +'<div class="field"><span class="fake-label">Tipo</span>'
         +'<div class="segfield" id="kindsel" role="radiogroup" aria-label="Tipo de lançamento">'
-        +'<button type="button" data-k="despesa" class="'+(kind==='despesa'?'on':'')+'" role="radio" aria-checked="'+(kind==='despesa')+'">'+svg(IC.up,14)+' Conta a pagar</button>'
+        +'<button type="button" data-k="despesa" class="'+(kind==='despesa'?'on':'')+'" role="radio" aria-checked="'+(kind==='despesa')+'">'+svg(IC.up,14)+' Despesa</button>'
         +'<button type="button" data-k="entrada" class="'+(kind==='entrada'?'on':'')+'" role="radio" aria-checked="'+(kind==='entrada')+'">'+svg(IC.down,14)+' Entrada</button>'
         +'</div></div>'
       +'<div class="row-3">'
-        +campo('f_parc','Parc.','<input id="f_parc" type="number" min="0" step="1" value="'+(t.parcela!=null?t.parcela:'')+'" placeholder="—">')
+        +campo('f_parc','Parcela','<input id="f_parc" type="number" min="0" step="1" value="'+(t.parcela!=null?t.parcela:'')+'" placeholder="—">')
         +campo('f_nome','Nome','<input id="f_nome" maxlength="300" value="'+esc(t.name||'')+'" placeholder="Ex.: Fatura de setembro">')
-        +campo('f_onde','Onde / quem','<input id="f_onde" maxlength="200" value="'+esc(t.onde||'')+'" placeholder="Ex.: Banco Inter">')
+        +campo('f_onde','Descrição','<input id="f_onde" maxlength="200" value="'+esc(t.onde||'')+'" placeholder="Ex.: Banco Inter">')
       +'</div>'
       +campo('f_desc','Descrição','<input id="f_desc" maxlength="300" value="'+esc(t.descricao||'')+'" placeholder="Opcional">')
       +'<div class="row-2">'
@@ -4926,7 +4929,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     var campoNome=document.getElementById('f_nome');
     if(!nome){
       campoNome.classList.add('invalid'); campoNome.focus();
-      anunciar('O nome é obrigatório'); return;
+      anunciar('O nome é obrigatório.'); return;
     }
     campoNome.classList.remove('invalid');
     var dados={
@@ -5012,7 +5015,7 @@ body.com-teclado .app{padding-bottom:56vh;}
   function saveCat(existing, chosen){
     var nome=document.getElementById('c_nome').value.trim();
     var campoNome=document.getElementById('c_nome');
-    if(!nome){ campoNome.classList.add('invalid'); campoNome.focus(); anunciar('O nome é obrigatório'); return; }
+    if(!nome){ campoNome.classList.add('invalid'); campoNome.focus(); anunciar('O nome é obrigatório.'); return; }
     campoNome.classList.remove('invalid');
     var querMeta=document.getElementById('c_meta').checked;
     /* Duas categorias marcadas como "a da reserva" fariam uma delas sumir da
@@ -5097,12 +5100,12 @@ body.com-teclado .app{padding-bottom:56vh;}
         +'<div class="adiar-datas"><span class="antes">'+esc(fmtDate(t.venc))+'</span>'
         +'<span class="seta">→</span><span class="depois" id="ad_nova">'+esc(fmtDate(novaData()))+'</span></div>'
         +'<div class="adiar-como">'+(cat && cat.diaVenc
-            ? 'Vai para o dia <b>'+cat.diaVenc+'</b> do mês seguinte, como está configurado na categoria.'
-            : 'Esta categoria não tem dia fixo, então a conta vai para <b>um mês à frente</b>. Dá para definir o dia no lápis da categoria.')+'</div></div>'
+            ? 'Move para o dia <b>'+cat.diaVenc+'</b> do mês seguinte, conforme configurado na categoria.'
+            : 'A categoria não tem dia fixo; a conta avança <b>um mês</b>. Defina o dia na configuração da categoria.')+'</div></div>'
       +(seguintes
         ? '<label class="opt-check"><input type="checkbox" id="ad_seg">'
-          +'<span><b>Adiar também os '+seguintes+' lançamento(s) seguintes desta categoria</b>'
-          +'<span class="hint">Cada um anda um mês, mantendo a ordem entre eles.</span></span></label>'
+          +'<span><b>Adiar também os '+seguintes+' lançamento(s) seguintes da categoria</b>'
+          +'<span class="hint">Cada um avança um mês, preservando a ordem.</span></span></label>'
         : '<p class="hint2">Não há lançamentos posteriores nesta categoria.</p>')
       +'<div id="ad_prev"></div>'
       +'<div class="modal-foot"><button class="btn-ghost" data-cancel>Cancelar</button>'
@@ -5112,7 +5115,7 @@ body.com-teclado .app{padding-bottom:56vh;}
       var box=document.getElementById('ad_prev');
       if(!estado.seg){ box.innerHTML=''; return; }
       var plano=planoAdiamento(t, true).slice(1, 7);
-      box.innerHTML='<div class="hint2">Também mudam:</div><div class="flist">'+plano.map(function(p){
+      box.innerHTML='<div class="hint2">Também alterados:</div><div class="flist">'+plano.map(function(p){
         return '<div class="frow"><span class="fdate">'+esc(p.item.name)+'</span>'
           +'<span class="fwhen">'+esc(fmtDate(p.de))+' → '+esc(fmtDate(p.para))+'</span></div>';
       }).join('')+'</div>';
@@ -5185,7 +5188,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     function salvar(){
       var nome=document.getElementById('e_nome').value.trim();
       var cn=document.getElementById('e_nome');
-      if(!nome){ cn.classList.add('invalid'); cn.focus(); anunciar('O nome é obrigatório'); return; }
+      if(!nome){ cn.classList.add('invalid'); cn.focus(); anunciar('O nome é obrigatório.'); return; }
       var dados={ name:nome, start:document.getElementById('e_ini').value,
         end:document.getElementById('e_fim').value, status:document.getElementById('e_status').value,
         valor:parseMoeda(document.getElementById('e_valor').value),
@@ -5337,21 +5340,21 @@ body.com-teclado .app{padding-bottom:56vh;}
         +'<select id="p_cent"><option value="1"'+(centavos?' selected':'')+'>Mostrar sempre (R$ 1.234,00)</option>'
         +'<option value="0"'+(!centavos?' selected':'')+'>Só quando houver (R$ 1.234)</option></select>'
         +'<span class="hint">Esconder os centavos redondos deixa as listas mais fáceis de varrer. O valor guardado não muda.</span></div>'
-      +'<div class="pref-sep" role="separator"><span>Este app</span></div>'
+      +'<div class="pref-sep" role="separator"><span>Aplicativo</span></div>'
       +'<div class="row-2"><div class="field"><label for="p_titulo">Nome do app</label>'
         +'<input id="p_titulo" maxlength="60" value="'+esc(appCfg.titulo)+'" placeholder="Organizador de Contas">'
         +'<span class="hint">Aparece no cabeçalho, na aba do navegador e no atalho da tela de início.</span></div>'
       +'<div class="field"><label for="p_periodo">Período</label>'
         +'<input id="p_periodo" maxlength="40" value="'+esc(appCfg.periodo)+'" placeholder="Ex.: agosto/2026">'
         +'<span class="hint">Deixe vazio para não mostrar nada.</span></div></div>'
-      +'<div class="field"><label for="p_metnome">Como chamar o porquinho</label>'
+      +'<div class="field"><label for="p_metnome">Nome da aba de reserva</label>'
         +'<input id="p_metnome" maxlength="24" value="'+esc(rotuloMetas())+'" placeholder="Porquinho">'
-        +'<span class="hint">Porquinho, reserva, poupança, metas… É o nome da quarta aba.</span></div>'
+        +'<span class="hint">Nome exibido na quarta aba (ex.: Porquinho, Reserva, Metas).</span></div>'
       +'<div class="pref-sep" role="separator"><span>Categorias</span></div>'
       +'<div class="cat-mini" id="p_cats">'+catManagerHtml()+'</div>'
       +'<div class="pref-sep" role="separator"><span>Períodos</span></div>'
-      +'<div class="zona-semestre"><div><b>Fechar o período</b>'
-        +'<span class="hint">Guarda tudo o que está aqui e deixa a mesa limpa para o próximo. Nada é apagado.</span></div>'
+      +'<div class="zona-semestre"><div><b>Encerrar período</b>'
+        +'<span class="hint">Arquiva os dados atuais e inicia um novo período. Nada é excluído.</span></div>'
         +'<button class="btn-ghost" id="p_arquivos">'+svg(IC.pasta,15)+' Períodos'
         +(arquivos.length?' <b>('+arquivos.length+')</b>':'')+'</button></div>'
       +'<div class="modal-foot"><button class="btn-ghost" data-cancel>Fechar</button></div></div>';
@@ -5451,62 +5454,62 @@ body.com-teclado .app{padding-bottom:56vh;}
     };
     var html='<div class="modal" role="dialog" aria-modal="true">'
       +'<div class="modal-head"><h2>Ajuda</h2><button class="icon-btn" data-x aria-label="Fechar">'+svg(IC.x)+'</button></div>'
-      +'<p>Este app organiza o que você tem para pagar e receber e mostra se você está em dia. Nada aqui é obrigatório: use só as partes que ajudarem.</p>'
+      +'<p>Organize contas a pagar e a receber e acompanhe a situação do mês. Use apenas os recursos que fizerem sentido para você.</p>'
 
-      +bloco('Onde ficam os meus dados?',
-        '<p>No <b>seu navegador</b>, neste aparelho. Nada é enviado para nenhum servidor e ninguém além de você vê — nem quem fez o app.</p>'
-        +'<p>O outro lado disso: <b>limpar os dados do navegador apaga tudo</b>, e trocar de celular não leva nada junto. Por isso o app pede de vez em quando para você <b>baixar uma cópia</b> — é um arquivo que fica com você e restaura tudo depois.</p>'
-        +'<p>O botão de dados fica no topo da tela. Lá dentro também ficam a sincronização automática e o "apagar tudo".</p>')
+      +bloco('Onde ficam os dados?',
+        '<p>No <b>navegador deste aparelho</b>. Nenhuma informação é enviada a servidores.</p>'
+        +'<p>Como consequência, limpar os dados do navegador ou trocar de aparelho resulta em perda dos dados. Recomenda-se <b>fazer backup</b> periodicamente — um arquivo que permite restaurar tudo depois.</p>'
+        +'<p>O acesso a backup, sincronização e exclusão está em <b>Dados e backup</b>, no topo da tela.</p>')
 
-      +bloco('Como levo para outro celular ou computador?',
-        '<p><b>Do jeito simples:</b> no aparelho antigo, botão de dados → <b>Baixar uma cópia</b>. Mande o arquivo para você mesma (e-mail, WhatsApp, Drive). No aparelho novo, abra o app → <b>Restaurar de uma cópia</b>.</p>'
-        +'<p><b>Do jeito automático:</b> dentro de "Modos automáticos" existe a sincronização por GitHub. Ela mantém os aparelhos iguais sozinha, mas exige criar uma conta e um token — só vale a pena se você usa os dois aparelhos toda semana.</p>')
+      +bloco('Como transferir para outro dispositivo?',
+        '<p><b>Manual:</b> no dispositivo atual, Dados e backup → <b>Fazer backup</b>. No novo dispositivo, abra o app → <b>Restaurar backup</b> e selecione o arquivo.</p>'
+        +'<p><b>Automático:</b> em "Modos automáticos", há sincronização via GitHub, que mantém os dispositivos alinhados. Requer conta e token — indicado para uso frequente em mais de um aparelho.</p>')
 
       +bloco('As quatro abas',
-        '<ul><li><b>Mês</b> — tudo o que vence, em ordem de data: hoje, amanhã, próximos dias e mais adiante. As setas ◂ ▸ passeiam pelos meses. Itens sem data (listas e lembretes) ficam recolhidos no fim.</li>'
-        +'<li><b>Cartões</b> — cada cartão com a <b>fatura atual</b> em destaque e as <b>próximas</b> logo abaixo. O valor em aberto de cada um aparece na tarja colorida.</li>'
-        +'<li><b>Abastecimento</b> — cada vez que você põe combustível: valor, preço por litro e litros. Mostra o gasto do mês contra o teto e o preço médio.</li>'
-        +'<li><b>'+rz+'</b> — o dinheiro que você guarda: objetivo, marcos e as conferências de saldo.</li></ul>'
-        +'<p>No teclado: <span class="kbd">s</span> troca de aba, <span class="kbd">p</span> abre o '+rz+', <span class="kbd">n</span> cria (uma conta, ou um abastecimento na aba de combustível).</p>')
+        '<ul><li><b>Mês</b> — vencimentos em ordem de data: hoje, amanhã, próximos dias e a vencer. As setas ◂ ▸ navegam entre os meses. Itens sem data ficam recolhidos ao final.</li>'
+        +'<li><b>Cartões</b> — cada cartão com a <b>fatura atual</b> em destaque e as <b>próximas</b> abaixo. O total em aberto aparece no cabeçalho.</li>'
+        +'<li><b>Abastecimento</b> — registro de combustível: valor, preço por litro e litros. Exibe o gasto do mês em relação ao limite e o preço médio.</li>'
+        +'<li><b>'+rz+'</b> — reserva financeira: objetivo, marcos e histórico de saldo.</li></ul>'
+        +'<p>Atalhos: <span class="kbd">s</span> troca de aba, <span class="kbd">p</span> abre o '+rz+', <span class="kbd">n</span> cria um registro.</p>')
 
-      +bloco('O que quer dizer "em dia"?',
-        '<p>É o resumo no alto da página. Uma categoria está <b>em dia</b> quando tudo o que vence no <b>próximo vencimento</b> dela (ou hoje, se houver algo hoje) já está pago.</p>'
-        +'<p>Contas que <b>já venceram</b> e não foram pagas não entram nessa conta — senão um atraso de março deixaria a categoria vermelha até o fim do ano. Elas continuam aparecendo na lista, mais apagadas, com a data em vermelho e a palavra "vencida".</p>')
+      +bloco('O que significa "em dia"?',
+        '<p>Indicado no resumo superior. Uma categoria está <b>em dia</b> quando tudo o que vence no próximo vencimento (ou hoje) já foi pago.</p>'
+        +'<p>Contas <b>vencidas</b> e não pagas não afetam esse indicador — permanecem na lista, destacadas com a data em vermelho e a marcação "vencida".</p>')
 
       +bloco('O que significa cada situação?',
-        '<ul><li><b>A pagar</b> — ainda não mexi nisso.</li>'
-        +'<li><b>Agendado</b> — já programei o pagamento (débito automático, agendamento no banco).</li>'
-        +'<li><b>Pago em parte</b> — paguei um pedaço e o resto fica para depois.</li>'
+        '<ul><li><b>A pagar</b> — pendente.</li>'
+        +'<li><b>Agendado</b> — pagamento programado (débito automático ou agendamento bancário).</li>'
+        +'<li><b>Pago em parte</b> — quitação parcial.</li>'
         +'<li><b>Pago</b> — quitado.</li></ul>'
-        +'<p>Numa <b>entrada</b> os mesmos estados aparecem com outros nomes: <i>A receber</i>, <i>Confirmada</i>, <i>Recebida em parte</i> e <i>Recebida</i>.</p>'
-        +'<p>Se você preencher o <b>valor</b>, dá para tocar no número na lista e anotar quanto já foi pago. Chegando no total, a conta vira "Paga" sozinha.</p>')
+        +'<p>Em uma <b>receita</b>, os mesmos estados aparecem como <i>A receber</i>, <i>Confirmada</i>, <i>Recebida em parte</i> e <i>Recebida</i>.</p>'
+        +'<p>Com o <b>valor</b> preenchido, toque no número na lista para registrar o quanto já foi pago. Ao atingir o total, a conta passa a "Paga" automaticamente.</p>')
 
-      +bloco('Como cadastro um cartão ou um abastecimento?',
-        '<p><b>Cartão:</b> na aba Cartões, use "Adicionar cartão" (ou o ☰ → Categorias → Nova, escolhendo o tipo <b>Cartão</b>). Depois, "Lançar uma fatura" cria cada mês/parcela. A fatura ainda não paga vira a "atual".</p>'
-        +'<p><b>Abastecimento:</b> na aba Abastecimento, preencha o formulário. Se você digitar o valor e o preço por litro, os litros saem sozinhos. O gasto entra no teto do mês.</p>'
-        +'<p>Toda categoria — comum, cartão ou combustível — pode ser editada no ☰ → <b>Categorias</b>.</p>')
+      +bloco('Como cadastrar cartão ou abastecimento?',
+        '<p><b>Cartão:</b> na aba Cartões, use "Adicionar cartão" (ou ☰ → Categorias → Nova, tipo <b>Cartão</b>). Em seguida, "Adicionar fatura" cria cada mês/parcela. A fatura não paga torna-se a "atual".</p>'
+        +'<p><b>Abastecimento:</b> na aba Abastecimento, preencha o formulário. Ao informar valor e preço por litro, os litros são calculados automaticamente. O valor é somado ao limite do mês.</p>'
+        +'<p>Toda categoria pode ser editada em ☰ → <b>Categorias</b>.</p>')
 
-      +bloco('Para que serve o teto?',
-        '<p>Para o que não tem boleto: combustível é o caso principal. Você define um <b>teto por mês</b> na categoria e a aba de Abastecimento mostra o quanto já foi e quanto ainda cabe.</p>'
-        +'<p>Deixar o teto em <b>0</b> ou vazio desliga o controle.</p>')
+      +bloco('Para que serve o limite?',
+        '<p>Para gastos sem boleto — combustível é o caso principal. Define-se um <b>limite mensal</b> na categoria, e a aba de Abastecimento mostra o quanto já foi gasto e o disponível.</p>'
+        +'<p>Limite <b>0</b> ou vazio desativa o controle.</p>')
 
       +bloco('Como funcionam os vencimentos?',
-        '<p>Cada conta tem a sua data. A categoria pode ter um <b>dia fixo</b> (no lápis, em "Dia do vencimento") — é ele que o app usa quando você toca no botão <b>↺</b> para adiar uma conta para o mês seguinte.</p>'
-        +'<p>Sem dia fixo, adiar joga a conta um mês à frente a partir da data que ela tinha.</p>')
+        '<p>Cada conta possui sua data. A categoria pode ter um <b>dia fixo</b> (em "Dia do vencimento") — usado ao tocar em <b>↺</b> para adiar a conta ao mês seguinte.</p>'
+        +'<p>Sem dia fixo, adiar move a conta um mês à frente a partir da data original.</p>')
 
       +bloco('O que é a aba '+rz+'?',
-        '<p>Um espaço separado para o dinheiro que você <b>guarda</b>: um objetivo, uma data-alvo, os marcos até lá e as <b>conferências de saldo</b> — a anotação de quanto havia na conta em cada data.</p>'
-        +'<p>É uma aba fixa. Se quiser outro nome (reserva, poupança, metas), troque no menu ☰ → Este app.</p>')
+        '<p>Espaço dedicado à reserva financeira: objetivo, prazo, marcos e <b>histórico de saldo</b> — o registro do saldo apurado em cada data.</p>'
+        +'<p>É uma aba fixa. Para alterar o nome, use ☰ → Aplicativo.</p>')
 
-      +bloco('E quando o mês acaba?',
-        '<p>Menu ☰ → <b>Períodos</b> → "Fechar e começar um novo". Tudo o que está na tela é guardado inteiro e a mesa fica limpa para o período seguinte.</p>'
-        +'<p>Nada é apagado: os períodos guardados ficam listados ali e podem voltar a qualquer momento pelo <b>Restaurar</b>.</p>')
+      +bloco('E ao fim do mês?',
+        '<p>☰ → <b>Períodos</b> → "Encerrar e iniciar novo". Os dados atuais são arquivados integralmente e a tela é preparada para o próximo período.</p>'
+        +'<p>Nada é excluído: os períodos arquivados ficam listados e podem ser restaurados a qualquer momento.</p>')
 
-      +bloco('Dá para virar um aplicativo no celular?',
-        '<p>Sim, e não precisa instalar nada de loja nenhuma. Com o app aberto no navegador do celular:</p>'
-        +'<ul><li><b>iPhone (Safari):</b> botão de compartilhar (o quadradinho com a seta) → <b>Adicionar à Tela de Início</b>.</li>'
-        +'<li><b>Android (Chrome):</b> menu de três pontinhos → <b>Adicionar à tela inicial</b>.</li></ul>'
-        +'<p>Ele passa a abrir em tela cheia, com ícone próprio, como qualquer outro aplicativo. Os dados continuam sendo os mesmos.</p>')
+      +bloco('É possível instalar como aplicativo?',
+        '<p>Sim, sem loja de aplicativos. Com o app aberto no navegador do celular:</p>'
+        +'<ul><li><b>iPhone (Safari):</b> botão de compartilhar → <b>Adicionar à Tela de Início</b>.</li>'
+        +'<li><b>Android (Chrome):</b> menu (⋮) → <b>Adicionar à tela inicial</b>.</li></ul>'
+        +'<p>O app passa a abrir em tela cheia, com ícone próprio. Os dados permanecem os mesmos.</p>')
 
       +'<div class="modal-foot"><button class="btn-ghost" data-cancel>Fechar</button></div></div>';
     var ov=buildOverlay(html);
@@ -5520,25 +5523,25 @@ body.com-teclado .app{padding-bottom:56vh;}
     var lista = arquivos.length
       ? '<div class="arq-lista">'+arquivos.map(function(a){
           return '<div class="arq-item"><div class="arq-id"><b>'+esc(a.nome)+'</b>'
-            +'<span class="hint">'+contaArquivo(a)+' · guardado em '+fmtDate(a.em)+'</span></div>'
+            +'<span class="hint">'+contaArquivo(a)+' · arquivado em '+fmtDate(a.em)+'</span></div>'
             +'<div class="arq-acoes">'
             +'<button class="btn-ghost sm" data-arq="restaurar" data-id="'+esc(a.id)+'">Restaurar</button>'
             +'<button class="btn-ghost sm" data-arq="baixar" data-id="'+esc(a.id)+'" title="Baixar como arquivo .json">'+svg(IC.save,14)+'</button>'
             +'<button class="icon-btn danger" data-arq="remover" data-id="'+esc(a.id)+'" aria-label="'+esc('Apagar '+a.nome)+'">'+SVG_TRASH+'</button>'
             +'</div></div>'; }).join('')+'</div>'
-      : '<div class="tcc-vazio"><p>Nenhum período guardado ainda.</p>'
-        +'<span class="hint">Ao fechar um período, ele vem para cá inteiro e pode voltar quando você quiser.</span></div>';
+      : '<div class="tcc-vazio"><p>Nenhum período arquivado.</p>'
+        +'<span class="hint">Ao encerrar um período, ele é arquivado aqui e pode ser restaurado a qualquer momento.</span></div>';
     var html='<div class="modal" role="dialog" aria-modal="true">'
       +'<div class="modal-head"><h2>Períodos</h2><button class="icon-btn" data-x aria-label="Fechar">'+svg(IC.x)+'</button></div>'
-      +'<div class="field"><label for="arq_nome">Fechar o período atual como</label>'
+      +'<div class="field"><label for="arq_nome">Nome do período a arquivar</label>'
         +'<input id="arq_nome" maxlength="60" value="'+esc(periodoSugerido())+'" placeholder="Ex.: agosto/2026"'
         +(vivo?'':' disabled')+'>'
         +'<span class="hint">'+(vivo
-            ? 'As categorias, os lançamentos e a reserva saem da tela e ficam guardados aqui. Depois é só restaurar.'
-            : 'Não há nada para guardar: o período atual está vazio.')+'</span></div>'
+            ? 'As categorias, os lançamentos e a reserva são arquivados e podem ser restaurados depois.'
+            : 'O período atual está vazio.')+'</span></div>'
       +'<div class="arq-fechar"><button class="btn-wine" id="arq_go"'+(vivo?'':' disabled')+'>'
-        +svg(IC.check,15)+' Fechar e começar um novo</button></div>'
-      +'<div class="pref-sep" role="separator"><span>Guardados</span></div>'
+        +svg(IC.check,15)+' Encerrar e iniciar novo</button></div>'
+      +'<div class="pref-sep" role="separator"><span>Arquivados</span></div>'
       +lista
       +'<div class="modal-foot"><button class="btn-ghost" data-cancel>Fechar</button></div></div>';
     var ov=buildOverlay(html);
@@ -5583,37 +5586,37 @@ body.com-teclado .app{padding-bottom:56vh;}
     }
 
     var corpo = sup
-      ? '<p class="hint2">Você escolhe um arquivo <b>.json</b> uma única vez e o app passa a gravar nele a cada mudança — sem exportar nada. Ao reabrir, ele lê esse mesmo arquivo.</p>'
-        +'<p class="hint2">Dica: salve o arquivo dentro da pasta do <b>Google Drive</b>, <b>OneDrive</b> ou <b>Dropbox</b> do seu computador. Assim os dados sincronizam entre seus aparelhos sozinhos.</p>'
-        +'<p class="hint2">O navegador pode pedir sua autorização uma vez por sessão — é uma proteção dele. Evite deixar o app aberto em duas abas ao mesmo tempo, porque a última a gravar vence.</p>'
-      : '<p class="hint2">Neste navegador não dá para gravar direto em um arquivo seu — isso funciona no <b>Chrome</b>, <b>Edge</b> ou <b>Opera</b> <b>no computador</b>. Em celular, nenhum navegador permite.</p>'
-        +'<p class="hint2">Por aqui os dados ficam salvos <b>neste navegador</b> e não somem ao fechar. Para levar para outro aparelho, use a cópia de segurança aí em cima.</p>';
+      ? '<p class="hint2">Selecione um arquivo <b>.json</b> uma vez e o app passa a gravar nele a cada alteração, sem necessidade de exportar. Na reabertura, lê o mesmo arquivo.</p>'
+        +'<p class="hint2">Salve o arquivo em uma pasta do <b>Google Drive</b>, <b>OneDrive</b> ou <b>Dropbox</b> para sincronizar entre dispositivos automaticamente.</p>'
+        +'<p class="hint2">O navegador pode solicitar autorização uma vez por sessão. Evite manter o app aberto em duas abas simultaneamente — a última gravação prevalece.</p>'
+      : '<p class="hint2">Este navegador não permite gravar diretamente em arquivo. O recurso funciona em <b>Chrome</b>, <b>Edge</b> ou <b>Opera</b> no computador. Não disponível em celular.</p>'
+        +'<p class="hint2">Os dados ficam salvos <b>neste navegador</b>. Para transferir a outro dispositivo, utilize o backup acima.</p>';
 
     var drive='<div class="fdrive"><b>Abrir no celular</b>'
-      +'<p class="hint2">Se você tem o app como <b>arquivo</b> e quer abri-lo no celular: o Google Drive não executa páginas HTML, então é preciso publicá-lo em um link. Em <b>app.netlify.com/drop</b>, arraste o arquivo <b>.html</b> e ele devolve um endereço para abrir em qualquer aparelho.</p>'
-      +'<p class="hint2">Cada aparelho guarda os próprios dados. Para passar de um para outro, use a cópia de segurança lá em cima.</p></div>';
+      +'<p class="hint2">Para abrir o app (arquivo) no celular: o Google Drive não executa páginas HTML, sendo necessário publicá-lo em um link. Em <b>app.netlify.com/drop</b>, arraste o arquivo <b>.html</b> para obter um endereço acessível em qualquer dispositivo.</p>'
+      +'<p class="hint2">Cada dispositivo mantém os próprios dados. Para transferir, utilize o backup acima.</p></div>';
 
     var sync;
     var conectado = !!(syncToken && gistId);
     if(conectado && syncState==='erro'){
-      sync='<div class="fstat warn">'+svg(IC.alert,14)+' <span>Não consegui sincronizar agora.<br>'+esc(syncMsg)+'</span></div>'
-        +'<p class="hint2">Suas alterações continuam salvas neste aparelho. Assim que a conexão voltar, use <b>Tentar de novo</b> — nada se perde no meio do caminho.</p>'
-        +'<div class="fileacts"><button class="btn-wine" data-syncpush>'+svg(IC.sync,15)+' Tentar de novo</button>'
+      sync='<div class="fstat warn">'+svg(IC.alert,14)+' <span>Falha na sincronização.<br>'+esc(syncMsg)+'</span></div>'
+        +'<p class="hint2">As alterações permanecem salvas neste dispositivo. Ao restabelecer a conexão, use <b>Tentar novamente</b>.</p>'
+        +'<div class="fileacts"><button class="btn-wine" data-syncpush>'+svg(IC.sync,15)+' Tentar novamente</button>'
         +'<button class="btn-ghost" data-syncpull>'+svg(IC.down,15)+' Baixar da nuvem</button>'
         +'<button class="btn-ghost" data-syncoff>Desconectar</button></div>';
     } else if(conectado && syncState==='on'){
-      sync='<div class="fstat ok">'+svg(IC.check,14)+' <span>Sincronizando com o GitHub'
+      sync='<div class="fstat ok">'+svg(IC.check,14)+' <span>Sincronizado com o GitHub'
         +(syncAt?'. Última vez: <b>'+esc(quandoTxt(syncAt))+'</b>':'')+'.</span></div>'
-        +'<p class="hint2">Tudo que você mudar aqui aparece nos seus outros aparelhos. Para ligar em outro aparelho, cole o mesmo token lá — ele acha esta cópia sozinho.</p>'
+        +'<p class="hint2">As alterações são refletidas nos demais dispositivos. Para conectar outro dispositivo, informe o mesmo token.</p>'
         +'<div class="fileacts"><button class="btn-ghost" data-syncpush>'+svg(IC.up,15)+' Enviar agora</button>'
         +'<button class="btn-ghost" data-syncpull>'+svg(IC.down,15)+' Baixar da nuvem</button>'
         +'<button class="btn-ghost" data-syncoff>Desconectar</button></div>';
     } else if(conectado && syncState==='conflito'){
-      sync='<div class="fstat warn">'+svg(IC.alert,14)+' <span>Este aparelho e a nuvem foram alterados separadamente. Escolha qual vale — a outra versão será substituída.</span></div>'
-        +'<div class="fileacts"><button class="btn-wine" data-syncpull>'+svg(IC.down,15)+' Usar a da nuvem</button>'
-        +'<button class="btn-ghost" data-syncforce>'+svg(IC.up,15)+' Usar a deste aparelho</button></div>';
+      sync='<div class="fstat warn">'+svg(IC.alert,14)+' <span>Este dispositivo e a nuvem foram alterados separadamente. Selecione a versão a manter — a outra será substituída.</span></div>'
+        +'<div class="fileacts"><button class="btn-wine" data-syncpull>'+svg(IC.down,15)+' Usar versão da nuvem</button>'
+        +'<button class="btn-ghost" data-syncforce>'+svg(IC.up,15)+' Usar versão local</button></div>';
     } else {
-      sync='<p class="hint2">Cole um token do GitHub para os dados viajarem entre o computador e o celular sozinhos. Sem isso, dá para levar na mão em <b>Cópia de segurança</b>, mais acima.</p>'
+      sync='<p class="hint2">Informe um token do GitHub para sincronizar os dados entre dispositivos. Alternativamente, utilize o backup manual acima.</p>'
         +(syncState==='erro'?'<div class="fstat warn">'+svg(IC.alert,14)+' <span>'+esc(syncMsg)+'</span></div>':'')
         +'<div class="field"><label for="sync_tok">Token do GitHub</label>'
         +'<input id="sync_tok" type="password" placeholder="ghp_…" autocomplete="off"></div>'
@@ -5624,39 +5627,39 @@ body.com-teclado .app{padding-bottom:56vh;}
         +'<li>No fim do menu da esquerda: <b>Developer settings</b>.</li>'
         +'<li><b>Personal access tokens</b> → <b>Tokens (classic)</b>.</li>'
         +'<li>Botão <b>Generate new token</b> → <b>Generate new token (classic)</b>.</li>'
-        +'<li>Em <b>Note</b> escreva algo como "contas" e escolha a validade em <b>Expiration</b>.</li>'
+        +'<li>Em <b>Note</b>, informe um nome (ex.: "contas") e defina a validade em <b>Expiration</b>.</li>'
         +'<li>Na lista de caixinhas, marque <b>somente</b> <code>gist</code>. Nenhuma outra.</li>'
         +'<li>Role até o fim → <b>Generate token</b> → copie. Começa com <code>ghp_</code> e o GitHub só mostra uma vez.</li></ol>'
-        +'<p class="hint2"><b>Precisa ser o clássico.</b> Os <i>Fine-grained tokens</i>, que aparecem primeiro na tela, ainda não oferecem permissão de Gists. Marcando só <code>gist</code> no clássico, o token fica igualmente restrito: alcança seus gists e nada mais.</p>'
-        +'<p class="hint2">O token fica guardado só neste aparelho e nunca entra na cópia de segurança. Se perder o celular, dá para revogá-lo no GitHub com um clique.</p></details>';
+        +'<p class="hint2"><b>Precisa ser o clássico.</b> Os <i>Fine-grained tokens</i>, que aparecem primeiro na tela, ainda não oferecem permissão de Gists. Marcando apenas <code>gist</code> no clássico, o token fica restrito aos gists.</p>'
+        +'<p class="hint2">O token é armazenado apenas neste dispositivo e não é incluído no backup. Pode ser revogado no GitHub a qualquer momento.</p></details>';
     }
 
     /* A cópia de segurança vem PRIMEIRO: é a única coisa aqui que qualquer
        pessoa consegue fazer, e é a que protege os dados. */
     var d=diasDesde(backupEm);
     var estadoBkp = d==null
-      ? '<div class="fstat warn">'+svg(IC.alert,14)+' <span>Você ainda não guardou nenhuma cópia destes dados.</span></div>'
+      ? '<div class="fstat warn">'+svg(IC.alert,14)+' <span>Nenhum backup realizado.</span></div>'
       : (d>=DIAS_LEMBRETE
-        ? '<div class="fstat warn">'+svg(IC.alert,14)+' <span>Sua última cópia é de <b>'+d+' dias</b> atrás.</span></div>'
-        : '<div class="fstat ok">'+svg(IC.check,14)+' <span>Última cópia: <b>'+(d===0?'hoje':(d===1?'ontem':'há '+d+' dias'))+'</b>.</span></div>');
+        ? '<div class="fstat warn">'+svg(IC.alert,14)+' <span>Último backup há <b>'+d+' dias</b>.</span></div>'
+        : '<div class="fstat ok">'+svg(IC.check,14)+' <span>Último backup: <b>'+(d===0?'hoje':(d===1?'ontem':'há '+d+' dias'))+'</b>.</span></div>');
 
     var html='<div class="modal" role="dialog" aria-modal="true">'
-      +'<div class="modal-head"><h2>Seus dados</h2><button class="icon-btn" data-x aria-label="Fechar">'+svg(IC.x)+'</button></div>'
-      +'<p>Tudo o que você registra fica guardado <b>só neste navegador</b>. É rápido e privado — mas se você limpar o navegador, trocar de celular ou perder o aparelho, <b>some</b>. Baixar uma cópia de vez em quando resolve isso.</p>'
+      +'<div class="modal-head"><h2>Dados e backup</h2><button class="icon-btn" data-x aria-label="Fechar">'+svg(IC.x)+'</button></div>'
+      +'<p>Os dados ficam armazenados <b>apenas neste navegador</b> — rápido e privado, mas perdidos ao limpar o navegador ou trocar de aparelho. Faça backup periodicamente.</p>'
       +estadoBkp
-      +'<div class="fileacts"><button class="btn-wine" data-exportar>'+svg(IC.down,15)+' Baixar uma cópia</button>'
-      +'<button class="btn-ghost" data-importar>'+svg(IC.up,15)+' Restaurar de uma cópia</button></div>'
-      +'<p class="hint2">A cópia é um arquivo com tudo: categorias, contas, entradas, gastos avulsos e a reserva. Serve também para levar para outro aparelho — baixe aqui, mande para você mesma e use <b>Restaurar</b> lá.</p>'
+      +'<div class="fileacts"><button class="btn-wine" data-exportar>'+svg(IC.down,15)+' Fazer backup</button>'
+      +'<button class="btn-ghost" data-importar>'+svg(IC.up,15)+' Restaurar backup</button></div>'
+      +'<p class="hint2">O backup é um arquivo com tudo: categorias, contas, receitas, gastos avulsos e a reserva. Também serve para transferir para outro dispositivo — exporte aqui e use <b>Restaurar</b> no destino.</p>'
       +'<details class="fadv"><summary>Modos automáticos <span class="hint">(avançado)</span></summary>'
-        +'<p class="hint2">Os dois modos abaixo mantêm a cópia sempre em dia sozinhos, sem você precisar lembrar. Exigem algum preparo — se não quiser mexer, a cópia manual acima já protege seus dados.</p>'
-        +'<h3 class="fsec">Sincronizar entre aparelhos <span class="hint">— precisa de conta no GitHub</span></h3>'+sync
-        +(sup ? ('<h3 class="fsec">Gravar direto num arquivo <span class="hint">— só no computador</span></h3>'
+        +'<p class="hint2">Os modos abaixo mantêm o backup atualizado automaticamente. Exigem configuração inicial — o backup manual acima já protege os dados.</p>'
+        +'<h3 class="fsec">Sincronizar entre dispositivos <span class="hint">— requer conta no GitHub</span></h3>'+sync
+        +(sup ? ('<h3 class="fsec">Gravar em arquivo <span class="hint">— apenas no computador</span></h3>'
                 +estado+corpo+(acoes?'<div class="fileacts">'+acoes+'</div>':''))
               : '')
         +drive
       +'</details>'
-      +'<div class="zona-risco"><div><b>Começar do zero</b>'
-        +'<span class="hint">Apaga todas as categorias, contas, entradas, gastos avulsos e a reserva deste navegador. Os períodos guardados também. Não dá para desfazer.</span></div>'
+      +'<div class="zona-risco"><div><b>Redefinir</b>'
+        +'<span class="hint">Exclui todas as categorias, contas, receitas, gastos avulsos, a reserva e os períodos arquivados deste navegador. Ação irreversível.</span></div>'
         +'<button class="btn-danger" data-apagartudo>'+SVG_TRASH+' Apagar tudo</button></div>'
       +'<div class="modal-foot"><button class="btn-ghost" data-cancel>Fechar</button></div></div>';
 
