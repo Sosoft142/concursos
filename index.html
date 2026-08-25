@@ -157,8 +157,6 @@ thead th.sortable{cursor:pointer;}
   clip:rect(0 0 0 0); white-space:nowrap; border:0;}
 .th-btn{border:0; background:none; color:inherit; font:inherit; padding:0; cursor:pointer;
   display:inline-flex; align-items:center; gap:4px; text-transform:inherit; letter-spacing:inherit;}
-.gbar{border:0; font:inherit; cursor:pointer; padding:0;}
-.gbar:focus-visible{outline:2px solid var(--ink); outline-offset:1px;}
 .sort-ar{font-size:10px;}
 tbody td{padding:12px 14px; border-bottom:1px solid var(--line); font-size:14px; vertical-align:middle;}
 tbody tr:last-child td{border-bottom:0;}
@@ -654,61 +652,6 @@ body.com-teclado .app{padding-bottom:56vh;}
 .app.dark .tcc-prog{background:#3f3a34;}
 .tcc-prog > span{display:block; height:100%; border-radius:999px; background:#4E8C48; transition:width .3s;}
 
-/* ---- cronograma: barras (gantt) ---- */
-.gantt{border:1.5px solid var(--line); border-radius:12px; background:var(--card); overflow:hidden;}
-.gantt-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
-.gantt-in{min-width:520px;}
-.grow{display:flex; align-items:stretch; border-top:1px solid var(--line);}
-.grow:first-child{border-top:0;}
-.gcell-l{width:172px; flex:none; padding:9px 11px; border-right:1px solid var(--line);
-  background:var(--card); position:sticky; left:0; z-index:2;}
-.grow:not(.ghead) .gcell-l{cursor:pointer;}
-.grow:not(.ghead) .gcell-l:hover{background:var(--hover);}
-.gcell-l:focus-visible{outline:2px solid var(--wine-fg); outline-offset:-2px;}
-.gname{font-size:13px; line-height:1.35; display:flex; align-items:center; gap:7px;}
-.gname .gdot{width:8px; height:8px; border-radius:50%; flex:none;}
-.gwhen{display:block; font-family:var(--mono); font-size:10.5px; color:var(--faint); margin-top:2px; padding-left:15px;}
-.gtrack{flex:1; position:relative; min-width:340px; padding:11px 0; overflow:hidden;}
-.gbar{position:absolute; top:50%; transform:translateY(-50%); height:16px; border-radius:8px;
-  min-width:8px; display:flex; align-items:center; overflow:hidden;}
-.gbar span{font-size:10.5px; color:#fff; padding:0 7px; white-space:nowrap; min-width:0;
-  overflow:hidden; text-overflow:ellipsis; text-shadow:0 1px 2px rgba(0,0,0,.25);}
-.gsem{position:absolute; top:50%; transform:translateY(-50%); font-size:11px; color:var(--faint);
-  left:10px; font-style:italic;}
-.ghead{background:var(--chipn); font-size:11px; color:var(--ink-soft);}
-.app.dark .ghead{background:#221e19;}
-.ghead .gcell-l{background:var(--chipn); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--faint);}
-.app.dark .ghead .gcell-l{background:#221e19;}
-.ghead .gcell-l{display:flex; align-items:flex-end;}
-.gmeses{flex:1; display:flex; min-width:340px; position:relative;}
-.gmes{flex:1; padding:17px 0 7px; text-align:center; border-left:1px solid var(--line); font-size:11px;
-  text-transform:uppercase; letter-spacing:.04em; white-space:nowrap; overflow:hidden;}
-.gmes:first-child{border-left:0;}
-.gsep{position:absolute; top:0; bottom:0; width:1px; background:var(--line); opacity:.55; pointer-events:none;}
-.ghoje{position:absolute; top:0; bottom:0; width:2px; background:#A23A3A; opacity:.75; pointer-events:none; z-index:1;}
-.ghead .ghoje::after{content:"hoje"; position:absolute; top:2px; left:4px; font-size:9.5px; color:#A23A3A;
-  font-family:var(--mono); letter-spacing:.02em; padding:0 3px; white-space:nowrap;}
-.app.dark .ghead .ghoje::after{background:#221e19;}
-.app.dark .ghoje{background:#d9958d;}
-.app.dark .ghead .ghoje::after{color:#d9958d;}
-.grow.late .gcell-l .gname{color:#A23A3A;}
-.grow.fora-do-prazo .gcell-l{box-shadow:inset -3px 0 0 #C98A2B;}
-.grow.fora-do-prazo .gwhen::after{content:" · passa do prazo"; color:#8A5B10;}
-.app.dark .grow.fora-do-prazo .gwhen::after{color:#cca65c;}
-.app.dark .grow.late .gcell-l .gname{color:#d9958d;}
-.grow:hover .gcell-l{background:var(--hover);}
-
-/* barra sem uma das pontas: listrada, para não fingir prazo que não existe */
-.gbar.aberta{background-image:repeating-linear-gradient(115deg,rgba(255,255,255,.28) 0 5px,transparent 5px 11px);}
-/* No escuro a barra é clara, então o rótulo inverte: texto branco sobre um
-   pastel some, e um preenchimento escuro o bastante para o branco não se
-   separaria do fundo da página. */
-.app.dark .gbar span{color:#1b1713; text-shadow:none; font-weight:500;}
-.app.dark .gbar.aberta{background-image:repeating-linear-gradient(115deg,rgba(27,23,19,.30) 0 5px,transparent 5px 11px);}
-.crono-aviso{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink-soft);
-  border:1.5px dashed var(--line); border-radius:11px; padding:10px 13px; margin-bottom:10px;}
-.crono-aviso svg{flex:none; opacity:.7;}
-
 /* ---- cronograma: lista ---- */
 .elist{display:flex; flex-direction:column; gap:9px;}
 .eitem{display:flex; align-items:flex-start; gap:11px; border:1.5px solid var(--line); border-radius:12px;
@@ -763,11 +706,6 @@ body.com-teclado .app{padding-bottom:56vh;}
 .tcc-vazio .acoes{display:flex; gap:9px; justify-content:center; flex-wrap:wrap;}
 
 @media (max-width:950px){
-  .gcell-l{width:118px; padding:8px 9px;}
-  .gname{font-size:12px;}
-  .gwhen{padding-left:0;}
-  .gantt-in{min-width:420px;}
-  .gtrack, .gmeses{min-width:300px;}
   .prazo{flex-wrap:wrap;}
   .prazo-n{font-size:22px;}
   .tcc-sh .dir{margin-left:0; width:100%;}
@@ -1493,7 +1431,6 @@ body.com-teclado .app{padding-bottom:56vh;}
   }
   var MES_NOME=['janeiro','fevereiro','março','abril','maio','junho','julho',
                 'agosto','setembro','outubro','novembro','dezembro'];
-  var MES_CURTO=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
   function mesDe(iso){ return String(iso||'').slice(0,7); }
   function mesLabel(ym){
     var m=/^(\d{4})-(\d{2})$/.exec(ym||''); if(!m) return '';
@@ -1520,16 +1457,6 @@ body.com-teclado .app{padding-bottom:56vh;}
          função inteira. Sem ela o app abre vazio, com a tela de
          boas-vindas e o exemplo fictício. <<<
      ============================================================ */
-  /* ============================================================
-     MEUS_DADOS — conteúdo inicial deste aparelho, montado a partir do
-     caderno de contas de 20/08/2026. Só é usado quando NÃO existe nada
-     salvo no navegador; a partir da primeira alteração, quem manda é o
-     que está gravado.
-
-     >>> Se for compartilhar este arquivo com outra pessoa, APAGUE esta
-         função inteira. Sem ela o app abre vazio, com a tela de
-         boas-vindas e o exemplo fictício. <<<
-     ============================================================ */
   function MEUS_DADOS(){ return {
   "cfg": {
     "titulo": "Organizador de Contas",
@@ -1546,18 +1473,6 @@ body.com-teclado .app{padding-bottom:56vh;}
       "instituicao": "",
       "teto": 0,
       "obs": "confira o dia de cada assinatura",
-      "meta": false,
-      "tipo": "",
-      "avulsos": []
-    },
-    {
-      "id": "c-sau",
-      "name": "Saúde",
-      "color": "#A0446E",
-      "diaVenc": 10,
-      "instituicao": "",
-      "teto": 0,
-      "obs": "",
       "meta": false,
       "tipo": "",
       "avulsos": []
@@ -1891,207 +1806,6 @@ body.com-teclado .app{padding-bottom:56vh;}
       "valor": 400,
       "tags": [
         "aporte"
-      ]
-    },
-    {
-      "id": "l-sau-00",
-      "catId": "c-sau",
-      "name": "Plano de saúde",
-      "venc": "2026-09-10",
-      "valor": 640,
-      "tags": [
-        "consultas"
-      ]
-    },
-    {
-      "id": "l-sau-01",
-      "catId": "c-sau",
-      "name": "Psicóloga",
-      "venc": "2026-09-10",
-      "valor": 240,
-      "tags": [
-        "consultas"
-      ]
-    },
-    {
-      "id": "l-sau-02",
-      "catId": "c-sau",
-      "name": "Psiquiatra",
-      "venc": "2026-09-10",
-      "valor": 180,
-      "tags": [
-        "consultas"
-      ]
-    },
-    {
-      "id": "l-sau-03",
-      "catId": "c-sau",
-      "name": "Fonoaudióloga",
-      "venc": "2026-09-10",
-      "valor": 400,
-      "tags": [
-        "consultas"
-      ]
-    },
-    {
-      "id": "l-sau-0E",
-      "catId": "c-sau",
-      "name": "Endocrinologista",
-      "venc": "2026-09-10",
-      "valor": 166.67,
-      "tags": [
-        "consultas"
-      ],
-      "notes": "R$500 a cada 3 meses — aqui está o valor mensal equivalente."
-    },
-    {
-      "id": "l-sau-10",
-      "catId": "c-sau",
-      "name": "Plano de saúde",
-      "venc": "2026-10-10",
-      "valor": 640,
-      "tags": [
-        "consultas"
-      ]
-    },
-    {
-      "id": "l-sau-11",
-      "catId": "c-sau",
-      "name": "Psicóloga",
-      "venc": "2026-10-10",
-      "valor": 240,
-      "tags": [
-        "consultas"
-      ]
-    },
-    {
-      "id": "l-sau-12",
-      "catId": "c-sau",
-      "name": "Psiquiatra",
-      "venc": "2026-10-10",
-      "valor": 180,
-      "tags": [
-        "consultas"
-      ]
-    },
-    {
-      "id": "l-sau-13",
-      "catId": "c-sau",
-      "name": "Fonoaudióloga",
-      "venc": "2026-10-10",
-      "valor": 400,
-      "tags": [
-        "consultas"
-      ]
-    },
-    {
-      "id": "l-sau-1E",
-      "catId": "c-sau",
-      "name": "Endocrinologista",
-      "venc": "2026-10-10",
-      "valor": 166.67,
-      "tags": [
-        "consultas"
-      ],
-      "notes": "R$500 a cada 3 meses — aqui está o valor mensal equivalente."
-    },
-    {
-      "id": "l-rem-0",
-      "catId": "c-sau",
-      "name": "Estradiol",
-      "venc": "2026-09-05",
-      "valor": 300,
-      "tags": [
-        "remédios"
-      ],
-      "notes": "Repete todo mês. 6 mg por dia"
-    },
-    {
-      "id": "l-rem-1",
-      "catId": "c-sau",
-      "name": "Espironolactona",
-      "venc": "2026-09-05",
-      "valor": 50,
-      "tags": [
-        "remédios"
-      ],
-      "notes": "Repete todo mês."
-    },
-    {
-      "id": "l-rem-2",
-      "catId": "c-sau",
-      "name": "Puran",
-      "venc": "2026-09-05",
-      "valor": 20,
-      "tags": [
-        "remédios"
-      ],
-      "notes": "Repete todo mês."
-    },
-    {
-      "id": "l-rem-3",
-      "catId": "c-sau",
-      "name": "Venlafaxina 75 mg",
-      "venc": "2026-09-05",
-      "valor": null,
-      "tags": [
-        "remédios"
-      ],
-      "notes": "Repete todo mês. valor a preencher"
-    },
-    {
-      "id": "l-rem-4",
-      "catId": "c-sau",
-      "name": "Venlafaxina 150 mg",
-      "venc": "2026-09-05",
-      "valor": null,
-      "tags": [
-        "remédios"
-      ],
-      "notes": "Repete todo mês. valor a preencher"
-    },
-    {
-      "id": "l-rem-5",
-      "catId": "c-sau",
-      "name": "Quetiapina",
-      "venc": "2026-09-05",
-      "valor": null,
-      "tags": [
-        "remédios"
-      ],
-      "notes": "Repete todo mês. valor a preencher"
-    },
-    {
-      "id": "l-rem-6",
-      "catId": "c-sau",
-      "name": "Bilastina",
-      "venc": "2026-09-05",
-      "valor": null,
-      "tags": [
-        "remédios"
-      ],
-      "notes": "Repete todo mês. valor a preencher"
-    },
-    {
-      "id": "l-vac-1",
-      "catId": "c-sau",
-      "name": "Vacina de alergia",
-      "venc": "",
-      "valor": 640,
-      "tags": [
-        "vacinas"
-      ],
-      "priority": "alta",
-      "notes": "R$640 por mês, por 5 meses. Pedir com 1 mês de antecedência."
-    },
-    {
-      "id": "l-vac-2",
-      "catId": "c-sau",
-      "name": "Listar as outras vacinas a tomar",
-      "venc": "",
-      "valor": null,
-      "tags": [
-        "vacinas"
       ]
     },
     {
@@ -2590,7 +2304,7 @@ body.com-teclado .app{padding-bottom:56vh;}
   var metas=null;               // aba Reservas: marcos, conferências e objetivo
   var arquivos=[];              // meses fechados, guardados inteiros
   var view='mes';
-  var cronoModo='gantt';        // 'gantt' | 'lista' — preferência salva
+
   var catAtualId=null, query="", fTag="", sortKey="date", sortDir="asc";
   var soPendentes=false;   // "falta pagar": esconde o que já está pago
   var contornos=true;      // anéis coloridos na entrada e na próxima conta
@@ -3310,7 +3024,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     }
   }
   function saveUI(){
-    try{ localStorage.setItem(UI_KEY, JSON.stringify({cur:catAtualId, sk:sortKey, sd:sortDir, view:view, dark:dark, cent:centavos, tag:fTag, grad:gradiente, crono:cronoModo, pend:soPendentes, anel:contornos, bkp:backupEm, bkpAdiado:lembreteAdiado})); }catch(e){}
+    try{ localStorage.setItem(UI_KEY, JSON.stringify({cur:catAtualId, sk:sortKey, sd:sortDir, view:view, dark:dark, cent:centavos, tag:fTag, grad:gradiente, pend:soPendentes, anel:contornos, bkp:backupEm, bkpAdiado:lembreteAdiado})); }catch(e){}
   }
   function loadUI(){
     try{
@@ -3320,7 +3034,6 @@ body.com-teclado .app{padding-bottom:56vh;}
       if(u.sd==='desc') sortDir='desc';
       /* 'cat' virou legado; qualquer preferência antiga salva nele volta ao Mês. */
       if(['mes','cartoes','abast','metas'].indexOf(u.view)>=0) view=u.view;
-      if(u.crono==='lista'||u.crono==='gantt') cronoModo=u.crono;
       soPendentes=!!u.pend;
       if(typeof u.anel==='boolean') contornos=u.anel;
       if(typeof u.cent==='boolean') centavos=u.cent;
@@ -3514,24 +3227,22 @@ body.com-teclado .app{padding-bottom:56vh;}
   // ---- render: hero ----
   function renderHero(){
     var contas=lancamentos.filter(function(t){ return !ehEntrada(t); });
-    var total=contas.length, pagas=0, aberto=0;
+    var aberto=0, aPagar=0;
     contas.forEach(function(t){
-      if(t.status==='pago') pagas++;
-      var f=faltaDe(t); if(f!=null) aberto+=f;
+      if(t.status==='pago') return;
+      var f=faltaDe(t); if(f!=null){ aberto+=f; aPagar++; }
     });
-    var emDia=0, comVenc=0;
-    var visiveis=categoriasVis();
-    visiveis.forEach(function(s){
-      var st=statusCategoria(s.id);
-      if(st.kind==='none') return;
-      comVenc++; if(st.kind==='ok') emDia++;
-    });
-    var diaTxt = comVenc ? ' · <b>'+emDia+' de '+comVenc+'</b> '+(comVenc===1?'categoria em dia':'categorias em dia') : '';
-    var abertoTxt = aberto>0 ? ' · <b>'+esc(fmtBRL(aberto))+'</b> em aberto' : '';
+    /* Sublinha enxuta: o período (se houver) e a única informação que importa
+       de relance — quanto ainda falta pagar. O resto (contagem de categorias,
+       "categorias em dia") virou ruído depois que a navegação deixou de ser
+       por categoria. */
+    var partes=[];
+    if(appCfg.periodo) partes.push(esc(appCfg.periodo));
+    if(aberto>0) partes.push('<b>'+esc(fmtBRL(aberto))+'</b> em aberto');
+    else partes.push('tudo em dia');
     hero.innerHTML='<div class="hero-line"><span class="hero-ic">'+svg(IC.wallet,22)+'</span><div>'
       +'<h1>'+esc(appCfg.titulo)+'</h1>'
-      +'<p class="sub">'+(appCfg.periodo?esc(appCfg.periodo)+' · ':'')+visiveis.length+' '+(visiveis.length===1?'categoria':'categorias')
-      +' · '+pagas+'/'+total+' contas pagas'+abertoTxt+diaTxt+'</p></div></div>';
+      +'<p class="sub">'+partes.join(' · ')+'</p></div></div>';
   }
 
   function renderCategorias(){
@@ -4500,10 +4211,6 @@ body.com-teclado .app{padding-bottom:56vh;}
     if(e.status==='done' || !e.end) return false;
     var d=dayDiff(e.end); return d!=null && d<0;
   }
-  function marcoPassaDoPrazo(e){
-    if(!metas.prazo || !e.end) return false;
-    return e.end>metas.prazo;
-  }
   function confOrd(){
     return metas.conferencias.slice().sort(function(a,b){
       var ka=a.date||'', kb=b.date||'';
@@ -4518,62 +4225,6 @@ body.com-teclado .app{padding-bottom:56vh;}
   function saldoAtual(){
     var c=ultimaConf();
     return c && c.saldo!=null ? c.saldo : null;
-  }
-  function janelaCrono(){
-    var datas=[];
-    metas.marcos.forEach(function(e){ if(e.start) datas.push(e.start); if(e.end) datas.push(e.end); });
-    if(metas.prazo) datas.push(metas.prazo);
-    datas.push(todayISO());
-    datas=datas.filter(Boolean).sort();
-    var t0=d2n(datas[0]), t1=d2n(datas[datas.length-1]);
-    if(t1<=t0) t1=t0+30*DIA;
-    var pad=Math.max(3*DIA, Math.round((t1-t0)*0.04));
-    t0-=pad; t1+=pad;
-    return {t0:t0, t1:t1, span:t1-t0};
-  }
-  function mesesDe(j){
-    var out=[], d=new Date(j.t0);
-    var cur=Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1);
-    while(cur<=j.t1){
-      var nd=new Date(cur);
-      var prox=Date.UTC(nd.getUTCFullYear(), nd.getUTCMonth()+1, 1);
-      out.push({ini:Math.max(cur,j.t0), fim:Math.min(prox,j.t1),
-        rot:MES_CURTO[nd.getUTCMonth()]+(nd.getUTCMonth()===0?'/'+String(nd.getUTCFullYear()).slice(2):'')});
-      cur=prox;
-      if(out.length>40) break;
-    }
-    return out;
-  }
-  function pctDe(j, ms){ return Math.max(0, Math.min(100, (ms-j.t0)/(j.span+DIA)*100)); }
-  function renderGantt(j){
-    var meses=mesesDe(j);
-    var hoje=pctDe(j, d2n(todayISO()));
-    var head='<div class="grow ghead"><div class="gcell-l">Marco</div><div class="gmeses">'
-      +meses.map(function(m){ return '<div class="gmes">'+esc(m.rot)+'</div>'; }).join('')
-      +'<span class="ghoje" style="left:'+hoje+'%"></span></div></div>';
-    var linhas=marcosOrd().map(function(e){
-      var cfg=ETAPA[e.status]||ETAPA.todo;
-      var late=marcoAtrasado(e), fora=marcoPassaDoPrazo(e);
-      var cor=etapaCor(cfg, late);
-      var ini=e.start||e.end, fim=e.end||e.start;
-      var barra='';
-      if(ini && fim){
-        var a=pctDe(j, d2n(ini)), b=pctDe(j, d2n(fim)+DIA);
-        var aberta=(!e.start||!e.end);
-        barra='<span class="gbar'+(aberta?' aberta':'')+'" style="left:'+a+'%;width:'+Math.max(b-a,1.2)+'%;background:'+cor+'">'
-          +'<span>'+esc(e.name)+(e.valor!=null?' · '+fmtBRL(e.valor):'')+'</span></span>';
-      } else {
-        barra='<span class="gsem">sem data</span>';
-      }
-      var quando = (e.start&&e.end) ? (fmtDate(e.start)+' → '+fmtDate(e.end))
-                 : (e.end ? 'até '+fmtDate(e.end) : (e.start ? 'a partir de '+fmtDate(e.start) : '—'));
-      return '<div class="grow'+(late?' late':'')+(fora?' fora-do-prazo':'')+'">'
-        +'<button type="button" class="gcell-l" data-act="editmarco" data-id="'+esc(e.id)+'">'
-          +'<span class="gname"><span class="gdot" style="background:'+cor+'"></span>'+esc(e.name)+'</span>'
-          +'<span class="gwhen">'+esc(quando)+'</span></button>'
-        +'<div class="gtrack">'+barra+'<span class="gsep" style="left:'+hoje+'%"></span></div></div>';
-    }).join('');
-    return '<div class="gantt"><div class="gantt-scroll"><div class="gantt-in">'+head+linhas+'</div></div></div>';
   }
   function renderMarcosLista(){
     return '<div class="elist">'+marcosOrd().map(function(e){
@@ -4606,10 +4257,7 @@ body.com-teclado .app{padding-bottom:56vh;}
     }
     var done=0; metas.marcos.forEach(function(e){ if(e.status==='done') done++; });
     var pct=Math.round(done/metas.marcos.length*100);
-    var corpo = cronoModo==='gantt' ? renderGantt(janelaCrono()) : renderMarcosLista();
-    var aviso = metas.marcos.some(function(e){ return !e.start && !e.end; })
-      ? '<div class="crono-aviso">'+svg(IC.alert,14)+' Marcos sem data não aparecem nas barras.</div>' : '';
-    return '<div class="tcc-prog"><span style="width:'+pct+'%"></span></div>'+aviso+corpo;
+    return '<div class="tcc-prog"><span style="width:'+pct+'%"></span></div>'+renderMarcosLista();
   }
   function renderConferencias(){
     var lista=confOrd().slice().reverse();
@@ -4694,10 +4342,6 @@ body.com-teclado .app{padding-bottom:56vh;}
     var secMarcos='<div class="tcc-sec"><div class="tcc-sh"><h3>Marcos</h3>'
       +'<span class="conta">'+metas.marcos.length+'</span>'
       +'<div class="dir">'
-        +(metas.marcos.length?'<div class="seg">'
-          +'<button class="'+(cronoModo==='gantt'?'on':'')+'" data-act="crono" data-m="gantt">'+svg(IC.cal,13)+' Barras</button>'
-          +'<button class="'+(cronoModo==='lista'?'on':'')+'" data-act="crono" data-m="lista">'+svg(IC.list,13)+' Lista</button>'
-        +'</div>':'')
         +'<button class="btn-ghost sm" data-act="novomarco">'+svg(IC.plus,14)+' Marco</button>'
       +'</div></div>'+renderMarcos()+'</div>';
     var secConf='<div class="tcc-sec"><div class="tcc-sh"><h3>Conferências de saldo</h3>'
@@ -4760,7 +4404,6 @@ body.com-teclado .app{padding-bottom:56vh;}
     if(act==='marcossugeridos'){ criarMarcosSugeridos(); return; }
     if(act==='novaconf'){ openConfModal(null); return; }
     if(act==='editconf'){ var c=acharConf(id); if(c) openConfModal(c); return; }
-    if(act==='crono'){ cronoModo=el.getAttribute('data-m'); saveUI(); renderMetas(); return; }
     if(act==='editcatmeta'){ var cc=findCat(id); if(cc) openCatModal(cc); return; }
   }
 
