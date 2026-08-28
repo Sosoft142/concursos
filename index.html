@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Organizador de Concursos · V0.16 -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
@@ -91,7 +92,7 @@
 .pane{animation:fade .25s ease}
 .pane>.sec{border-left:0;padding:0 0 6px;margin-top:0}
 .pane>.sec .bsub{margin-bottom:16px}
-.mini-btn.up svg{transform:rotate(180deg)}.rowi-acts{position:absolute;right:8px;top:8px;display:flex;gap:4px;z-index:1}.rowi-acts .mini-btn{width:26px;height:26px}.rowi-acts .mini-btn.del:hover{color:var(--rose);border-color:var(--rose)}.rowi:has(.rowi-acts)>.fld:first-of-type>label{padding-right:100px}
+.mini-btn.up svg{transform:rotate(180deg)}.versao{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.7rem;letter-spacing:.02em;color:var(--faint);background:var(--surface-2);border:1px solid var(--border);padding:2px 7px;border-radius:6px;margin-left:6px}.rowi-acts{position:absolute;right:8px;top:8px;display:flex;gap:4px;z-index:1}.rowi-acts .mini-btn{width:26px;height:26px}.rowi-acts .mini-btn.del:hover{color:var(--rose);border-color:var(--rose)}.rowi:has(.rowi-acts)>.fld:first-of-type>label{padding-right:100px}
 .sec[id$="-notas"]{--sc:var(--teal)}
 .notas{width:100%;min-height:180px;font:inherit;font-size:.9rem;line-height:1.65;background:var(--surface-2);border:1px solid var(--border-strong);color:var(--text);border-radius:var(--radius-sm);padding:14px 15px;resize:vertical}
 .notas:focus{border-color:var(--teal);outline:none}
@@ -335,7 +336,7 @@ Só de cada concurso
 </section>
 <footer>
 <div class="fx">
-<p>Feito para <b>Sofia</b> · Organizador de Concursos DF</p>
+<p>Organizador de Concursos · DF <span class="versao" id="appver"></span></p>
 <p>Atualizado em <b id="upd">–</b> · confira sempre as datas no edital oficial.</p>
 </div>
 </footer>
@@ -348,6 +349,7 @@ Só de cada concurso
    Tudo o que aparece nas três abas vem de DADOS (concursos + matérias).
    DADOS é salvo no navegador e sincronizado no GitHub como um Gist.
    ===================================================================== */
+var APP_VERSAO='0.16';
 var SEED={
 materias:[
 {"id":"lp","n":"Língua Portuguesa","t":["Interpretação de textos","Ortografia e acentuação","Classes de palavras","Concordância nominal e verbal","Regência nominal e verbal","Crase","Pontuação","Coesão e coerência","Emprego e vozes dos verbos","Emprego dos pronomes","Sintaxe da oração","Redação oficial e reescrita (ofícios, comunicados)"],"dica":"teoria 25 min + questões da banca 25 min","mat":[{"t":"resumo","l":"Resumo (PDF)","u":"https://drive.google.com/file/d/1u_OlRzn9XBrvt6EiIk7unhHrQCDDgPWB/view"},{"t":"apostila","l":"Guia TJSP (PDF)","u":"https://www.tjsp.jus.br/Download/EJUS/AVAS/DicasLinguaPortuguesa/DicasLinguaPortuguesa.pdf"},{"t":"video","l":"Videoaulas","u":"https://www.youtube.com/results?search_query=portugues+concurso+gramatica+interpretacao+de+texto"},{"t":"quest","l":"Questões","u":"https://www.estudegratis.com.br/questoes-de-concurso/materia/portugues"}]},
@@ -720,6 +722,12 @@ if(!o.noSync&&typeof agendarSync==='function')agendarSync();
    HELPERS
    ===================================================================== */
 function ic(id){return '<svg viewBox="0 0 24 24"><use href="#'+id+'"/></svg>'}
+/* par de botões subir/descer — mesmo controle em toda lista ordenável */
+function ordBtns(fn,i){
+return '<button type="button" class="mini-btn up" onclick="'+fn+'('+i+',-1)" title="Subir" aria-label="Subir na lista">'+ic('i8')+'</button>'
++'<button type="button" class="mini-btn" onclick="'+fn+'('+i+',1)" title="Descer" aria-label="Descer na lista">'+ic('i8')+'</button>';
+}
+function arrMove(a,i,dir){var j=i+dir;if(j<0||j>=a.length)return false;var t=a[i];a[i]=a[j];a[j]=t;return true}
 function ea(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;')}
 function tx(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function CCT(){return DADOS.concursos||[]}
@@ -751,7 +759,6 @@ function proximo(){var f=futuros();return f.length?f[0]:null}
 var MAT=[],CICLOS={};
 function rebuildMAT(){
 MAT=MT().map(function(m){return {id:m.id,n:m.n,t:m.t||[],dica:m.dica||'teoria + questões da banca',cs:matDe(m.id)}});
-MAT.sort(function(a,b){if(b.cs.length!==a.cs.length)return b.cs.length-a.cs.length;return 0});
 }
 function cicloManual(){var c=DADOS.ciclo;return !!(c&&c.modo==='manual'&&(c.blocos||[]).length)}
 function cicloKey(){return cicloManual()?'manual':faseKey()}
@@ -1116,6 +1123,8 @@ return '<h3 class="bt"><span class="bic">'+ic(icone)+'</span>'+titulo+'</h3>'+(s
 }
 function renderAccs(){
 var el=document.getElementById('acc-list');if(!el)return;
+var abertos={};
+[].forEach.call(el.querySelectorAll('.acc.open'),function(a){abertos[a.id.replace('acc-','')]=1});
 var h='';
 CC().forEach(function(c){
 var cor=corVar(c.cor),secs=secsDe(c),d=c.prova?dto(c.prova):null;
@@ -1133,6 +1142,9 @@ h+='<div class="card acc" id="acc-'+c.id+'" style="border-top:2px solid color-mi
 +'<div class="pnav-row">'
 +pnavHtml(c.id,secs.map(function(s){var si=SECINFO[s.k];return {p:s.k,n:si.n,i:si.i,c:si.c}}))
 +'<div class="acc-tools">'
++'<button class="mini-btn up" onclick="ccMover(\''+c.id+'\',-1)" title="Subir este concurso" aria-label="Subir este concurso">'+ic('i8')+'</button>'
++'<button class="mini-btn" onclick="ccMover(\''+c.id+'\',1)" title="Descer este concurso" aria-label="Descer este concurso">'+ic('i8')+'</button>'
++'<button class="mini-btn" onclick="arqToggle(\''+c.id+'\')" title="Arquivar este concurso" aria-label="Arquivar este concurso">'+ic('i34')+'</button>'
 +'<button class="mini-btn" onclick="edEditar(\''+c.id+'\')" title="Editar este concurso" aria-label="Editar este concurso">'+ic('i28')+'</button>'
 +'<button class="mini-btn" onclick="edRemover(\''+c.id+'\')" title="Remover este concurso" aria-label="Remover este concurso">'+ic('i29')+'</button>'
 +'</div></div>';
@@ -1218,6 +1230,7 @@ el.innerHTML=h||'<div class="pn-empty">Nenhum concurso cadastrado. Use o botão 
 CC().forEach(function(c){
 if((c.cronograma||[]).length)renderTimeline('tl-'+c.id,c.cronograma);
 var s=secsDe(c);if(s.length)paneInit(c.id,s[0].k);
+if(abertos[c.id])toggleConcurso(c.id);
 });
 }
 /* abas do painel de preparação, com contadores do dia */
@@ -1629,6 +1642,7 @@ emRender();
 }
 function emSet(i,k,v){if(EM[i])EM[i][k]=v}
 function emAdd(){EM.push({id:'',n:'',dica:'',t:'',mat:''});emRender()}
+function emMover(i,dir){if(arrMove(EM,i,dir))emRender()}
 function emDel(i){
 var m=EM[i];
 if(m.id){
@@ -1639,9 +1653,10 @@ EM.splice(i,1);emRender();
 }
 function emRender(){
 var h=modalHead('Matérias e tópicos','i0','emFechar()')+'<div class="modal-b">';
-h+=edNota('As matérias alimentam o <b>checklist</b>, o <b>ciclo de estudos</b>, o <b>registro de questões</b> e a aba <b>Comparar</b>. Depois de criar uma matéria, marque-a dentro de cada concurso que a cobra.');
+h+=edNota('As matérias alimentam o <b>checklist</b>, o <b>ciclo de estudos</b>, o <b>registro de questões</b> e a aba <b>Comparar</b>. Depois de criar uma matéria, marque-a dentro de cada concurso que a cobra. <b>A ordem daqui é a ordem do checklist</b> — use as setas para pôr na frente o que você quer ver primeiro.');
 EM.forEach(function(m,i){
-h+='<div class="rowi"><button type="button" class="rm" onclick="emDel('+i+')" title="Remover matéria" aria-label="Remover matéria">'+ic('i29')+'</button>'
+h+='<div class="rowi"><div class="rowi-acts">'+ordBtns('emMover',i)
++'<button type="button" class="mini-btn del" onclick="emDel('+i+')" title="Remover matéria" aria-label="Remover matéria">'+ic('i29')+'</button></div>'
 +fT('Nome da matéria',m.n,'emSet('+i+',\'n\',this.value)','Ex.: Direito Constitucional')
 +fT('Dica do ciclo de estudos',m.dica,'emSet('+i+',\'dica\',this.value)','Ex.: teoria 25 min + questões 25 min')
 +fA('Tópicos (um por linha)',m.t,'emSet('+i+',\'t\',this.value)','',120)
@@ -1703,6 +1718,7 @@ return h;
 }
 function feDeckSet(i,k,v){if(FE.decks[i])FE.decks[i][k]=v;if(k==='c')feLista()}
 function feDeckAdd(){FE.decks.push({id:feNovoDeckId(),n:'',c:'var(--blue)'});feLista()}
+function feDeckMover(i,dir){if(arrMove(FE.decks,i,dir))feLista()}
 function feDeckDel(i){
 var d=FE.decks[i];if(!d)return;
 var n=FE.cards.filter(function(c){return c.d===d.id}).length;
@@ -1736,6 +1752,7 @@ h+='<div class="fe-deck"><span class="sw" style="background:'+ea(d.c)+'"></span>
 +'<span class="nm"><input type="text" value="'+ea(d.n)+'" placeholder="Nome do deck" oninput="feDeckSet('+i+',\'n\',this.value)"/></span>'
 +'<select class="fe-cor" onchange="feDeckSet('+i+',\'c\',this.value)">'+feCorOpts(d.c)+'</select>'
 +'<button class="btn ghost sm fe-open" onclick="feAbrirDeck(\''+d.id+'\')">'+n+' card'+(n===1?'':'s')+ic('i8')+'</button>'
++ordBtns('feDeckMover',i)
 +'<button class="mini-btn" onclick="feDeckDel('+i+')" title="Remover deck" aria-label="Remover deck">'+ic('i29')+'</button></div>';
 });
 h+='<button type="button" class="btn add-row" onclick="feDeckAdd()">'+ic('i30')+'Adicionar deck</button>';
@@ -1863,12 +1880,15 @@ if(!confirm('Remover o grupo “'+(g.n||'sem nome')+'” e os '+(g.itens||[]).le
 FO.splice(gi,1);foRender();
 }
 function foAddI(gi){FO[gi].itens.push({b:'',s:'',u:''});foRender()}
+function foMoverG(i,dir){if(arrMove(FO,i,dir))foRender()}
+function foMoverI(gi,ii,dir){if(arrMove(FO[gi].itens,ii,dir))foRender()}
 function foDelI(gi,ii){FO[gi].itens.splice(ii,1);foRender()}
 function foRender(){
 var h=modalHead('Fontes de concursos','i1','foFechar()')+'<div class="modal-b">';
 h+=edNota('Este é o diretório da aba <b>Concursos</b>. Monte-o do seu jeito: crie grupos (por exemplo “Concursos federais” ou “Blogs que sigo”) e coloque neles os sites que você realmente consulta. Se a descrição de um link ficar vazia, eu mostro o endereço do site.');
 FO.forEach(function(g,gi){
-h+='<div class="rowi"><button type="button" class="rm" onclick="foDelG('+gi+')" title="Remover grupo" aria-label="Remover grupo">'+ic('i29')+'</button>'
+h+='<div class="rowi"><div class="rowi-acts">'+ordBtns('foMoverG',gi)
++'<button type="button" class="mini-btn del" onclick="foDelG('+gi+')" title="Remover grupo" aria-label="Remover grupo">'+ic('i29')+'</button></div>'
 +fT('Nome do grupo',g.n,'foSet('+gi+',\'n\',this.value)','Ex.: Fontes oficiais (GDF)')
 +fT('Descrição curta',g.sub,'foSet('+gi+',\'sub\',this.value)','Ex.: publicações e órgãos do governo')
 +'<div class="fld-row">'
@@ -1876,7 +1896,10 @@ h+='<div class="rowi"><button type="button" class="rm" onclick="foDelG('+gi+')" 
 +'<div class="fld"><label>Cor</label>'+selCor(g.cor||'blue','foSet('+gi+',\'cor\',this.value)')+'</div>'
 +'</div>';
 (g.itens||[]).forEach(function(it,ii){
-h+='<div class="rowi" style="background:var(--surface-2)"><button type="button" class="rm" onclick="foDelI('+gi+','+ii+')" title="Remover link" aria-label="Remover link">'+ic('i29')+'</button>'
+h+='<div class="rowi" style="background:var(--surface-2)"><div class="rowi-acts">'
++'<button type="button" class="mini-btn up" onclick="foMoverI('+gi+','+ii+',-1)" title="Subir" aria-label="Subir na lista">'+ic('i8')+'</button>'
++'<button type="button" class="mini-btn" onclick="foMoverI('+gi+','+ii+',1)" title="Descer" aria-label="Descer na lista">'+ic('i8')+'</button>'
++'<button type="button" class="mini-btn del" onclick="foDelI('+gi+','+ii+')" title="Remover link" aria-label="Remover link">'+ic('i29')+'</button></div>'
 +fT('Nome do site',it.b,'foIt('+gi+','+ii+',\'b\',this.value)','Ex.: PCI Concursos — DF')
 +fT('Descrição',it.s,'foIt('+gi+','+ii+',\'s\',this.value)','deixe vazio para mostrar o endereço')
 +fU('Endereço',it.u,'foIt('+gi+','+ii+',\'u\',this.value)')
@@ -1906,12 +1929,14 @@ function edDocs(){DO=JSON.parse(JSON.stringify(DADOS.docs||[]));doRender()}
 function doFechar(){if(!confirm('Fechar sem salvar os documentos?'))return;DO=null;modalFechar()}
 function doSet(i,k,v){if(DO[i])DO[i][k]=v;if(k==='ic')doRender()}
 function doAdd(){DO.push({n:'',ic:'i15',u:''});doRender()}
+function doMover(i,dir){if(arrMove(DO,i,dir))doRender()}
 function doDel(i){DO.splice(i,1);doRender()}
 function doRender(){
 var h=modalHead('Meus documentos','i16','doFechar()')+'<div class="modal-b">';
 h+=edNota('Atalhos que ficam no alto do painel, na aba <b>Hoje</b>. Servem para o que você abre toda hora: um índice de resumos no Drive, o cronograma, uma planilha de erros, o edital em PDF.');
 DO.forEach(function(d,i){
-h+='<div class="rowi"><button type="button" class="rm" onclick="doDel('+i+')" title="Remover documento" aria-label="Remover documento">'+ic('i29')+'</button>'
+h+='<div class="rowi"><div class="rowi-acts">'+ordBtns('doMover',i)
++'<button type="button" class="mini-btn del" onclick="doDel('+i+')" title="Remover documento" aria-label="Remover documento">'+ic('i29')+'</button></div>'
 +fT('Nome',d.n,'doSet('+i+',\'n\',this.value)','Ex.: Cronograma de estudos')
 +fU('Endereço',d.u,'doSet('+i+',\'u\',this.value)')
 +'<div class="fld"><label>Ícone</label>'+selIc(ICONES_DOC,d.ic||'i15','doSet('+i+',\'ic\',this.value)')+'</div></div>';
@@ -2003,11 +2028,7 @@ ciRender();
 }
 function ciAdd(){CI.blocos.push({mid:'',m:'',d:'',min:MET().blocoMin});ciRender()}
 function ciDel(i){CI.blocos.splice(i,1);ciRender()}
-function ciMover(i,dir){
-var j=i+dir;if(j<0||j>=CI.blocos.length)return;
-var t=CI.blocos[i];CI.blocos[i]=CI.blocos[j];CI.blocos[j]=t;
-ciRender();
-}
+function ciMover(i,dir){if(arrMove(CI.blocos,i,dir))ciRender()}
 function ciCopiar(silencioso){
 var fk=faseKey();
 if(!fk||!CICLOS[fk]){if(!silencioso)alert('Não há ciclo automático para copiar — cadastre um concurso com data de prova.');return}
@@ -2034,8 +2055,7 @@ h+='<div class="fe-row"><span class="fd" style="--dk:var(--teal)">'+(i+1)+'</spa
 }else{
 CI.blocos.forEach(function(b,i){
 h+='<div class="rowi"><div class="rowi-acts">'
-+'<button type="button" class="mini-btn up" onclick="ciMover('+i+',-1)" title="Subir" aria-label="Subir">'+ic('i8')+'</button>'
-+'<button type="button" class="mini-btn" onclick="ciMover('+i+',1)" title="Descer" aria-label="Descer">'+ic('i8')+'</button>'
++ordBtns('ciMover',i)
 +'<button type="button" class="mini-btn del" onclick="ciDel('+i+')" title="Remover bloco" aria-label="Remover bloco">'+ic('i29')+'</button>'
 +'</div>'
 +'<div class="fld"><label>Matéria</label><select onchange="ciMid('+i+',this.value)"><option value="">— bloco livre —</option>';
@@ -2620,6 +2640,7 @@ try{
 var d=new Date();
 var s=String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();
 var el=document.getElementById('upd');if(el)el.textContent=s;
+var v=document.getElementById('appver');if(v)v.textContent='V'+APP_VERSAO;
 }catch(e){}
 })();
 loadSync();
