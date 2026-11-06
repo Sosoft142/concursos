@@ -44,3 +44,15 @@ test('gestos curtos retornam à aba e arraste ou impulso completam navegação',
   assert.equal(completesSwipe(60,390,600),false);
   assert.equal(completesSwipe(84,320,700),true);
 });
+test('busca reflete edição em objeto já consultado e substituição de ficha',()=>{
+  const contest={titulo:'Fundação Educação',cargo:'Técnico'};
+  assert.equal(filterContests([contest],{query:'educacao'}).length,1);
+  contest.titulo='Instituto de Estatística';contest.cargo='Recenseador';
+  assert.equal(filterContests([contest],{query:'educacao'}).length,0);
+  assert.equal(filterContests([contest],{query:'estatistica recenseador'}).length,1);
+  assert.equal(filterContests([{...contest,titulo:'Tribunal'}],{query:'estatistica'}).length,0);
+});
+test('empate de prazo prioriza inscrição e mantém ordem estável entre concursos',()=>{
+  const contests=[{id:'prova',prova:'2026-12-01'},{id:'primeiro',inscAte:'2026-12-01'},{id:'segundo',inscAte:'2026-12-01'}];
+  assert.equal(nextDeadline(contests,'2026-11-06',c=>c.inscAte).contest.id,'primeiro');
+});

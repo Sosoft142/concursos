@@ -1,5 +1,13 @@
 # Histórico
 
+## 0.31.0 — 06/11/2026
+
+- Lista do edital monta tópicos sob demanda e libera os controles ao recolher a matéria, preservando o progresso.
+- Busca reaproveita o índice textual e atualiza apenas a lista; próximo prazo calculado em uma passagem com empate estável.
+- Caixas e formulários com rótulos maiores, foco visível e controles de remover/reordenar em uma faixa própria.
+- Janelas no celular organizam Salvar e Cancelar na mesma linha e separam a remoção. Títulos de seções, textos longos e ficha do cargo têm melhor distribuição.
+- Registro de questões com rótulos permanentes e campos uniformes.
+
 ## 0.30.1 — 06/11/2026
 
 - Importação de concursos por arquivo JSON, com prévia e alternativa de colar texto.

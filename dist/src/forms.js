@@ -331,7 +331,7 @@ app.edRender = function () {
   /* ficha */
   var f = '';
   (app.ED.ficha || []).forEach(function (r, i) {
-    f += '<div class="rowi">' + app.rm('ficha', i) + app.fT('Rótulo', r.l, 'edRow(\'ficha\',' + i + ',\'l\',this.value)', 'Vagas') + app.fFmt('Valor', r.v, 'edRow(\'ficha\',' + i + ',\'v\',this.value)', '3 imediatas + 9 CR') + app.fT('Complemento (menor, ao lado)', r.s, 'edRow(\'ficha\',' + i + ',\'s\',this.value)', 'bruto') + '</div>';
+    f += '<div class="rowi">' + app.rm('ficha', i) + app.fT('Rótulo', r.l, 'edRow(\'ficha\',' + i + ',\'l\',this.value)', 'Vagas') + app.fFmt('Valor', r.v, 'edRow(\'ficha\',' + i + ',\'v\',this.value)', '3 imediatas + 9 CR') + app.fT('Complemento (texto de apoio)', r.s, 'edRow(\'ficha\',' + i + ',\'s\',this.value)', 'bruto') + '</div>';
   });
   f += app.addBtn('ficha', {
     l: '',

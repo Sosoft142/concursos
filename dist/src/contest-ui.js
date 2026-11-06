@@ -4,7 +4,7 @@ import { filterContests, nextDeadline } from './catalog.js';
 app.ccQuery = '';
 app.ccFilter = 'all';
 
-app.renderCards = function () {
+app.renderCards = function ({listOnly = false} = {}) {
   const list = document.getElementById('cc-list');
   if (!list) return;
   const contests = app.CC();
@@ -41,6 +41,7 @@ app.renderCards = function () {
   }).join('') || (contests.length
     ? '<p class="pn-empty">Nenhum concurso corresponde à busca ou ao filtro.</p>'
     : '<p class="pn-empty">Seus concursos aparecerão aqui.</p>');
+  if (listOnly) return;
   app.renderContagem();
   app.renderBoasVindas();
   const next = nextDeadline(contests, app.hoje(), app.inscFim);
@@ -88,10 +89,10 @@ document.addEventListener('click', event => {
 document.addEventListener('input', event => {
   if (event.target.id !== 'contest-search') return;
   app.ccQuery = event.target.value;
-  app.renderCards();
+  app.renderCards({listOnly: true});
 });
 document.addEventListener('change', event => {
   if (event.target.id !== 'contest-filter') return;
   app.ccFilter = event.target.value;
-  app.renderCards();
+  app.renderCards({listOnly: true});
 });
