@@ -1,5 +1,12 @@
 # Histórico
 
+## 0.30.1 — 06/11/2026
+
+- Importação de concursos por arquivo JSON, com prévia e alternativa de colar texto.
+- Pacotes podem incluir matérias e tópicos novos; colisões de IDs são remapeadas e reimportações não duplicam fichas.
+- Importação preserva os demais concursos e progresso; ficha e matérias seguem juntas no payload de sincronização existente.
+- Validação de formato, versão, referências de matérias e links antes de modificar os dados.
+
 ## 0.30.0 — 06/11/2026
 
 - Código separado em módulos ES, estilos, dados de instalação, testes e documentação, seguindo a organização do Retomar.

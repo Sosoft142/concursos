@@ -1,10 +1,11 @@
 # Estado atual — Concursos
 
-- Versão: **0.30.0**. Produção: https://sosoft142.github.io/concursos/.
+- Versão: **0.30.1**. Produção: https://sosoft142.github.io/concursos/.
 - Repositório: `Sosoft142/concursos`, branch principal `main`.
 - PWA sem framework ou bundler; fonte pública em `dist/`, com módulos ES e CSS separado. Organização inspirada no Retomar.
 - Raiz do Pages preservada por arquivos gerados. `npm run build` prepara shell, manifesto e workers compatíveis.
 - Cartões priorizam título, cargo, prova, inscrição e vagas; engrenagem abre gerenciamento. Busca sem acentos e filtros de inscrição.
+- Importação por arquivo JSON ou texto, com prévia antes de adicionar. Pacotes `concursos-pacote`, versão 1, incluem concursos e matérias; IDs em colisão são remapeados sem alterar marcações existentes. Reimportação mantém fichas já cadastradas. A gravação usa o fluxo normal de sincronização.
 - Navegação inferior no celular; editor com campos essenciais primeiro, informações opcionais recolhidas e rótulos associados aos campos.
 - Gestos de toque: arraste com acompanhamento entre abas, abertura do menu pela primeira aba e fechamento lateral. Intenção horizontal e distância/velocidade mínimas; exclusão de campos, controles, áreas horizontais e bordas do sistema.
 - Voltar percorre áreas e fecha menus/janelas; usa a ação real do editor, preservando confirmação de descarte.

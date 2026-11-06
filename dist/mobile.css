@@ -208,3 +208,16 @@ main { position: relative; touch-action: pan-y pinch-zoom; }
 .gesture-active .view { animation: none; will-change: transform; }
 .view.gesture-preview { display: block; position: absolute; left: 16px; right: 16px; pointer-events: none; animation: none; }
 @media (max-width:360px) { .view.gesture-preview { left:12px; right:12px; } }
+
+.import-dialog > p { color:var(--muted); margin-bottom:20px; font-size:.94rem; line-height:1.6; }
+.import-dialog input[type=file] { width:100%; font:inherit; font-size:.9rem; padding:12px 0; color:var(--text); }
+.import-dialog input[type=file]::file-selector-button { font:inherit; background:var(--primary-soft); color:var(--primary-ink); border:1px solid var(--border-strong); border-radius:9px; padding:11px 12px; margin-right:10px; cursor:pointer; }
+.import-dialog details { border-top:1px solid var(--border); padding-top:14px; margin-top:14px; }
+.import-dialog summary { min-height:44px; cursor:pointer; font-size:.94rem; }
+.import-dialog textarea { min-height:180px; font-family:ui-monospace,monospace; font-size:.9rem!important; }
+.import-preview { border:1px solid var(--border-strong); border-radius:12px; padding:16px; margin-top:18px; }
+.import-preview h4 { font-size:1rem; margin-bottom:10px; }
+.import-preview ul { padding-left:20px; }
+.import-preview p { margin-top:12px; font-size:.88rem; color:var(--muted); }
+#contest-import-error { padding:12px; border-radius:10px; background:var(--rose-soft); color:var(--rose); margin-top:16px; }
+.btn:disabled { opacity:.5; cursor:default; }

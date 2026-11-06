@@ -1,7 +1,7 @@
 import { app } from './state.js';
 
 export function start() {
-  app.APP_VERSAO = '0.30.0';
+  app.APP_VERSAO = '0.30.1';
   app.SEED = {
     materias: [{
       id: 'lp',

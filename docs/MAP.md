@@ -8,6 +8,7 @@
 | Dados, datas e formatação | `dist/src/domain.js` | `data.test.mjs` |
 | Busca e próximo prazo | `dist/src/catalog.js` | `catalog.test.mjs` |
 | Cartões e gerenciamento | `dist/src/contest-ui.js` | navegador |
+| Importação de arquivos e pacotes de matérias | `dist/src/importing.js`, `import-ui.js` | `importing.test.mjs`, navegador |
 | Persistência, migração e backup | `dist/src/repository.js` | `data.test.mjs` |
 | Navegação e abas | `dist/src/navigation.js`, `history.js` | `navigation.test.mjs` |
 | Gestos | `dist/src/gestures.js` | `gestures.test.mjs`, `catalog.test.mjs`, Android |

@@ -658,7 +658,7 @@ app.ccModelo = function () {
   };
 };
 /* completa o que faltar e joga fora o que não faz parte da ficha */
-app.ccNormalizar = function (o) {
+app.ccNormalizar = function (o, materias = app.MT()) {
   var base = app.ccModelo(),
     saida = {};
   Object.keys(base).forEach(function (k) {
@@ -682,46 +682,11 @@ app.ccNormalizar = function (o) {
     saida[k] = String(v);
   });
   saida.mats = (saida.mats || []).filter(function (m) {
-    return app.mById(m);
+    return materias.some(function (subject) { return subject.id === m; });
   });
   return saida;
 };
-app.ccImportar = function () {
-  var s = prompt('Cole aqui a ficha de um concurso (o texto que começa com {  ):');
-  if (!s) return;
-  var o;
-  try {
-    o = JSON.parse(s);
-  } catch (e) {
-    alert('Não consegui ler esse texto.\n\nConfira se você colou tudo, do primeiro { até o último }.');
-    return;
-  }
-  var lista = Array.isArray(o) ? o : [o];
-  lista = lista.filter(function (x) {
-    return x && typeof x === 'object' && String(x.titulo || '').trim();
-  });
-  if (!lista.length) {
-    alert('Esse texto não tem nenhum concurso com título.');
-    return;
-  }
-  var nomes = [];
-  lista.forEach(function (x) {
-    var c = app.ccNormalizar(x);
-    c.id = app.idLivre(app.slug(c.id || c.curto || c.titulo), app.CCT());
-    if (!c.nome) c.nome = c.titulo;
-    if (!c.badge) c.badge = (c.curto || c.titulo).slice(0, 10);
-    app.CCT().push(c);
-    nomes.push(c.titulo);
-  });
-  app.migrarDados();
-  app.saveS();
-  app.renderTudo();
-  var novo = app.CCT()[app.CCT().length - 1];
-  alert('Pronto!\n\n' + (nomes.length === 1 ? 'Entrou: ' : 'Entraram:\n• ') + nomes.join('\n• ') + '\n\nEle já aparece na lista, tem área de estudo própria e entra na comparação. Abra o lápis para conferir e ajustar o que quiser.');
-  if (novo) setTimeout(function () {
-    app.goPane('estudo', novo.id, 'cronograma');
-  }, 250);
-};
+app.ccImportar = function () { app.openContestImport(); };
 app.ccExportar = function (id) {
   var c = app.cById(id);
   if (!c) return;
