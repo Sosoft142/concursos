@@ -7,7 +7,7 @@ app.corVar = function (c) {
    HELPERS
    ===================================================================== */
 app.ic = function (id) {
-  return '<svg viewBox="0 0 24 24"><use href="#' + id + '"/></svg>';
+  return '<svg viewBox="0 0 24 24"><use href="#' + app.ea(id) + '"/></svg>';
 };
 /* par de botões subir/descer — mesmo controle em toda lista ordenável */
 app.ordBtns = function (fn, i) {
@@ -255,7 +255,7 @@ app.mtlHtml = function (mid) {
   m.mat.forEach(function (o) {
     if (!o || !o.u) return;
     var tp = app.TIPOS[o.t] || app.TIPOS.site;
-    h += '<a class="mtl mtl-' + (o.t || 'site') + '" href="' + app.ea(o.u) + '" target="_blank" rel="noopener">' + app.ic(tp.i) + (o.l || tp.l) + '</a>';
+    h += '<a class="mtl mtl-' + app.ea(o.t || 'site') + '" href="' + app.ea(o.u) + '" target="_blank" rel="noopener">' + app.ic(tp.i) + app.tx(o.l || tp.l) + '</a>';
   });
   return h;
 };

@@ -88,3 +88,11 @@ test('edição salva concurso novo e mantém progresso já existente',()=>{
   app.S.t={'lp:0':{e:true}};app.ED=app.edVazio();app.ED.titulo='Concurso teste';app.ED.__it=[];app.ED.__atr='';
   app.edSalvar();assert.equal(app.DADOS.concursos.length,1);assert.equal(app.DADOS.concursos[0].titulo,'Concurso teste');assert.equal(app.S.t['lp:0'].e,true);
 });
+test('descrições e materiais importados não executam HTML embutido',()=>{
+  const payload='<img src=x onerror=alert(1)>';
+  assert.ok(!app.secHead('teste','i15','Conteúdo',payload).includes('<img'));
+  app.TIPOS={site:{i:'i14',l:'Site'}};
+  app.DADOS.materias=[{id:'importada',mat:[{t:'site',l:payload,u:'https://example.test'}]}];
+  const html=app.mtlHtml('importada');assert.ok(!html.includes('<img'));assert.ok(html.includes('&lt;img'));
+  assert.ok(!app.ic('i14" onload="alert(1)').includes('href="#i14" onload='));
+});

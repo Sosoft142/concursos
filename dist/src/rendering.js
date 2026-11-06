@@ -253,7 +253,7 @@ app.renderTimeline = function (elId, items) {
   tl.innerHTML = html;
 };
 app.secHead = function (k, icone, titulo, sub) {
-  return '<h3 class="bt"><span class="bic">' + app.ic(icone) + '</span>' + titulo + '</h3>' + (sub ? '<p class="bsub">' + sub + '</p>' : '');
+  return '<h3 class="bt"><span class="bic">' + app.ic(icone) + '</span>' + titulo + '</h3>' + (sub ? '<p class="bsub">' + app.fmt(sub) + '</p>' : '');
 };
 app.renderAccs = function () {
   var el = document.getElementById('acc-list');
@@ -342,7 +342,7 @@ app.renderAccs = function () {
         if ((e.tags || []).length) {
           h += '<div class="pts">';
           e.tags.forEach(function (t) {
-            h += '<span class="chip' + (t.c ? ' ' + t.c : '') + '">' + app.tx(t.t) + '</span>';
+            h += '<span class="chip' + (t.c ? ' ' + app.ea(t.c) : '') + '">' + app.tx(t.t) + '</span>';
           });
           h += '</div>';
         }
