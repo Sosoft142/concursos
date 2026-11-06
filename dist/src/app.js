@@ -1,0 +1,20 @@
+import { app } from './state.js';
+import './domain.js';
+import './repository.js';
+import './navigation.js';
+import './rendering.js';
+import './forms.js';
+import './settings.js';
+import './sync/engine.js';
+import './study.js';
+import './pwa.js';
+import './contest-ui.js';
+import { start } from './bootstrap.js';
+import { initializeHistory } from './history.js';
+import { initializeGestures } from './gestures.js';
+import { installLegacyActions } from './legacy-actions.js';
+
+installLegacyActions();
+start();
+initializeHistory();
+initializeGestures();
