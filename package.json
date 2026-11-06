@@ -1,0 +1,12 @@
+{
+  "name": "concursos",
+  "version": "0.30.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify": "node scripts/verify.mjs",
+    "context": "node scripts/context.mjs"
+  }
+}
