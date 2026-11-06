@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Organizador de Concursos · V0.30.1 -->
+<!-- Organizador de Concursos · V0.31.0 -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
@@ -162,9 +162,9 @@ Onde encontrar novos concursos
 <h3 class="bt"><span class="bic"><svg viewBox="0 0 24 24"><use href="#i22"/></svg></span>Registro de questões</h3>
 <p class="bsub">Nesta fase, <b>60–70% do tempo em questões</b> (as das bancas dos seus concursos). Registre cada bateria com a data: eu somo por matéria, mostro a evolução semana a semana e aponto o que está abaixo do seu alvo.</p>
 <form class="qz-form" id="qz-form" onsubmit="return addQuiz(event)">
-<select id="qz-mat" aria-label="Matéria"></select>
-<input id="qz-f" type="number" min="1" inputmode="numeric" placeholder="questões" aria-label="Questões feitas" required/>
-<input id="qz-a" type="number" min="0" inputmode="numeric" placeholder="acertos" aria-label="Acertos" required/>
+<label class="qz-field">Matéria<select id="qz-mat" aria-label="Matéria"></select></label>
+<label class="qz-field">Questões feitas<input id="qz-f" type="number" min="1" inputmode="numeric" placeholder="Ex.: 20" aria-label="Questões feitas" required/></label>
+<label class="qz-field">Acertos<input id="qz-a" type="number" min="0" inputmode="numeric" placeholder="Ex.: 14" aria-label="Acertos" required/></label>
 <button class="btn primary" type="submit">Registrar</button>
 </form>
 <div id="quiz-list"></div>

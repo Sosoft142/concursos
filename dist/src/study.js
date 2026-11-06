@@ -188,13 +188,35 @@ app.setFiltro = function (f, btn) {
   if (btn) btn.setAttribute('aria-pressed', 'true');
   app.renderCheck();
 };
+// Only expanded subjects need topic controls in the DOM. Progress lives in S.t.
+function checklistBody(m) {
+  const materials = app.mtlHtml(m.id);
+  return (materials ? '<div class="mtls-row">' + materials + '</div>' : '') + m.t.map((topic, i) => {
+    const state = app.S.t[m.id + ':' + i] || {};
+    const url = app.topUrl(topic);
+    const buttons = [['e', 'Estudei', 'E'], ['r', 'Revisei', 'R'], ['q', 'Questões', 'Q']].map(([stage, label, short]) =>
+      `<button class="sd ${stage}${state[stage] ? ' on' : ''}" data-topic-subject="${app.ea(m.id)}" data-topic-index="${i}" data-topic-stage="${stage}" title="${label}" aria-pressed="${!!state[stage]}"><span class="sd-short">${short}</span><span class="sd-label">${label}</span></button>`
+    ).join('');
+    return `<div class="ck-t${state.e && state.r && state.q ? ' done' : ''}"><span class="tx">${app.tx(app.topName(topic))}${url ? ` <a href="${app.ea(url)}" target="_blank" rel="noopener" aria-label="abrir material do tópico">${app.ic('i5')}</a>` : ''}</span><span class="stg">${buttons}</span></div>`;
+  }).join('');
+}
+export function handleTopicClick(event) {
+  const button = event.target.closest('[data-topic-stage]');
+  if (!button) return;
+  const {topicSubject, topicIndex, topicStage} = button.dataset;
+  if (['e', 'r', 'q'].includes(topicStage)) app.tg(topicSubject, Number(topicIndex), topicStage);
+}
+if (typeof document !== 'undefined') document.addEventListener('click', handleTopicClick);
+
 app.ckToggle = function (id) {
   app.ckOpen[id] = !app.ckOpen[id];
-  var el = document.getElementById('ckm-' + id);
-  if (el) {
-    el.classList.toggle('open', app.ckOpen[id]);
-    el.querySelector('.ck-h')?.setAttribute('aria-expanded', String(app.ckOpen[id]));
-  }
+  const el = document.getElementById('ckm-' + id);
+  if (!el) return;
+  const subject = app.MAT.find(m => m.id === id);
+  const body = el.querySelector('.ck-body');
+  if (body) body.innerHTML = app.ckOpen[id] && subject ? checklistBody(subject) : '';
+  el.classList.toggle('open', app.ckOpen[id]);
+  el.querySelector('.ck-h')?.setAttribute('aria-expanded', String(app.ckOpen[id]));
 };
 app.renderCheck = function () {
   var el = document.getElementById('check-list');
@@ -218,15 +240,7 @@ app.renderCheck = function () {
       dots += '<span class="dotc" style="background:' + app.corDe(cid) + (k ? ';margin-left:-4px' : '') + '"></span>';
     });
     if (!dots) dots = '<span class="dotc" style="background:var(--border-strong)"></span>';
-    var mh = app.mtlHtml(m.id);
-    html += '<div class="ck-mat' + (app.ckOpen[m.id] ? ' open' : '') + '" id="ckm-' + m.id + '"><button class="ck-h" onclick="ckToggle(\'' + m.id + '\')" aria-expanded="' + !!app.ckOpen[m.id] + '">' + dots + '<b>' + app.tx(m.n) + '</b><span class="ck-ct">' + done + '/' + m.t.length + '</span><span class="pbar"><i style="width:' + pct + '%;--pc:var(--violet)"></i></span><svg class="chev" viewBox="0 0 24 24"><use href="#i8"/></svg></button><div class="ck-body">' + (mh ? '<div class="mtls-row">' + mh + '</div>' : '');
-    m.t.forEach(function (t, i) {
-      var st = app.S.t[m.id + ':' + i] || {},
-        all = st.e && st.r && st.q,
-        nm = app.topName(t),
-        url = app.topUrl(t);
-      html += '<div class="ck-t' + (all ? ' done' : '') + '"><span class="tx">' + app.tx(nm) + (url ? ' <a href="' + app.ea(url) + '" target="_blank" rel="noopener" aria-label="abrir material do tópico">' + app.ic('i5') + '</a>' : '') + '</span><span class="stg">' + '<button class="sd e' + (st.e ? ' on' : '') + '" onclick="tg(\'' + m.id + '\',' + i + ',\'e\')" title="Estudei" aria-pressed="' + !!st.e + '"><span class="sd-short">E</span><span class="sd-label">Estudei</span></button>' + '<button class="sd r' + (st.r ? ' on' : '') + '" onclick="tg(\'' + m.id + '\',' + i + ',\'r\')" title="Revisei" aria-pressed="' + !!st.r + '"><span class="sd-short">R</span><span class="sd-label">Revisei</span></button>' + '<button class="sd q' + (st.q ? ' on' : '') + '" onclick="tg(\'' + m.id + '\',' + i + ',\'q\')" title="Resolvi questões" aria-pressed="' + !!st.q + '"><span class="sd-short">Q</span><span class="sd-label">Questões</span></button>' + '</span></div>';
-    });
+    html += '<div class="ck-mat' + (app.ckOpen[m.id] ? ' open' : '') + '" id="ckm-' + m.id + '"><button class="ck-h" onclick="ckToggle(\'' + m.id + '\')" aria-expanded="' + !!app.ckOpen[m.id] + '"><span class="ck-dots">' + dots + '</span><b>' + app.tx(m.n) + '</b><span class="ck-ct">' + done + '/' + m.t.length + '</span><span class="pbar"><i style="width:' + pct + '%;--pc:var(--violet)"></i></span><svg class="chev" viewBox="0 0 24 24"><use href="#i8"/></svg></button><div class="ck-body">' + (app.ckOpen[m.id] ? checklistBody(m) : '');
     html += '</div></div>';
   });
   el.innerHTML = html || '<div class="pn-empty">Nenhuma matéria neste filtro. Use <b>Editar matérias e tópicos</b> logo abaixo para cadastrar.</div>';

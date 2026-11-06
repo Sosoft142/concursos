@@ -1,21 +1,35 @@
 const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
 
+const searchIndex = new WeakMap();
+function searchableText(contest) {
+  const source = [contest.titulo, contest.cargo, contest.curto, contest.banca, contest.bancaCurto, contest.nivel].join(' ');
+  let cached = searchIndex.get(contest);
+  if (!cached || cached.source !== source) {
+    cached = {source, text: normalize(source)};
+    searchIndex.set(contest, cached);
+  }
+  return cached.text;
+}
+
 export function filterContests(contests, {query = '', filter = 'all'} = {}) {
   const words = normalize(query).trim().split(/\s+/).filter(Boolean);
   return contests.filter(contest => {
     if (filter === 'registered' && !contest.inscrita) return false;
     if (filter === 'watching' && contest.inscrita) return false;
-    const text = normalize([contest.titulo, contest.cargo, contest.curto, contest.banca, contest.bancaCurto, contest.nivel].join(' '));
+    if (!words.length) return true;
+    const text = searchableText(contest);
     return words.every(word => text.includes(word));
   });
 }
 
 export function nextDeadline(contests, today, registrationEnd) {
-  const deadlines = [];
+  let next = null;
+  const consider = (contest, date, kind) => {
+    if (date && date >= today && (!next || date < next.date || (date === next.date && kind === 'registration' && next.kind !== kind))) next = {contest, date, kind};
+  };
   for (const contest of contests) {
-    const end = registrationEnd(contest);
-    if (!contest.inscrita && end && end >= today) deadlines.push({contest, date: end, kind: 'registration'});
-    if (contest.prova && contest.prova >= today) deadlines.push({contest, date: contest.prova, kind: 'exam'});
+    if (!contest.inscrita) consider(contest, registrationEnd(contest), 'registration');
+    consider(contest, contest.prova, 'exam');
   }
-  return deadlines.sort((a, b) => a.date.localeCompare(b.date) || (a.kind === 'registration' ? -1 : 1))[0] || null;
+  return next;
 }
