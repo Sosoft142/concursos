@@ -50,9 +50,8 @@ svg { stroke-width: 1.75; }
 .list-heading h2 { display: flex; align-items: center; gap: 10px; color: var(--area); }
 .heading-symbol { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--area-soft); border: 1px solid var(--area-line); }
 .heading-symbol svg { width: 21px; height: 21px; }
-.contest-toolbar { padding: 12px; background: var(--area-soft); border: 1px solid var(--area-line); border-radius: 15px; gap: 10px; }
-.contest-toolbar select { background: white; }
-.search-field { background: white; }
+.contest-toolbar { border-color: var(--area-line); }
+.search-field svg { color: var(--area); }
 .cc { border-color: color-mix(in srgb, var(--ac) 32%, white); background: color-mix(in srgb, var(--ac) 10%, white); border-radius: 16px; }
 .cc::before { width: 4px; }
 .cc-heading { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 8px 10px; align-items: center; margin-bottom: 7px; }
@@ -140,7 +139,6 @@ svg { stroke-width: 1.75; }
   .tab-symbol { width: 30px; height: 28px; border-radius: 9px; }
   .tab .tab-symbol svg { width: 21px; height: 21px; }
   main.wrap { padding-bottom: calc(116px + env(safe-area-inset-bottom)); }
-  .contest-toolbar { padding: 10px; }
   .cc { padding: 17px 16px 13px; }
   .cc-dates > span { padding: 7px 9px; }
   .cc-cta { border-color: color-mix(in srgb, var(--ac) 24%, white); margin-top: 13px; }

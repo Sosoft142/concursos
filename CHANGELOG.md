@@ -1,5 +1,11 @@
 # Histórico
 
+## 0.33.1 — 07/11/2026
+
+- Busca em uma barra única, com filtro compacto na mesma linha; removidas as caixas sobrepostas e o contador visual.
+- Campo com rótulo curto, foco visível e contagem acessível de resultados; busca por cargo/banca e filtros mantidos.
+- Deslize entre abas funciona também sobre botões, links e caixas de estudo; o arraste evita cliques acidentais, mantendo toques simples, rolagem vertical e edição dos campos.
+
 ## 0.33.0 — 07/11/2026
 
 - Identidade visual por área: índigo em Concursos, verde em Estudos, ameixa em Comparar e âmbar em prazos, com fundos e cabeçalhos coloridos.

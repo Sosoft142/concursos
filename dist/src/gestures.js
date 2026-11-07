@@ -39,7 +39,10 @@ export function initializeGestures() {
     if (!inDrawer && !main.contains(event.target)) return;
     // Leave Android's screen-edge Back gesture to the system/browser.
     if (event.clientX < 24 || event.clientX > innerWidth - 24) return;
-    if (!inDrawer && event.target.closest('input,textarea,select,button,a,[contenteditable="true"],.pnav,.cmp-matrix,.fc-study,.ck-body')) return;
+    // Cards, including their buttons/links, can start a swipe. A tap still clicks;
+    // once a horizontal drag starts, finish() suppresses the resulting click.
+    // Keep editing and native horizontal scrolling under the user's control.
+    if (!inDrawer && event.target.closest('input,textarea,select,[contenteditable]:not([contenteditable="false"]),.pnav,.cmp-matrix')) return;
     const current = document.querySelector('.view.active');
     if (!current) return;
     drag = {pointer: event.pointerId, x: event.clientX, y: event.clientY, time: performance.now(), dx: 0, axis: null, current, inDrawer, target: null, preview: null, mode: null};
