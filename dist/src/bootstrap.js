@@ -2,7 +2,7 @@ import { app } from './state.js';
 import { ACCENTS, ACCENT_TEXT } from './appearance.js';
 
 export function start() {
-  app.APP_VERSAO = '0.32.0';
+  app.APP_VERSAO = '0.33.0';
   app.SEED = {
     materias: [{
       id: 'lp',
@@ -454,7 +454,7 @@ export function start() {
   (function stamp() {
     try {
       var d = new Date();
-      var s = '06/11/2026';
+      var s = '07/11/2026';
       var el = document.getElementById('upd');
       if (el) el.textContent = s;
       var v = document.getElementById('appver');

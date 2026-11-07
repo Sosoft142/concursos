@@ -2,12 +2,12 @@
 export const DEFAULT_ACCENT = 'azul';
 export const ACCENT_TEXT = '#ffffff';
 export const ACCENTS = [
-  {id:'violeta', n:'Violeta', cor:'#6746b6', soft:'#f3effc', ink:'#6746b6'},
-  {id:'azul', n:'Azul', cor:'#2456b8', soft:'#edf3ff', ink:'#2456b8'},
-  {id:'agua', n:'Verde-água', cor:'#0b7569', soft:'#eaf7f3', ink:'#0b7569'},
-  {id:'verde', n:'Verde', cor:'#227444', soft:'#edf7ee', ink:'#227444'},
-  {id:'ciano', n:'Ciano', cor:'#0b6f85', soft:'#eaf6fa', ink:'#0b6f85'},
-  {id:'ambar', n:'Âmbar', cor:'#875b0e', soft:'#fff6df', ink:'#875b0e'},
-  {id:'laranja', n:'Laranja', cor:'#a04419', soft:'#fff0e7', ink:'#a04419'},
-  {id:'rosa', n:'Rosa', cor:'#aa355c', soft:'#fceef3', ink:'#aa355c'}
+  {id:'violeta', n:'Violeta', cor:'#824892', soft:'#f6edf9', ink:'#824892'},
+  {id:'azul', n:'Azul', cor:'#4853b5', soft:'#e9edff', ink:'#4853b5'},
+  {id:'agua', n:'Verde-água', cor:'#176f65', soft:'#eaf7f1', ink:'#176f65'},
+  {id:'verde', n:'Verde', cor:'#28714e', soft:'#eef7f0', ink:'#28714e'},
+  {id:'ciano', n:'Ciano', cor:'#246d82', soft:'#eaf6fa', ink:'#246d82'},
+  {id:'ambar', n:'Âmbar', cor:'#865a13', soft:'#fff6df', ink:'#865a13'},
+  {id:'laranja', n:'Laranja', cor:'#a34b2d', soft:'#fff0e7', ink:'#a34b2d'},
+  {id:'rosa', n:'Rosa', cor:'#aa4068', soft:'#fceef3', ink:'#aa4068'}
 ];

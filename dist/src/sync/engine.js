@@ -301,7 +301,9 @@ app.renderPill = function () {
   if (!p) return;
   p.className = 'sync-pill' + (app.syncBusy ? ' busy' : app.syncState === 'on' ? ' on' : app.syncState === 'conflito' ? ' conflito' : app.syncState === 'erro' ? ' erro' : '');
   var l = p.querySelector('.slbl');
-  if (l) l.textContent = app.syncBusy ? 'Sincronizando…' : app.syncState === 'on' ? 'Sincronizado' : app.syncState === 'conflito' ? 'Conflito' : app.syncState === 'erro' ? 'Erro' : 'Sincronizar';
+  const status = app.syncBusy ? 'Sincronizando…' : app.syncState === 'on' ? 'Sincronizado' : app.syncState === 'conflito' ? 'Conflito' : app.syncState === 'erro' ? 'Erro' : 'Sincronizar';
+  if (l) l.textContent = status;
+  p.setAttribute('aria-label', 'Sincronização: ' + status);
   p.setAttribute('title', app.syncMsg || (app.syncState === 'on' ? 'Última sincronização: ' + (app.syncAt ? new Date(app.syncAt).toLocaleString('pt-BR') : '—') : 'Sincronizar entre aparelhos'));
 };
 app.syncModalMsg = function () {

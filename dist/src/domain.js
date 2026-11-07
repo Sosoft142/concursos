@@ -7,7 +7,7 @@ app.corVar = function (c) {
    HELPERS
    ===================================================================== */
 app.ic = function (id) {
-  return '<svg viewBox="0 0 24 24"><use href="#' + app.ea(id) + '"/></svg>';
+  return '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#' + app.ea(id) + '"/></svg>';
 };
 /* par de botões subir/descer — mesmo controle em toda lista ordenável */
 app.ordBtns = function (fn, i) {
