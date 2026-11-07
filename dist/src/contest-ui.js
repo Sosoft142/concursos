@@ -19,12 +19,12 @@ app.renderCards = function ({listOnly = false} = {}) {
     const days = contest.prova ? app.dto(contest.prova) : null;
     return `<article class="card cc" style="--ac:${color}">
       <div class="cc-main">
-        <div class="cc-kicker">${app.tx(contest.bancaCurto || contest.curto || 'Concurso público')}${contest.nivel ? ` · ${app.tx(contest.nivel)}` : ''}</div>
-        <h4>${app.tx(contest.titulo)}</h4>
+        <div class="cc-heading"><span class="contest-symbol" aria-hidden="true">${app.ic('i36')}</span><div><div class="cc-kicker">${app.tx(contest.bancaCurto || contest.curto || 'Concurso público')}${contest.nivel ? ` · ${app.tx(contest.nivel)}` : ''}</div>
+        <h4>${app.tx(contest.titulo)}</h4></div></div>
         ${contest.cargo ? `<p class="role">${app.tx(contest.cargo)}</p>` : ''}
         <div class="cc-dates">
-          <span>${app.ic('i11')}<span>${contest.prova ? `Prova <b>${app.brDate(contest.prova)}</b>${days < 0 ? ' · realizada' : days === 0 ? ' · hoje' : days === 1 ? ' · amanhã' : ` · em ${days} dias`}` : 'Prova com data a definir'}</span></span>
-          ${deadline && !contest.inscrita ? `<span>Inscrições até <b>${app.brDate(deadline)}</b></span>` : ''}
+          <span class="date-exam">${app.ic('i11')}<span>${contest.prova ? `Prova <b>${app.brDate(contest.prova)}</b>${days < 0 ? ' · realizada' : days === 0 ? ' · hoje' : days === 1 ? ' · amanhã' : ` · em ${days} dias`}` : 'Prova com data a definir'}</span></span>
+          ${deadline && !contest.inscrita ? `<span class="date-registration">${app.ic('i21')}Inscrições até <b>${app.brDate(deadline)}</b></span>` : ''}
         </div>
         <div class="cc-tags">
           <span class="chip ${contest.inscrita ? 'green' : ''}">${contest.inscrita ? 'Inscrição feita' : 'De olho'}</span>
@@ -35,7 +35,7 @@ app.renderCards = function ({listOnly = false} = {}) {
       <div class="cc-cta">
         <button class="btn primary" data-contest-action="open" data-id="${app.ea(contest.id)}">${app.ic('i2')}Ver concurso</button>
         ${contest.urlBanca ? `<a class="cc-source" href="${app.ea(contest.urlBanca)}" target="_blank" rel="noopener">Banca ${app.ic('i5')}</a>` : ''}
-        <button class="cc-manage icon-btn" data-contest-action="manage" data-id="${app.ea(contest.id)}" aria-label="Gerenciar ${app.ea(contest.titulo)}" title="Gerenciar concurso"><svg viewBox="0 0 24 24"><path d="m9 3-.5 2.5-1.4.8-2.4-.8-2.4 4.2 1.9 1.7v1.6l-1.9 1.7 2.4 4.2 2.4-.8 1.4.8L9 21h6l.5-2.5 1.4-.8 2.4.8 2.4-4.2-1.9-1.7v-1.6l1.9-1.7-2.4-4.2-2.4.8-1.4-.8L15 3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        <button class="cc-manage icon-btn" data-contest-action="manage" data-id="${app.ea(contest.id)}" aria-label="Gerenciar ${app.ea(contest.titulo)}" title="Gerenciar concurso">${app.ic('i23')}</button>
       </div>
     </article>`;
   }).join('') || (contests.length
@@ -67,7 +67,7 @@ app.ccManage = function (id) {
   const contest = app.cById(id);
   if (!contest) return;
   const action = (name, icon, label) => `<button class="manage-action" data-contest-action="${name}" data-id="${app.ea(id)}">${app.ic(icon)}<span>${label}</span></button>`;
-  app.modalAbrir(app.modalHead('Gerenciar concurso', 'i23', 'modalFechar()') + `<div class="modal-b"><p class="manage-title">${app.tx(contest.titulo)}</p><div class="manage-list">${action('edit', 'i28', 'Editar informações')}${action('register', 'i10', contest.inscrita ? 'Marcar como de olho' : 'Marcar inscrição feita')}${action('up', 'i8', 'Mover para cima')}${action('down', 'i8', 'Mover para baixo')}${action('export', 'i15', 'Copiar ficha')}${action('archive', 'i34', 'Arquivar concurso')}</div></div>`, true);
+  app.modalAbrir(app.modalHead('Gerenciar concurso', 'i23', 'modalFechar()') + `<div class="modal-b"><p class="manage-title">${app.tx(contest.titulo)}</p><div class="manage-list">${action('edit', 'i28', 'Editar informações')}${action('register', 'i10', contest.inscrita ? 'Marcar como de olho' : 'Marcar inscrição feita')}${action('up', 'i41', 'Mover para cima')}${action('down', 'i8', 'Mover para baixo')}${action('export', 'i15', 'Copiar ficha')}${action('archive', 'i34', 'Arquivar concurso')}</div></div>`, true);
 };
 
 document.addEventListener('click', event => {

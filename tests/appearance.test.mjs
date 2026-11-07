@@ -34,3 +34,12 @@ test('atalho para fontes abre a seção recolhida antes de rolar',async()=>{
  app.goAnchor('concursos','novos-concursos');
  await new Promise(resolve=>setTimeout(resolve,140));assert.equal(disclosure.open,true);assert.equal(scrolled,true);
 });
+test('cores das áreas têm contraste em fundos próprios e em botões preenchidos',()=>{
+ const css=readFileSync(new URL('../dist/identity.css',import.meta.url),'utf8');
+ const tokens=Object.fromEntries([...css.matchAll(/--([\w-]+):\s*(#[0-9a-f]{6});/g)].map(m=>[m[1],m[2]]));
+ for(const area of ['indigo','study','compare','deadline']){
+  assert.ok(contrast(tokens[area],tokens[area+'-soft'])>=4.5,area+' sobre o fundo da área');
+  assert.ok(contrast(tokens[area],'#ffffff')>=4.5,area+' em botão ou ícone preenchido');
+  assert.ok(contrast('#17263b',tokens[area+'-soft'])>=7,area+' leitura no fundo colorido');
+ }
+});

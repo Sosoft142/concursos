@@ -1,11 +1,13 @@
 # Estado atual — Concursos
 
-- Versão: **0.32.0**. Produção: https://sosoft142.github.io/concursos/.
+- Versão: **0.33.0**. Produção: https://sosoft142.github.io/concursos/.
 - Repositório: `Sosoft142/concursos`, branch principal `main`.
 - PWA sem framework ou bundler; fonte pública em `dist/`, com módulos ES e CSS separado. Organização inspirada no Retomar.
 - Raiz do Pages preservada por arquivos gerados. `npm run build` prepara shell, manifesto e workers compatíveis.
 - Visual exclusivamente claro, com superfícies brancas, fundo cinza-claro e cores de destaque com contraste verificado. Sem seleção de modo escuro ou ajuste automático pelo sistema.
-- Tipografia única, cartões sem sombras, cores e navegação mais discretas. Fontes para novos concursos ficam recolhidas e abrem também pelo menu lateral.
+- Identidade por área: índigo em Concursos, verde em Estudos, ameixa em Comparar e âmbar em prazos. Cores ocupam fundos e cabeçalhos; textos e ícones identificam cada função. `identity.css` concentra essa camada visual.
+- Ícones lineares com traço de 1,75, bases arredondadas, engrenagem reconhecível e nuvem SVG com descrição acessível. Tipografia única e modo claro preservados.
+- Fontes para novos concursos ficam recolhidas e abrem também pelo menu lateral.
 - Cartões priorizam título, cargo, prova, inscrição e vagas; engrenagem abre gerenciamento. Busca sem acentos e filtros de inscrição.
 - Importação por arquivo JSON ou texto, com prévia antes de adicionar. Pacotes `concursos-pacote`, versão 1, incluem concursos e matérias; IDs em colisão são remapeados sem alterar marcações existentes. Reimportação mantém fichas já cadastradas. A gravação usa o fluxo normal de sincronização.
 - Navegação inferior no celular; editor com campos essenciais primeiro, informações opcionais recolhidas e rótulos associados aos campos.
@@ -17,5 +19,6 @@
 - Otimização: tópicos são montados só nas matérias abertas; busca indexada atualiza apenas a lista, e próximo prazo usa uma passagem. Marcações continuam em `S.t`, sem mudar o formato dos dados.
 - Revisão das caixas: rótulos e campos legíveis, controles de linha separados, rodapé dos modais organizado e ficha com textos de apoio. Registro de questões tem rótulos persistentes.
 - Validação e medição desta revisão: [REVISAO-0.31.0.md](REVISAO-0.31.0.md).
+- Critérios de cores e ícones em [UI.md](UI.md); conferência realizada em [REVISAO-0.33.0.md](REVISAO-0.33.0.md).
 - Verificação: `npm run verify`; resultados completos em `.work/verification.log`. Testes de domínio, persistência, migração, sync, navegação, gestos e offline.
 - Limite da validação: testes de eventos de toque e revisão responsiva em navegador; a sensação e a integração com o gesto nativo devem ser conferidas também no aparelho Android físico.

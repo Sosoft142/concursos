@@ -1,12 +1,21 @@
-# Critérios de interface
+# Critérios de interface — Concursos
 
-- Título completo, cargo e prazos são o conteúdo principal.
-- Inscrição feita, prazo pendente e prova realizada precisam de texto, além da cor.
-- Uma ação principal por cartão; gerenciamento separado por engrenagem, com ações secundárias no painel.
-- Áreas de toque suficientes, sem transformar todos os controles em botões grandes.
-- Navegação principal acessível ao polegar e espaço reservado para a barra inferior e áreas seguras.
-- Campos essenciais aparecem primeiro; informações opcionais ficam recolhidas.
-- Busca mantém foco e posição. Cartões longos devem continuar legíveis em 320 px.
-- Gestos acompanham o dedo, permitem cancelamento e preservam rolagem vertical e os controles existentes.
-- Respeitar redução de movimento e o Voltar do Android; fechar editor segue sua confirmação de descarte.
-- Verificar lista vazia, lista preenchida, título longo, editor, estudos e comparação.
+A interface é exclusivamente clara. Referências: ícones lineares do Silhuetta e do Retomar, bases arredondadas, cores suaves em áreas amplas e controles proporcionais ao conteúdo. Esta aplicação mantém o próprio símbolo de formatura.
+
+| Área ou função | Cor | Aplicação |
+| --- | --- | --- |
+| Concursos | Índigo como padrão | Navegação, busca e título da lista |
+| Estudos | Verde | Cabeçalho e painel de preparação |
+| Comparar | Ameixa | Cabeçalho e navegação da comparação |
+| Prazos e inscrições | Âmbar | Resumo de datas e bloco de inscrição |
+| Cada concurso | Cor cadastrada | Superfície, borda, símbolo e ação de abrir |
+| Revisões, flashcards, ciclo, edital e questões | Cores das ferramentas | Abas e ícones coerentes dentro do painel |
+
+- A cor de destaque personalizada continua aplicada a Concursos e às janelas gerais. Estudos e Comparar mantêm identidades próprias.
+- Cor não é o único identificador: manter texto, ícones e datas. Erro, conflito e urgência continuam com rótulos.
+- Priorizar título, cargo e datas. Ações secundárias ficam separadas; área de toque suficiente não exige ícone gigante.
+- SVG com traço de 1,75, extremidades arredondadas e nomes acessíveis nos controles. Preservar IDs históricos usados por dados e preferências.
+- Nuvem em SVG, com descrição de estado e animação apenas durante sincronização. Não mudar os critérios que confirmam uma sincronização.
+- `identity.css` organiza a identidade visual; estilos estruturais e responsivos continuam nos arquivos base. `npm run build` inclui essa camada na raiz compatível e no cache.
+- Conferir visualmente lista preenchida, título longo, aba de estudos, comparação, editor e menor largura antes de publicar. Verificar contraste, rolagem, controles e ausência de transbordamento do documento.
+- Preservar dados, backup, sincronização, histórico, gestos e confirmação de descarte.

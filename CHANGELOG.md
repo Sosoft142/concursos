@@ -1,5 +1,13 @@
 # Histórico
 
+## 0.33.0 — 07/11/2026
+
+- Identidade visual por área: índigo em Concursos, verde em Estudos, ameixa em Comparar e âmbar em prazos, com fundos e cabeçalhos coloridos.
+- Cartões incorporam a cor do concurso em toda a superfície; inscrições, provas e ações ficam delimitadas em grupos próprios.
+- Ícones lineares e arredondados alinhados às referências Silhuetta e Retomar; engrenagem, nuvem, calendário e comparação mais reconhecíveis.
+- Nuvem SVG com estado acessível; os identificadores históricos dos ícones e os estados de sincronização são mantidos.
+- Nova camada de estilo incluída nos arquivos da raiz e no cache offline.
+
 ## 0.32.0 — 06/11/2026
 
 - Tema exclusivamente claro em páginas, campos, menu, janelas e instalação PWA; sem alternância automática pelo sistema.
