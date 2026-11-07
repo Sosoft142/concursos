@@ -1,15 +1,16 @@
 import { app } from './state.js';
+import { DEFAULT_ACCENT } from './appearance.js';
 
 app.CFG = function () {
   app.S.ui = app.S.ui || {};
   if (!app.S.ui.cfg || typeof app.S.ui.cfg !== 'object') app.S.ui.cfg = {};
-  if (!app.S.ui.cfg.acento) app.S.ui.cfg.acento = 'violeta';
+  if (!app.S.ui.cfg.acento) app.S.ui.cfg.acento = DEFAULT_ACCENT;
   if (!app.S.ui.cfg.oculto || typeof app.S.ui.cfg.oculto !== 'object') app.S.ui.cfg.oculto = {};
   return app.S.ui.cfg;
 };
 app.acentoDe = function (id) {
   for (var i = 0; i < app.ACENTOS.length; i++) if (app.ACENTOS[i].id === id) return app.ACENTOS[i];
-  return app.ACENTOS[0];
+  return app.ACENTOS.find(accent => accent.id === DEFAULT_ACCENT);
 };
 app.oculto = function (id) {
   return !!app.CFG().oculto[id];
@@ -34,8 +35,7 @@ app.edConfig = function () {
   app.cgRender();
 };
 app.cgFechar = function () {
-  app.CG = null;
-  app.modalFechar();
+  app.cgCancelar();
 };
 app.cgAcento = function (id) {
   app.CG.acento = id;

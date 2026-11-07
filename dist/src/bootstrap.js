@@ -1,7 +1,8 @@
 import { app } from './state.js';
+import { ACCENTS, ACCENT_TEXT } from './appearance.js';
 
 export function start() {
-  app.APP_VERSAO = '0.31.0';
+  app.APP_VERSAO = '0.32.0';
   app.SEED = {
     materias: [{
       id: 'lp',
@@ -398,56 +399,8 @@ export function start() {
   app.DO = null;
   app.ME = null;
   app.CI = null;
-  app.ACENTOS = [{
-    id: 'violeta',
-    n: 'Violeta',
-    cor: '#9085e9',
-    soft: '#211f3e',
-    ink: '#cabff5'
-  }, {
-    id: 'azul',
-    n: 'Azul',
-    cor: '#4a93ea',
-    soft: '#15263c',
-    ink: '#b6d5f7'
-  }, {
-    id: 'agua',
-    n: 'Verde-água',
-    cor: '#1fa87a',
-    soft: '#0e2b24',
-    ink: '#8fdcc2'
-  }, {
-    id: 'verde',
-    n: 'Verde',
-    cor: '#33ad5f',
-    soft: '#0f2c1c',
-    ink: '#9adcb3'
-  }, {
-    id: 'ciano',
-    n: 'Ciano',
-    cor: '#35b0c4',
-    soft: '#0d2a30',
-    ink: '#9adfe9'
-  }, {
-    id: 'ambar',
-    n: 'Âmbar',
-    cor: '#c98500',
-    soft: '#2c2209',
-    ink: '#f0cd86'
-  }, {
-    id: 'laranja',
-    n: 'Laranja',
-    cor: '#d95926',
-    soft: '#2e1a10',
-    ink: '#f5b193'
-  }, {
-    id: 'rosa',
-    n: 'Rosa',
-    cor: '#d55181',
-    soft: '#2e1621',
-    ink: '#f2adc5'
-  }];
-  app.ACENTO_TEXTO = '#0d0f15';
+  app.ACENTOS = ACCENTS;
+  app.ACENTO_TEXTO = ACCENT_TEXT;
   app.OCULTAVEIS = [{
     id: 'flash',
     n: 'Flashcards',
