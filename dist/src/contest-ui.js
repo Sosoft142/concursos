@@ -58,7 +58,7 @@ app.renderBoasVindas = function () {
   const empty = !app.CCT().length;
   if (hero) hero.hidden = empty;
   welcome.hidden = !empty;
-  welcome.innerHTML = empty ? `<div class="bv-h"><span class="bv-ic">${app.ic('i24')}</span><div><h3>Seu próximo passo começa aqui</h3><p>Reúna editais, acompanhe prazos e organize seus estudos.</p></div></div>
+  welcome.innerHTML = empty ? `<div class="bv-h"><div><h3>Organize sua preparação</h3><p>Adicione um concurso ou recupere seus dados para começar.</p></div></div>
     <div class="bv-acts"><button class="btn primary" onclick="edNovo()">${app.ic('i30')}Adicionar primeiro concurso</button><button class="btn ghost" onclick="abrirSync()">${app.ic('i31')}Recuperar meus dados</button></div>
     <details class="bv-help"><summary>Como funciona</summary><p>Cadastre um edital, selecione as matérias e acompanhe revisões, questões e flashcards na aba Estudos. Os dados ficam neste aparelho; a sincronização conecta seus dispositivos. Um backup também pode ser restaurado nas configurações.</p></details>` : '';
 };

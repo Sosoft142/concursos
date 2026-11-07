@@ -1,5 +1,14 @@
 # Histórico
 
+## 0.32.0 — 06/11/2026
+
+- Tema exclusivamente claro em páginas, campos, menu, janelas e instalação PWA; sem alternância automática pelo sistema.
+- Nova paleta com contraste de texto e botões verificado; azul como padrão para novas configurações e compatibilidade com cores já escolhidas.
+- Gradientes decorativos, brilho, transparência do cabeçalho e sombras dos cartões removidos; tipografia única e navegação mais discreta.
+- Fontes para novos concursos recolhidas em uma seção que pode ser aberta também pelo menu lateral.
+- Ícones de instalação atualizados para a nova identidade de cores, preservando o desenho e o endereço do app.
+- Fechar configurações desfaz a prévia de cor que não foi salva.
+
 ## 0.31.0 — 06/11/2026
 
 - Lista do edital monta tópicos sob demanda e libera os controles ao recolher a matéria, preservando o progresso.

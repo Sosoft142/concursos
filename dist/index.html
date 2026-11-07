@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<!-- Organizador de Concursos · V0.31.0 -->
+<!-- Organizador de Concursos · V0.32.0 -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<meta name="color-scheme" content="dark" />
-<meta name="theme-color" content="#0d0f15" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#ffffff" />
 <meta name="description" content="Seus concursos, cronogramas, lista do edital e flashcards — tudo em um lugar." />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="Concursos" />
 <link rel="icon" type="image/svg+xml" href="./icon.svg" />
 <link rel="icon" type="image/png" sizes="32x32" href="./icon-32.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@18..72,500;18..72,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="manifest" href="./manifest.webmanifest" />
 <title>Organizador de Concursos</title>
 <link rel="stylesheet" href="./concursos.css" />
@@ -70,7 +70,7 @@ Comparar
 <div class="card hero" id="hero">
 <div class="hero-l">
 <span class="eyebrow">Painel de concursos</span>
-<h3>Uma etapa de cada vez</h3>
+<h3>Próximos prazos</h3>
 <p id="next-deadline">Acompanhe seus editais e os próximos prazos.</p>
 </div>
 <div class="hero-r" id="hero-cd"></div>
@@ -85,20 +85,12 @@ Comparar
 <button class="btn ghost sm" onclick="ccImportar()"><svg viewBox="0 0 24 24"><use href="#i15"/></svg>Importar concurso</button>
 <p>Abra um arquivo JSON ou cole uma ficha. Seus concursos e marcações são preservados.</p>
 </div>
-<div id="bloco-fontes">
-<div class="area-sep" aria-hidden="true"><span class="ln"></span><span class="tx"><svg viewBox="0 0 24 24"><use href="#i1"/></svg>Descobrir novos editais</span><span class="ln"></span></div>
-<h2 class="section" id="novos-concursos">
-<svg class="sicon" viewBox="0 0 24 24"><use href="#i1"/></svg>
-Onde encontrar novos concursos
-</h2>
+<details class="discovery" id="bloco-fontes">
+<summary id="novos-concursos">Fontes para novos concursos<svg viewBox="0 0 24 24"><use href="#i8"/></svg></summary>
 <p class="section-sub">Fontes oficiais e portais que reúnem os concursos <b>previstos</b> e com <b>edital aberto</b>. Salve os links e cheque com frequência — os prazos de inscrição costumam ser curtos.</p>
 <div class="src-cols" id="fontes-list"></div>
 <button class="btn ghost sm" style="margin-top:14px" onclick="edFontes()"><svg viewBox="0 0 24 24"><use href="#i28"/></svg>Editar fontes e grupos</button>
-<div class="tip">
-<svg viewBox="0 0 24 24"><use href="#i7"/></svg>
-<p><b>Dica de rotina:</b> reserve 10 minutos por semana para varrer os portais de concursos e o diário oficial do seu estado. Quando um edital de interesse abrir, use o botão <b>Adicionar concurso</b> logo acima e preencha o que já souber — o resto dá para completar depois.</p>
-</div>
-</div>
+</details>
 <div id="arq-box" hidden></div>
 </section>
 <!-- ============ VIEW: ESTUDO ============ -->

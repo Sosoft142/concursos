@@ -146,10 +146,11 @@ app.goAnchor = function (v, id) {
   app.toggleDrawer(false);
   setTimeout(function () {
     var el = document.getElementById(id);
-    if (el) el.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    if (el) {
+      const disclosure = el.closest('details');
+      if (disclosure) disclosure.open = true;
+      el.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
   }, 120);
 };
 app.goPane = function (v, esc, p) {
