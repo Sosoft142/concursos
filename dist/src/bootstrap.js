@@ -2,7 +2,7 @@ import { app } from './state.js';
 import { ACCENTS, ACCENT_TEXT } from './appearance.js';
 
 export function start() {
-  app.APP_VERSAO = '0.33.0';
+  app.APP_VERSAO = '0.33.1';
   app.SEED = {
     materias: [{
       id: 'lp',
