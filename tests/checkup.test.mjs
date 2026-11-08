@@ -147,3 +147,34 @@ test('cópia truncada é lida por inteiro sem enviar o token ao host de arquivos
  try {await app.syncBaixar();assert.equal(app.syncState,'on');assert.equal(app.lastSyncedAt,'complete');assert.equal(request.options.credentials,'omit');assert.equal(request.options.headers,undefined);}
  finally {globalThis.fetch=originalFetch;}
 });
+test('documento criado pelo próprio editor continua válido ao reabrir e sincronizar',async()=>{
+ // doSalvar has always serialized documents as {n,ic,u}, without an ID.
+ app.renderDocs=()=>{};app.DO=[{n:'Meu edital',ic:'i15',u:'https://example.test/edital.pdf'}];
+ app.doSalvar();const stored=store.get(app.LSK);const saved=JSON.parse(stored);
+ assert.deepEqual(saved.d.docs,[{n:'Meu edital',ic:'i15',u:'https://example.test/edital.pdf'}]);
+ app.carregarEstado(stored);assert.equal(app.arranqueCorrompido,false);
+ assert.equal(app.S.t['lp:0'].e,'2026-11-03');
+ const remote={...saved,v:2,updatedAt:'base'};assert.equal(app.payloadCompleto(remote),true);
+ app.gh=async(path,options)=>{requests.push(options?.method||'GET');return gist(remote);};
+ app.dataUpdatedAt='base';app.lastSyncedAt='base';await app.syncEnviar();assert.ok(requests.includes('PATCH'));
+ await app.syncBaixar();assert.equal(app.syncState,'on');assert.deepEqual(app.DADOS.docs,saved.d.docs);
+});
+test('cópia local protegida pode ser exportada integralmente sem virar backup vazio',()=>{
+ const original='{"t":{"lp:0":{"e":true}},"d":';store.set(app.LSK,original);app.carregarEstado(original);
+ assert.equal(app.bkTexto(),original);app.saveS({noSync:true});assert.equal(store.get(app.LSK),original);
+});
+test('baixar documentos legados recupera sessão bloqueada e libera gravação',async()=>{
+ app.carregarEstado('{');const remote=snapshot('restored');remote.d.docs=[{n:'Edital',u:'https://example.test/edital',ic:'i15'}];
+ app.gh=async()=>gist(remote);await app.syncBaixar();
+ assert.equal(app.syncState,'on');assert.equal(app.arranqueCorrompido,false);assert.equal(app.estadoOriginal,null);
+ assert.equal(app.S.t['lp:0'].e,'2026-11-01');assert.equal(app.DADOS.docs[0].n,'Edital');
+ assert.deepEqual(JSON.parse(store.get(app.LSK)).d.docs,remote.d.docs);
+});
+test('incompatibilidade em identificador obrigatório informa o campo sem remover dados',()=>{
+ const data=snapshot();data.d.materias=[{n:'Sem ID',t:[]}];app.carregarEstado(JSON.stringify(data));
+ assert.equal(app.arranqueCorrompido,true);assert.match(app.erroDados,/d\.materias\.id/);
+ assert.deepEqual(JSON.parse(app.bkTexto()),data);
+});
+test('envio de sessão protegida explica o bloqueio e não toca na nuvem',async()=>{
+ app.arranqueCorrompido=true;await app.syncEnviar();assert.equal(requests.length,0);assert.match(app.syncMsg,/dados locais/);assert.equal(app.syncState,'erro');
+});

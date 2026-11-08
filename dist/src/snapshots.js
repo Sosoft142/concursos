@@ -2,15 +2,15 @@
 // migrated later; malformed collections must never reach rendering or storage.
 const record=value=>!!value&&typeof value==='object'&&!Array.isArray(value);
 const own=(value,key)=>Object.prototype.hasOwnProperty.call(value,key);
-function requireShape(ok) {if(!ok)throw new Error('Os dados do arquivo estão incompletos ou em formato inválido. Nada foi substituído.');}
+function requireShape(ok, field='') {if(!ok)throw new Error('Os dados do arquivo estão incompletos ou em formato inválido. Nada foi substituído.'+(field?' Campo: '+field+'.':''));}
 function rows(value,key) {
  if(value[key]==null)return;
  requireShape(Array.isArray(value[key])&&value[key].every(record));
 }
-function identified(values,key='id') {
+function identified(values,key='id',path='') {
  const ids=new Set();
  for(const value of values||[]) {
-  requireShape(record(value)&&typeof value[key]==='string'&&!!value[key]&&!/["'<>\\]/.test(value[key])&&!ids.has(value[key]));
+  requireShape(record(value)&&typeof value[key]==='string'&&!!value[key]&&!/["'<>\\]/.test(value[key])&&!ids.has(value[key]),path?path+'.'+key:key);
   ids.add(value[key]);
  }
 }
@@ -30,7 +30,10 @@ export function validateSnapshot(value,{complete=false}={}) {
  if(own(value,'d')) {
   const data=value.d;requireShape(record(data)&&Array.isArray(data.concursos)&&Array.isArray(data.materias));
   for(const key of ['concursos','materias','decks','cards','fontes','docs']) {
-   rows(data,key);identified(data[key],key==='cards'?'i':'id');
+   rows(data,key);
+   // Documents have always been positional {n,ic,u} records. doSalvar()
+   // deliberately stores no ID; do not reject the app's own saved format.
+   if(key!=='docs')identified(data[key],key==='cards'?'i':'id','d.'+key);
   }
   for(const subject of data.materias) {
    if(subject.t!=null)requireShape(Array.isArray(subject.t)&&subject.t.every(topic=>typeof topic==='string'||record(topic)&&typeof topic.n==='string'));

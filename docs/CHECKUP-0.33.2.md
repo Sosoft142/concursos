@@ -1,5 +1,7 @@
 # Check-up geral — 0.33.2
 
+**Atualização de 08/11:** a validação desta versão introduziu uma regressão com documentos sem `id`. Corrigida em [0.33.3](RECUPERACAO-0.33.3.md), com teste do formato realmente salvo pelo editor.
+
 Revisão de 07/11/2026. Base: versão 0.33.1. Repositório: Sosoft142/concursos.
 
 ## Correções

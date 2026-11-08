@@ -2,7 +2,7 @@ import { app } from './state.js';
 import { ACCENTS, ACCENT_TEXT } from './appearance.js';
 
 export function start() {
-  app.APP_VERSAO = '0.33.2';
+  app.APP_VERSAO = '0.33.3';
   app.SEED = {
     materias: [{
       id: 'lp',
@@ -454,7 +454,7 @@ export function start() {
   (function stamp() {
     try {
       var d = new Date();
-      var s = '07/11/2026';
+      var s = '08/11/2026';
       var el = document.getElementById('upd');
       if (el) el.textContent = s;
       var v = document.getElementById('appver');
@@ -470,7 +470,7 @@ export function start() {
     noStamp: true,
     noSync: true
   });
-  if (app.arranqueCorrompido) alert('Os dados salvos neste navegador estão ilegíveis. Nenhum conteúdo foi sobrescrito. Restaure um backup válido ou baixe sua cópia da nuvem para recuperar o app.');
+  if (app.arranqueCorrompido) alert('Não consegui abrir os dados salvos neste aparelho. A cópia original foi preservada. Você pode copiar um backup ou baixar sua cópia da nuvem.\n\n'+(app.erroDados||''));
   app.renderPill();
   app.togglePainel(app.S.ui.pn3 !== 0);
   if (app.syncState === 'on') setTimeout(app.syncAoAbrir, 400);

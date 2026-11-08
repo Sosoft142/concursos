@@ -1,5 +1,11 @@
 # Histórico
 
+## 0.33.3 — 08/11/2026
+
+- Corrige regressão da 0.33.2: documentos salvos sem `id` pelo próprio editor deixavam de ser aceitos na abertura e na sincronização. O formato histórico volta a ser aceito, mantendo documentos e progresso.
+- Sessões protegidas exportam a cópia local original; mensagens identificam campos incompatíveis e explicam bloqueio de envio sem sobrescrever a nuvem.
+- Testes reproduzem salvar/reabrir/enviar/baixar com documentos legados; 112 testes e verificação em navegador com nuvem simulada.
+
 ## 0.33.2 — 07/11/2026
 
 - Restauração e carga remota validadas antes de substituir dados; armazenamento ilegível e falhas de gravação preservam a cópia anterior.
