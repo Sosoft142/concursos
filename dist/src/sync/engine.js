@@ -1,5 +1,5 @@
 import { app } from '../state.js';
-import {isFullSnapshot} from '../snapshots.js';
+import {isFullSnapshot,validateSnapshot} from '../snapshots.js';
 
 let connectionEpoch = 0;
 function contentRevision() {return JSON.stringify([app.S.t,app.S.qzl,app.S.cy,app.S.fc,app.DADOS]);}
@@ -27,7 +27,8 @@ async function remoteFrom(gist) {
     if(new TextEncoder().encode(text).byteLength>10*1024*1024)throw new Error('A cópia excede o limite de leitura de 10 MB. Use um backup manual para recuperá-la.');
     value=JSON.parse(text);
   }
-  if(!app.payloadCompleto(value))throw new Error('A cópia na nuvem está incompleta ou ilegível. Nenhum dado foi substituído.');
+  if(!value||typeof value!=='object')throw new Error('A cópia na nuvem está incompleta ou ilegível. Nenhum dado foi substituído.');
+  validateSnapshot(value,{complete:true});
   return value;
 }
 function hasDraft() {return ['ED','EM','FE','FO','DO','ME','CI','CG'].some(key=>app[key]);}
@@ -142,7 +143,11 @@ app.syncFalhou = function (error) {
   app.renderPill();app.syncModalMsg();
 };
 app.syncEnviar = async function (force=false) {
-  if(app.syncState==='off'||!app.syncToken||!app.gistId||app.arranqueDuvidoso||app.arranqueCorrompido)return;
+  if(app.syncState==='off'||!app.syncToken||!app.gistId)return;
+  if(app.arranqueDuvidoso||app.arranqueCorrompido){
+    app.syncState='erro';app.syncMsg='O envio está bloqueado porque os dados locais ainda não foram abertos. A cópia da nuvem foi preservada. Baixe a cópia da nuvem ou copie um backup dos dados locais.';
+    app.renderPill();app.syncModalMsg();return;
+  }
   const operation=begin();if(!operation)return;
   try {
     const gist=await app.gh('/gists/'+operation.gist);if(!current(operation))return;

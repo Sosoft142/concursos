@@ -188,6 +188,8 @@ app.qzlDe = function (o) {
   return l;
 };
 app.bkTexto = function () {
+  // If loading was blocked, export the original rather than the empty fallback.
+  if(app.arranqueCorrompido && typeof app.estadoOriginal==='string')return app.estadoOriginal;
   return JSON.stringify({
     v: 2,
     updatedAt: app.S.at || app.nowISO(),
@@ -236,12 +238,19 @@ app.persistirEstado = function (next) {
   try {localStorage.setItem(app.LSK, JSON.stringify(next));}
   catch {app.persistOk=false;throw new Error('O navegador não conseguiu salvar os dados. Libere espaço e tente novamente. A cópia anterior foi mantida.');}
   app.S=next;app.DADOS=next.d;app.persistOk=true;
+  app.estadoOriginal=null;app.erroDados='';
   app.arranqueCorrompido=false;app.arranqueDuvidoso=false;app.arranqueVazio=false;app.gravacaoPendente=false;
   app.dataUpdatedAt=next.at;
 };
 app.carregarEstado = function (raw) {
-  try {app.S=raw==null?{}:app.prepararEstado(JSON.parse(raw));}
-  catch {app.S={};app.persistOk=false;app.arranqueCorrompido=true;}
+  try {
+    app.S=raw==null?{}:app.prepararEstado(JSON.parse(raw));
+    app.arranqueCorrompido=false;app.estadoOriginal=null;app.erroDados='';
+    if(raw!=null)app.persistOk=true;
+  } catch(error) {
+    app.S={};app.persistOk=false;app.arranqueCorrompido=true;app.estadoOriginal=raw;
+    app.erroDados=error instanceof SyntaxError?'O texto salvo não é um JSON completo.':error.message;
+  }
 };
 app.bkImport = function () {
   const text=prompt('Cole aqui o backup salvo:');

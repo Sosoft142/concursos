@@ -1,6 +1,6 @@
 # Estado atual — Concursos
 
-- Versão: **0.33.2**. Produção: https://sosoft142.github.io/concursos/.
+- Versão: **0.33.3**. Produção: https://sosoft142.github.io/concursos/.
 - Repositório: `Sosoft142/concursos`, branch principal `main`.
 - PWA sem framework ou bundler; fonte pública em `dist/`, com módulos ES e CSS separado. Organização inspirada no Retomar.
 - Raiz do Pages preservada por arquivos gerados. `npm run build` prepara shell, manifesto e workers compatíveis.
@@ -21,6 +21,7 @@
 - Validação e medição desta revisão: [REVISAO-0.31.0.md](REVISAO-0.31.0.md).
 - Critérios de cores e ícones em [UI.md](UI.md); conferência realizada em [REVISAO-0.33.0.md](REVISAO-0.33.0.md).
 - Revisão 0.33.1: busca conferida em 320/390/1024 px ([captura](screenshots/0.33.1-search.jpg)); seis cenários de gestos com eventos sintéticos no navegador e 73 testes automatizados aprovados.
+- Correção 0.33.3: restaura compatibilidade com documentos sem `id`, formato usado pelo editor; recupera abertura local e sincronização sem apagar dados. [Detalhes](RECUPERACAO-0.33.3.md).
 - Check-up 0.33.2: validação atômica de backup/nuvem, controle de concorrência e respostas atrasadas, preservação de marcas/URLs ao editar tópicos, proteção de conteúdo externo e correções de cartões/teclado. [Relatório](CHECKUP-0.33.2.md).
-- Verificação: `npm run verify` (107 testes aprovados); resultados completos em `.work/verification.log`. Testes de domínio, persistência, migração, sync, navegação, gestos e offline.
+- Verificação: `npm run verify` (112 testes aprovados); resultados completos em `.work/verification.log`. Testes de domínio, persistência, migração, sync, navegação, gestos e offline.
 - Limite da validação: testes de eventos de toque e revisão responsiva em navegador; a sensação e a integração com o gesto nativo devem ser conferidas também no aparelho Android físico.
