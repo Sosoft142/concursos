@@ -31,7 +31,7 @@ app.modalFundo = function (ev) {
   if (ev.target && ev.target.classList.contains('modal-bd')) app.modalFechar();
 };
 app.modalHead = function (titulo, icone, fechar) {
-  return '<div class="modal-h"><span class="pn-ic" style="width:34px;height:34px;border-radius:10px">' + app.ic(icone || 'i28') + '</span><h3>' + app.tx(titulo) + '</h3>' + '<button class="icon-btn" onclick="' + (fechar || 'edFechar()') + '" aria-label="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>';
+  return '<div class="modal-h"><span class="pn-ic" style="width:34px;height:34px;border-radius:3px">' + app.ic(icone || 'i28') + '</span><h3>' + app.tx(titulo) + '</h3>' + '<button class="icon-btn" onclick="' + (fechar || 'edFechar()') + '" aria-label="Fechar">' + app.ic('i43') + '</button></div>';
 };
 app.pget = function (o, p) {
   var a = p.split('.'),

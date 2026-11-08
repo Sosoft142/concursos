@@ -4,6 +4,7 @@
 | --- | --- | --- |
 | Estrutura HTML e símbolos SVG | `dist/index.html`, `dist/src/domain.js` | `icons.test.mjs`, navegador |
 | Estilos e experiência móvel | `dist/concursos.css`, `dist/mobile.css`, `dist/identity.css` | navegador, 320/390/1024 px |
+| Fontes, instalação e licenças visuais | `dist/fonts/`, `dist/icon*`, `dist/THIRD-PARTY-NOTICES.txt` | `offline.test.mjs`, navegador |
 | Paletas do modo claro e preferências | `dist/src/appearance.js`, `settings.js` | `appearance.test.mjs`, navegador |
 | Entrada e inicialização | `dist/src/app.js`, `bootstrap.js`, `state.js` | sintaxe, imports, regressão de dados |
 | Dados, datas e formatação | `dist/src/domain.js` | `data.test.mjs` |

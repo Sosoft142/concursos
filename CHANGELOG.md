@@ -1,5 +1,12 @@
 # Histórico
 
+## 0.34.0 — 08/11/2026
+
+- Nova identidade exclusivamente clara: azul-petróleo, verde profundo, terracota e ocre; cartões com cantos discretos, divisórias e cabeçalhos sólidos.
+- Ícones Material Sharp, fontes IBM Plex Sans e Space Grotesk locais, incluídas no cache offline. Ícones da instalação atualizados.
+- Navegação em faixas, resumo de prazos dividido e formulários com campos brancos e títulos mais claros; revisão em 320/390/760/1024 px.
+- Dados, sincronização, gestos, identificadores históricos e endereço preservados; 112 testes automatizados aprovados.
+
 ## 0.33.3 — 08/11/2026
 
 - Corrige regressão da 0.33.2: documentos salvos sem `id` pelo próprio editor deixavam de ser aceitos na abertura e na sincronização. O formato histórico volta a ser aceito, mantendo documentos e progresso.
