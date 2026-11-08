@@ -31,7 +31,7 @@ app.modalFundo = function (ev) {
   if (ev.target && ev.target.classList.contains('modal-bd')) app.modalFechar();
 };
 app.modalHead = function (titulo, icone, fechar) {
-  return '<div class="modal-h"><span class="pn-ic" style="width:34px;height:34px;border-radius:10px">' + app.ic(icone || 'i28') + '</span><h3>' + titulo + '</h3>' + '<button class="icon-btn" onclick="' + (fechar || 'edFechar()') + '" aria-label="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>';
+  return '<div class="modal-h"><span class="pn-ic" style="width:34px;height:34px;border-radius:10px">' + app.ic(icone || 'i28') + '</span><h3>' + app.tx(titulo) + '</h3>' + '<button class="icon-btn" onclick="' + (fechar || 'edFechar()') + '" aria-label="Fechar"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>';
 };
 app.pget = function (o, p) {
   var a = p.split('.'),
@@ -568,25 +568,34 @@ app.emFechar = function () {
   if (app.ED) app.edRender();else app.modalFechar();
 };
 app.emSalvar = function () {
-  var nova = [],
-    usados = [];
+  const nova=[];
+  // Reserve all IDs before walking editor order, including removed subjects
+  // whose historical progress still exists. New subjects cannot inherit it.
+  const used=new Set([...app.MT(),...app.EM].map(m=>m.id).filter(Boolean));
+  Object.keys(app.S.t).forEach(key=>used.add(key.slice(0,key.lastIndexOf(':'))));
+  const progress={...app.S.t};
   app.EM.forEach(function (m) {
-    var nome = String(m.n || '').trim();
-    if (!nome) return;
-    var id = m.id || app.idLivre(app.slug(nome), usados.map(function (x) {
-      return {
-        id: x
-      };
-    }));
-    usados.push(id);
-    nova.push({
-      id: id,
-      n: nome,
-      dica: String(m.dica || '').trim(),
-      t: app.linhas(m.t),
-      mat: app.emParseMat(m.mat)
+    const name=String(m.n||'').trim();
+    if(!name)return;
+    const id=m.id||app.idLivre(app.slug(name),[...used].map(id=>({id})));
+    used.add(id);
+    const original=app.mById(id);
+    const positions=new Map();
+    (original?.t||[]).forEach((topic,index)=>{
+      const text=app.topName(topic);if(!positions.has(text))positions.set(text,[]);
+      positions.get(text).push(index);
+      delete progress[id+':'+index];
     });
+    const topics=app.linhas(m.t).map((text,index)=>{
+      const previous=positions.get(text)?.shift();
+      if(previous==null)return text;
+      if(app.S.t[id+':'+previous])progress[id+':'+index]=app.S.t[id+':'+previous];
+      // The plain-text editor does not edit topic URLs: keep them on save.
+      return JSON.parse(JSON.stringify(original.t[previous]));
+    });
+    nova.push({id,n:name,dica:String(m.dica||'').trim(),t:topics,mat:app.emParseMat(m.mat)});
   });
+  app.S.t=progress;
   var vivos = {};
   nova.forEach(function (m) {
     vivos[m.id] = 1;

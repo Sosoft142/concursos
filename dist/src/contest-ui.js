@@ -34,7 +34,7 @@ app.renderCards = function ({listOnly = false} = {}) {
       </div>
       <div class="cc-cta">
         <button class="btn primary" data-contest-action="open" data-id="${app.ea(contest.id)}">${app.ic('i2')}Ver concurso</button>
-        ${contest.urlBanca ? `<a class="cc-source" href="${app.ea(contest.urlBanca)}" target="_blank" rel="noopener">Banca ${app.ic('i5')}</a>` : ''}
+        ${contest.urlBanca ? `<a class="cc-source" href="${app.href(contest.urlBanca)}" target="_blank" rel="noopener">Banca ${app.ic('i5')}</a>` : ''}
         <button class="cc-manage icon-btn" data-contest-action="manage" data-id="${app.ea(contest.id)}" aria-label="Gerenciar ${app.ea(contest.titulo)}" title="Gerenciar concurso">${app.ic('i23')}</button>
       </div>
     </article>`;

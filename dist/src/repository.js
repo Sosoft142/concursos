@@ -1,4 +1,5 @@
 import { app } from './state.js';
+import {validateSnapshot} from './snapshots.js';
 
 app.armazenamentoVivo = function () {
   try {
@@ -27,7 +28,7 @@ app.estadoVirgem = function () {
 };
 /* a loja tinha dados que não estavam visíveis no arranque: adota, não apaga */
 app.guardaAdotar = function (A) {
-  app.S = A;
+  app.S = app.prepararEstado(A, true);
   app.S.t = app.S.t || {};
   app.S.cy = app.S.cy || {};
   app.S.fc = app.S.fc || {};
@@ -47,7 +48,7 @@ app.guardaAdotar = function (A) {
 };
 /* devolve true quando a gravação foi impedida para proteger os dados */
 app.guardaBloqueia = function () {
-  if (app.arranqueDuvidoso) {
+  if (app.arranqueDuvidoso || app.arranqueCorrompido) {
     app.gravacaoPendente = true;
     return true;
   }
@@ -64,11 +65,12 @@ app.guardaBloqueia = function () {
   if (!atual) return false;
   try {
     var A = JSON.parse(atual);
-    if (A && A.d && (A.d.concursos || []).length && (A.d.materias || []).length) {
+    validateSnapshot(A, {complete:true});
+    if (A.d.concursos.length || (A.qzl || []).length || ['t','fc','cy'].some(key => Object.keys(A[key] || {}).length)) {
       app.guardaAdotar(A);
       return true;
     }
-  } catch (e) {}
+  } catch (e) {app.arranqueCorrompido=true;app.persistOk=false;return true;}
   return false;
 };
 /* loja quebrada: tenta de novo de vez em quando */
@@ -87,6 +89,7 @@ app.guardaResolver = function () {
           return;
         }
       } catch (e) {}
+      app.arranqueCorrompido=true;app.persistOk=false;app.arranqueDuvidoso=false;return;
     }
     app.arranqueDuvidoso = false;
     if (app.gravacaoPendente) {
@@ -104,24 +107,24 @@ app.guardaResolver = function () {
    entrava sem metas, sem decks e com a ficha no formato velho.
    Sao idempotentes: rodar duas vezes nao muda nada.
    ===================================================================== */
-app.semear = function (chave) {
-  if (!Array.isArray(app.DADOS[chave]) || !app.DADOS[chave].length) app.DADOS[chave] = JSON.parse(JSON.stringify(app.SEED[chave]));
+app.semear = function (chave, data = app.DADOS) {
+  if (!Array.isArray(data[chave])) data[chave] = JSON.parse(JSON.stringify(app.SEED[chave]));
 };
-app.migrarDados = function () {
-  if (!app.DADOS || typeof app.DADOS !== 'object') return;
-  if (!Array.isArray(app.DADOS.concursos)) app.DADOS.concursos = [];
-  if (!Array.isArray(app.DADOS.materias)) app.DADOS.materias = [];
-  app.semear('decks');
-  app.semear('cards');
-  app.semear('fontes');
-  app.semear('docs');
-  if (!app.DADOS.metas || typeof app.DADOS.metas !== 'object') app.DADOS.metas = {};
+app.migrarDados = function (data = app.DADOS) {
+  if (!data || typeof data !== 'object') return;
+  if (!Array.isArray(data.concursos)) data.concursos = [];
+  if (!Array.isArray(data.materias)) data.materias = [];
+  app.semear('decks', data);
+  app.semear('cards', data);
+  app.semear('fontes', data);
+  app.semear('docs', data);
+  if (!data.metas || typeof data.metas !== 'object') data.metas = {};
   Object.keys(app.SEED.metas).forEach(function (k) {
-    if (app.DADOS.metas[k] == null) app.DADOS.metas[k] = JSON.parse(JSON.stringify(app.SEED.metas[k]));
+    if (data.metas[k] == null) data.metas[k] = JSON.parse(JSON.stringify(app.SEED.metas[k]));
   });
-  if (!app.DADOS.ciclo || typeof app.DADOS.ciclo !== 'object') app.DADOS.ciclo = JSON.parse(JSON.stringify(app.SEED.ciclo));
-  if (!Array.isArray(app.DADOS.ciclo.blocos)) app.DADOS.ciclo.blocos = [];
-  app.DADOS.concursos.forEach(function (c) {
+  if (!data.ciclo || typeof data.ciclo !== 'object') data.ciclo = JSON.parse(JSON.stringify(app.SEED.ciclo));
+  if (!Array.isArray(data.ciclo.blocos)) data.ciclo.blocos = [];
+  data.concursos.forEach(function (c) {
     if (c.notas == null) c.notas = '';
     if (c.arquivado == null) c.arquivado = false;
     /* ficha do cargo: o que estava como <small>…</small> dentro do valor vira
@@ -208,8 +211,7 @@ app.bkSelecionar = function () {
   el.focus();
   el.select();
   try {
-    document.execCommand('copy');
-    alert('Backup copiado!');
+    if(document.execCommand('copy'))alert('Backup copiado!');
   } catch (e) {}
 };
 app.bkExport = function () {
@@ -222,30 +224,43 @@ app.bkExport = function () {
     });
   } else app.bkModal(s);
 };
+// Preparing and persisting are separate so a validation/quota failure leaves
+// both the in-memory state and the last synchronized revision intact.
+app.prepararEstado = function (value, complete = false) {
+  validateSnapshot(value, {complete});
+  const next = JSON.parse(JSON.stringify({t:value.t||{}, qzl:app.qzlDe(value), cy:value.cy||{}, fc:value.fc||{}, ui:value.ui||{}, d:value.d||app.DADOS, at:value.updatedAt||value.at||''}));
+  app.migrarDados(next.d);
+  return next;
+};
+app.persistirEstado = function (next) {
+  try {localStorage.setItem(app.LSK, JSON.stringify(next));}
+  catch {app.persistOk=false;throw new Error('O navegador não conseguiu salvar os dados. Libere espaço e tente novamente. A cópia anterior foi mantida.');}
+  app.S=next;app.DADOS=next.d;app.persistOk=true;
+  app.arranqueCorrompido=false;app.arranqueDuvidoso=false;app.arranqueVazio=false;app.gravacaoPendente=false;
+  app.dataUpdatedAt=next.at;
+};
+app.carregarEstado = function (raw) {
+  try {app.S=raw==null?{}:app.prepararEstado(JSON.parse(raw));}
+  catch {app.S={};app.persistOk=false;app.arranqueCorrompido=true;}
+};
 app.bkImport = function () {
-  var s = prompt('Cole aqui o backup salvo:');
-  if (!s) return;
+  const text=prompt('Cole aqui o backup salvo:');
+  if(!text)return;
   try {
-    var o = JSON.parse(s);
-    if (!o || typeof o !== 'object') throw new Error('formato');
-    app.S.t = o.t || {};
-    app.S.qzl = app.qzlDe(o);
-    app.S.cy = o.cy || {};
-    app.S.fc = o.fc || {};
-    app.S.ui = o.ui || {};
-    if (o.d && Array.isArray(o.d.concursos) && Array.isArray(o.d.materias)) {
-      app.DADOS = o.d;
-      app.migrarDados();
-      app.S.d = app.DADOS;
-    }
-    app.saveS();
+    const next=app.prepararEstado(JSON.parse(text));
+    next.at=new Date().toISOString();
+    app.persistirEstado(next);
+    app.agendarSync?.();
+    app.aplicarAcento?.();
     app.renderTudo();
     app.togglePainel(app.S.ui.pn3 !== 0);
-    var nfc = Object.keys(app.S.fc).length,
-      ntp = Object.keys(app.S.t).length,
-      ncc = app.CC().length;
-    alert('Progresso restaurado!\n\n• ' + ncc + ' concursos\n• ' + nfc + ' flashcards com histórico\n• ' + ntp + ' tópicos marcados na lista do edital');
-  } catch (e) {
-    alert('Não consegui ler esse backup — confira se colou o texto completo.');
+    alert('Progresso restaurado!\n\n• '+app.CC().length+' concursos\n• '+Object.keys(app.S.fc).length+' flashcards com histórico\n• '+Object.keys(app.S.t).length+' tópicos marcados na lista do edital');
+  } catch(error) {
+    alert(error instanceof SyntaxError?'Não consegui ler esse backup — confira se colou o texto completo.':error.message);
   }
+};
+
+app.flushPendingSaves = function () {
+  if(app.notaTimer){clearTimeout(app.notaTimer);app.notaTimer=null;app.DADOS.updatedAt=new Date().toISOString();app.saveS();}
+  if(app.uiTimer){clearTimeout(app.uiTimer);app.uiTimer=null;app.saveS({noStamp:true,noSync:true});}
 };

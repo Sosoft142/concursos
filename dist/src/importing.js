@@ -1,3 +1,4 @@
+import {validateSnapshot} from './snapshots.js';
 // Portable packages add contests and subjects; they never restore an entire app backup.
 export const MAX_IMPORT_BYTES = 5 * 1024 * 1024;
 
@@ -82,6 +83,7 @@ export function planContestImport(text, current, normalizeContest) {
     normalized.badge ||= (normalized.curto || normalized.titulo).slice(0, 10);
     return normalized;
   });
+  validateSnapshot({t:{},d:{concursos:result,materias:addedSubjects}});
   return {concursos: result, materias: addedSubjects, skipped};
 }
 

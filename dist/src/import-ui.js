@@ -20,7 +20,7 @@ app.openContestImport = function () {
 function showError(error) {
   prepared = null;
   const message = document.getElementById('contest-import-error');
-  if (message) {message.hidden = false; message.textContent = error.message || 'Não foi possível ler o arquivo.';}
+  if (message) {message.hidden = false; message.textContent = error.message || 'Não foi possível ler o arquivo.'; message.scrollIntoView?.({block:'nearest'});}
   const button = document.querySelector('[data-import-action="apply"]');
   if (button) button.disabled = true;
   const preview = document.getElementById('contest-import-preview');

@@ -2,7 +2,7 @@ import { app } from './state.js';
 import { ACCENTS, ACCENT_TEXT } from './appearance.js';
 
 export function start() {
-  app.APP_VERSAO = '0.33.1';
+  app.APP_VERSAO = '0.33.2';
   app.SEED = {
     materias: [{
       id: 'lp',
@@ -160,6 +160,7 @@ export function start() {
   app.persistOk = true;
   app.S = {};
   app.arranqueDuvidoso = false;
+  app.arranqueCorrompido = false;
   app.arranqueVazio = false;
   app.gravacaoPendente = false;
   app.guardaAvisou = false;
@@ -171,12 +172,7 @@ export function start() {
       app.persistOk = false;
     }
     app.marcarArranque(bruto);
-    try {
-      app.S = JSON.parse(bruto || '{}');
-    } catch (e) {
-      app.persistOk = false;
-      app.S = {};
-    }
+    app.carregarEstado(bruto);
   })();
   if (!app.S || typeof app.S !== 'object') app.S = {};
   app.S.t = app.S.t || {};
@@ -249,6 +245,7 @@ export function start() {
     if (!el || !el.classList) return;
     var grupo = null;
     if (el.classList.contains('pnav-b')) grupo = [].slice.call(document.querySelectorAll('.pnav-b[data-e="' + el.getAttribute('data-e') + '"]'));else if (el.classList.contains('tab')) grupo = [].slice.call(document.querySelectorAll('.tabs .tab'));
+    if (grupo) grupo = grupo.filter(button => !button.hidden && getComputedStyle(button).display !== 'none');
     if (!grupo || grupo.length < 2) return;
     e.preventDefault();
     var i = grupo.indexOf(el),
@@ -442,6 +439,9 @@ export function start() {
   app.syncBusy = false;
   app.syncTimer = null;
   app.syncAt = '';
+  window.addEventListener('online', () => app.syncAoAbrir());
+  window.addEventListener('pagehide', () => app.flushPendingSaves());
+  document.addEventListener('visibilitychange', () => {if(document.hidden)app.flushPendingSaves();});
   app.fltr = 'all';
   app.ckOpen = {};
   app.qzEditando = null;
@@ -470,6 +470,7 @@ export function start() {
     noStamp: true,
     noSync: true
   });
+  if (app.arranqueCorrompido) alert('Os dados salvos neste navegador estão ilegíveis. Nenhum conteúdo foi sobrescrito. Restaure um backup válido ou baixe sua cópia da nuvem para recuperar o app.');
   app.renderPill();
   app.togglePainel(app.S.ui.pn3 !== 0);
   if (app.syncState === 'on') setTimeout(app.syncAoAbrir, 400);

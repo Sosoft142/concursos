@@ -1,7 +1,8 @@
 import { app } from './state.js';
 
 app.corVar = function (c) {
-  return 'var(--' + (c || 'primary') + ')';
+  const colors=['primary','violet','teal','blue','amber','green','orange','magenta','rose'];
+  return 'var(--' + (colors.includes(c) ? c : 'primary') + ')';
 };
 /* =====================================================================
    HELPERS
@@ -23,6 +24,12 @@ app.arrMove = function (a, i, dir) {
 };
 app.ea = function (s) {
   return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+};
+// Only web links can be opened from editable/imported content. Escape the
+// resulting attribute as well; escaping quotes alone does not block javascript:.
+app.href = function (value) {
+  try {const url=new URL(String(value));if(['http:','https:'].includes(url.protocol))return app.ea(url.href);}catch{}
+  return '#';
 };
 app.tx = function (s) {
   return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -255,7 +262,7 @@ app.mtlHtml = function (mid) {
   m.mat.forEach(function (o) {
     if (!o || !o.u) return;
     var tp = app.TIPOS[o.t] || app.TIPOS.site;
-    h += '<a class="mtl mtl-' + app.ea(o.t || 'site') + '" href="' + app.ea(o.u) + '" target="_blank" rel="noopener">' + app.ic(tp.i) + app.tx(o.l || tp.l) + '</a>';
+    h += '<a class="mtl mtl-' + app.ea(o.t || 'site') + '" href="' + app.href(o.u) + '" target="_blank" rel="noopener">' + app.ic(tp.i) + app.tx(o.l || tp.l) + '</a>';
   });
   return h;
 };
