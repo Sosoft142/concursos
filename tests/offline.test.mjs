@@ -13,6 +13,7 @@ function worker({online=true}={}) {
 test('manifesto offline inclui todos os módulos e arquivos existem',()=>{
   const source=readFileSync('sw.js','utf8');const list=JSON.parse(source.match(/const ASSETS = (\[[\s\S]*?\]);/)[1]);
   assert.ok(list.includes('./dist/identity.css'));assert.ok(list.includes('./dist/src/app.js'));assert.ok(list.includes('./dist/src/gestures.js'));
+  for(const font of ['ibm-plex-sans','space-grotesk'])assert.ok(list.includes(`./dist/fonts/${font}.woff2`),`fonte offline: ${font}`);
   for(const file of list.filter(file=>file!=='./'))assert.ok(existsSync(file),file);
 });
 test('instalação prepara conteúdo completo e limpeza preserva outros apps',async()=>{

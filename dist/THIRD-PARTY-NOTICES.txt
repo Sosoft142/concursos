@@ -1,23 +1,18 @@
-Settings icon adapted from Feather Icons (https://github.com/feathericons/feather).
+Material Icons Sharp
+Copyright Google LLC. Licensed under the Apache License, Version 2.0.
+SVG geometry sourced from https://github.com/google/material-design-icons
+and used inline with historical symbol IDs retained.
+Full license: licenses/material-icons-APACHE2.txt
 
-The MIT License (MIT)
+IBM Plex Sans
+Copyright IBM Corp. Licensed under the SIL Open Font License, Version 1.1.
+Source: https://github.com/google/fonts/tree/main/ofl/ibmplexsans
+Local variable WOFF2 converted from the upstream TTF without glyph subsetting.
+Full license: fonts/OFL-ibm-plex-sans.txt
 
-Copyright (c) 2013-2023 Cole Bemis
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Space Grotesk
+Copyright The Space Grotesk Project Authors / Florian Karsten.
+Licensed under the SIL Open Font License, Version 1.1.
+Source: https://github.com/google/fonts/tree/main/ofl/spacegrotesk
+Local variable WOFF2 converted from the upstream TTF without glyph subsetting.
+Full license: fonts/OFL-space-grotesk.txt

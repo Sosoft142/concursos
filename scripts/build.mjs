@@ -17,7 +17,7 @@ function walk(dir) {
   for (const item of readdirSync(resolve(root, dir), {withFileTypes:true})) {
     const name = `${dir}/${item.name}`;
     if (item.isDirectory()) walk(name);
-    else if (/\.(?:js|css|png|svg|webmanifest)$/.test(name) && !name.endsWith('/sw.js')) files.push(name);
+    else if (/\.(?:js|css|png|svg|webmanifest|woff2)$/.test(name) && !name.endsWith('/sw.js')) files.push(name);
   }
 }
 walk('dist');
