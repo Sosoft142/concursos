@@ -124,6 +124,6 @@ export function initializeGestures() {
   }
   document.addEventListener('pointerup', event => finish(event));
   document.addEventListener('pointercancel', event => finish(event, true));
-  document.addEventListener('click', event => {if (performance.now() < suppressClickUntil) {event.preventDefault();event.stopImmediatePropagation();}}, true);
+  document.addEventListener('click', event => {if (event.detail !== 0 && performance.now() < suppressClickUntil) {event.preventDefault();event.stopImmediatePropagation();}}, true);
   window.addEventListener('blur', () => {if(drag)finish({pointerId:drag.pointer},true);});
 }

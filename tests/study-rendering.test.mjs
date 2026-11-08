@@ -42,3 +42,10 @@ test('controle delegado resolve clique no texto interno para a marcação corret
  assert.deepEqual(calls,[['lp',1,'r']]);
  handleTopicClick({target:{closest:()=>null}});assert.equal(calls.length,1);
 });
+
+test('últimos lançamentos mostram os mais recentes mesmo na mesma data',()=>{
+ document.getElementById=id=>id==='quiz-list'?list:null;
+ app.DADOS.metas={alvo:70};app.S.qzl=Array.from({length:15},(_,i)=>({id:'q'+i,m:'lp',d:'2026-11-07',f:100,a:i}));
+ app.renderQuiz();const history=list.innerHTML.slice(list.innerHTML.indexOf('Últimos lançamentos'));
+ assert.ok(history.indexOf('q14')<history.indexOf('q13'));assert.ok(history.includes('q3'));assert.ok(!history.includes('q2'));
+});

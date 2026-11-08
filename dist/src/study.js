@@ -197,7 +197,7 @@ function checklistBody(m) {
     const buttons = [['e', 'Estudei', 'E'], ['r', 'Revisei', 'R'], ['q', 'Questões', 'Q']].map(([stage, label, short]) =>
       `<button class="sd ${stage}${state[stage] ? ' on' : ''}" data-topic-subject="${app.ea(m.id)}" data-topic-index="${i}" data-topic-stage="${stage}" title="${label}" aria-pressed="${!!state[stage]}"><span class="sd-short">${short}</span><span class="sd-label">${label}</span></button>`
     ).join('');
-    return `<div class="ck-t${state.e && state.r && state.q ? ' done' : ''}"><span class="tx">${app.tx(app.topName(topic))}${url ? ` <a href="${app.ea(url)}" target="_blank" rel="noopener" aria-label="abrir material do tópico">${app.ic('i5')}</a>` : ''}</span><span class="stg">${buttons}</span></div>`;
+    return `<div class="ck-t${state.e && state.r && state.q ? ' done' : ''}"><span class="tx">${app.tx(app.topName(topic))}${url ? ` <a href="${app.href(url)}" target="_blank" rel="noopener" aria-label="abrir material do tópico">${app.ic('i5')}</a>` : ''}</span><span class="stg">${buttons}</span></div>`;
   }).join('');
 }
 export function handleTopicClick(event) {
@@ -450,8 +450,8 @@ app.renderQuiz = function () {
   }
   /* lançamentos */
   html += '<div class="qz-sub"><h4>Últimos lançamentos</h4><span class="hint" style="margin:0">' + app.S.qzl.length + ' no total' + (semData ? ' · ' + semData + ' sem data (vieram do formato antigo)' : '') + '</span></div>';
-  var ultimos = app.S.qzl.slice().sort(function (x, y) {
-    return (y.d || '') < (x.d || '') ? -1 : 1;
+  var ultimos = app.S.qzl.slice().reverse().sort(function (x, y) {
+    return (y.d || '').localeCompare(x.d || '');
   }).slice(0, 12);
   ultimos.forEach(function (r) {
     if (app.qzEditando === r.id) {
@@ -495,7 +495,7 @@ app.renderFlash = function () {
     html = '<div class="fc-decks">';
   app.DK().forEach(function (dk) {
     var n = app.fcDueList(dk.id).length;
-    html += '<button class="fc-deck' + (n ? '' : ' fc-zero') + '" style="--dk:' + dk.c + '" onclick="fcStart(\'' + dk.id + '\')"' + (n ? '' : ' disabled') + '><b>' + app.tx(dk.n) + '</b><span class="n">' + n + '</span><span class="s">' + (n ? 'para hoje' : 'em dia ✓') + '</span></button>';
+    html += '<button class="fc-deck' + (n ? '' : ' fc-zero') + '" style="--dk:' + app.ea(dk.c) + '" onclick="fcStart(\'' + dk.id + '\')"' + (n ? '' : ' disabled') + '><b>' + app.tx(dk.n) + '</b><span class="n">' + n + '</span><span class="s">' + (n ? 'para hoje' : 'em dia ✓') + '</span></button>';
   });
   html += '</div>';
   if (tot) {
@@ -544,8 +544,8 @@ app.fcShow = function () {
       n: 'Cards',
       c: 'var(--magenta)'
     };
-  var html = '<div class="fc-meta"><span class="fc-tag" style="--dk:' + dk.c + '">' + dk.n + '</span><span class="ct">' + (app.fcIdx + 1) + ' / ' + app.fcQ.length + '</span><button class="fc-x" onclick="fcClose()" aria-label="Fechar">✕</button></div>';
-  html += '<div class="fc-card" style="--dk:' + dk.c + '" onclick="fcReveal()"><div class="fc-q">' + app.fmt(c.q) + '</div>' + (app.fcRev ? '<div class="fc-a">' + app.fmt(c.a) + '</div><div class="fc-foot"><span class="fc-src">' + app.fmt1(c.s) + '</span>' + (c.u ? '<a class="fc-aula" href="https://www.youtube.com/results?search_query=' + c.u + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">' + app.ic('i26') + 'Aula sobre o tema</a>' : '') + '</div>' : '<div class="fc-hint">toque para ver a resposta</div>') + '</div>';
+  var html = '<div class="fc-meta"><span class="fc-tag" style="--dk:' + app.ea(dk.c) + '">' + app.tx(dk.n) + '</span><span class="ct">' + (app.fcIdx + 1) + ' / ' + app.fcQ.length + '</span><button class="fc-x" onclick="fcClose()" aria-label="Fechar">✕</button></div>';
+  html += '<div class="fc-card" style="--dk:' + app.ea(dk.c) + '" onclick="fcReveal()"><div class="fc-q">' + app.fmt(c.q) + '</div>' + (app.fcRev ? '<div class="fc-a">' + app.fmt(c.a) + '</div><div class="fc-foot"><span class="fc-src">' + app.fmt1(c.s) + '</span>' + (c.u ? '<a class="fc-aula" href="https://www.youtube.com/results?search_query=' + app.ea(encodeURIComponent(c.u)) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">' + app.ic('i26') + 'Aula sobre o tema</a>' : '') + '</div>' : '<div class="fc-hint">toque para ver a resposta</div>') + '</div>';
   html += '<div class="fc-btns">' + (app.fcRev ? '<button class="btn rose" onclick="fcAns(0)">✗ Errei</button><button class="btn green" onclick="fcAns(1)">✓ Acertei</button>' : '<button class="btn ghost" style="flex:1;justify-content:center;padding:13px" onclick="fcReveal()">Mostrar resposta</button>') + '</div>';
   el.innerHTML = html;
 };

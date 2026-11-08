@@ -1,5 +1,16 @@
 # Histórico
 
+## 0.33.2 — 07/11/2026
+
+- Restauração e carga remota validadas antes de substituir dados; armazenamento ilegível e falhas de gravação preservam a cópia anterior.
+- Sincronização com operação exclusiva, revisão de envio congelada, proteção de edições durante download e descarte de respostas após desconexão. Reconexão de rede tenta novamente.
+- Conexão lê o gist completo antes de confirmar a substituição, percorre páginas e recupera conteúdo truncado sem repassar credenciais ao host de arquivos.
+- Editor mantém URLs e marcações dos tópicos preservados após inserção/reordenação; novos IDs não colidem com matérias existentes ou históricas.
+- Histórico de questões mostra primeiro o registro mais novo na mesma data; notas pendentes são gravadas ao ocultar/sair do app.
+- Importação recusa estrutura e datas inválidas; renderização protege links, cores e textos de conteúdo externo. Fontes e documentos vazios permanecem vazios após migração.
+- Cartões arquivados alinhados; teclado ignora abas ocultas e continua disponível depois de deslizar. Mensagens distinguem envio pendente de concluído.
+- Check-up documentado em `docs/CHECKUP-0.33.2.md`; 107 testes automatizados.
+
 ## 0.33.1 — 07/11/2026
 
 - Busca em uma barra única, com filtro compacto na mesma linha; removidas as caixas sobrepostas e o contador visual.

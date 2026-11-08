@@ -31,9 +31,9 @@ function startOn(...ancestors) {
   // closest() also finds a button/link when the actual target is its SVG/text.
   target.closest=selectors=>ancestors.some(ancestor=>selectors.split(',').includes(ancestor))?{}:null;
 }
-function clickAfterTouch() {
+function clickAfterTouch(extra={}) {
   const result={prevented:false,stopped:false};
-  for(const fn of callbacks.click||[])fn({preventDefault(){result.prevented=true;},stopImmediatePropagation(){result.stopped=true;}});
+  for(const fn of callbacks.click||[])fn({detail:1,...extra,preventDefault(){result.prevented=true;},stopImmediatePropagation(){result.stopped=true;}});
   return result;
 }
 test('conteúdo acompanha o dedo e só então confirma a troca de aba',async()=>{
@@ -86,4 +86,9 @@ test('arraste curto sobre botão volta à mesma aba sem disparar clique',async()
   startOn('button');send('pointerdown',220,300);clock=200;send('pointermove',190,302);send('pointerup',190,302);
   await settled();assert.deepEqual(changed,[]);assert.equal(current.style.transform,'');
   assert.deepEqual(clickAfterTouch(),{prevented:true,stopped:true});
+});
+
+test('supressão do toque após deslize não bloqueia ativação por teclado',async()=>{
+  startOn('button');send('pointerdown',220,300);send('pointermove',90,305);send('pointerup',90,305);await settled();
+  assert.deepEqual(clickAfterTouch({detail:0}),{prevented:false,stopped:false});
 });

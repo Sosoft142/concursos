@@ -65,3 +65,10 @@ test('payload de sincronização leva ficha e matérias sem alterar marcações 
   const payload=app.payload();assert.equal(payload.d.concursos[1].id,'ibge-2026');assert.equal(payload.d.materias[1].id,'ibge-lp');assert.equal(payload.t['lp:0'].e,true);
   assert.deepEqual(payload.d.concursos[1].mats,['ibge-lp']);
 });
+
+test('estrutura interna inválida é recusada antes de gravar ou renderizar',()=>{
+ for(const bad of [{raiox:{linhas:'inválido'}},{ficha:[null]},{blocos:[{itens:'inválido'}]}])assert.throws(()=>plan({titulo:'Teste',...bad}),/inválido/);
+});
+test('data de prova malformada não entra no app nem vira marcação HTML',()=>{
+ for(const date of ['2026-02-31','<img src=x>'])assert.throws(()=>plan({titulo:'Teste',prova:date}),/inválido/);
+});

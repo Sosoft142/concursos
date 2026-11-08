@@ -75,7 +75,7 @@ app.renderFontes = function () {
     var cor = app.corVar(g.cor || 'primary');
     h += '<div class="card src-group"><div class="sg-head"><div class="sg-ic" style="background:color-mix(in srgb,' + cor + ' 16%,transparent);color:' + cor + '">' + app.ic(g.ic || 'i14') + '</div>' + '<div><h4>' + app.tx(g.n) + '</h4><p>' + app.tx(g.sub || '') + '</p></div></div><div class="src-list">';
     (g.itens || []).forEach(function (it) {
-      h += '<a class="src-item" href="' + app.ea(it.u) + '" target="_blank" rel="noopener"><div class="si-txt"><b>' + app.tx(it.b) + '</b><span>' + app.tx(it.s || app.dominio(it.u)) + '</span></div><span class="ext">' + app.ic('i5') + '</span></a>';
+      h += '<a class="src-item" href="' + app.href(it.u) + '" target="_blank" rel="noopener"><div class="si-txt"><b>' + app.tx(it.b) + '</b><span>' + app.tx(it.s || app.dominio(it.u)) + '</span></div><span class="ext">' + app.ic('i5') + '</span></a>';
     });
     h += '</div></div>';
   });
@@ -87,7 +87,7 @@ app.renderDocs = function () {
   if (!el) return;
   var h = '';
   (app.DADOS.docs || []).forEach(function (d) {
-    h += '<a class="pn-doc" href="' + app.ea(d.u) + '" target="_blank" rel="noopener">' + app.ic(d.ic || 'i15') + app.tx(d.n) + '</a>';
+    h += '<a class="pn-doc" href="' + app.href(d.u) + '" target="_blank" rel="noopener">' + app.ic(d.ic || 'i15') + app.tx(d.n) + '</a>';
   });
   h += '<button class="pn-doc pn-doc-ed" onclick="edDocs()">' + app.ic('i28') + ((app.DADOS.docs || []).length ? 'Editar documentos' : 'Adicionar um documento seu') + '</button>';
   el.innerHTML = h;
@@ -131,7 +131,7 @@ app.renderArquivados = function () {
   var h = '<div class="area-sep"><span class="ln"></span><span class="tx">' + app.ic('i34') + 'Arquivados (' + arq.length + ')</span><span class="ln"></span></div><div class="grid">';
   arq.forEach(function (c) {
     var cor = app.corVar(c.cor);
-    h += '<div class="card cc arq" style="--ac:' + cor + '"><div class="cc-badge" style="background:color-mix(in srgb,' + cor + ' 11%,transparent);color:' + cor + '">' + app.tx(c.badge || app.nomeCurto(c)).replace(/\n/g, '<br/>') + '</div>' + '<div class="cc-main"><h4>' + app.tx(c.titulo) + '</h4><div class="role">' + app.tx(c.cargo || '') + (c.prova ? ' · prova em ' + app.brDate(c.prova) : '') + '</div></div>' + '<div class="cc-cta"><button class="btn ghost sm" onclick="arqToggle(\'' + c.id + '\')">' + app.ic('i20') + 'Restaurar</button>' + '<button class="btn ghost sm" onclick="edRemover(\'' + c.id + '\')">' + app.ic('i29') + 'Apagar de vez</button></div></div>';
+    h += '<article class="card cc arq" style="--ac:' + cor + '"><div class="cc-main"><div class="cc-heading"><span class="contest-symbol" aria-hidden="true">' + app.ic('i34') + '</span><div><div class="cc-kicker">Arquivado</div><h4>' + app.tx(c.titulo) + '</h4></div></div><p class="role">' + app.tx(c.cargo || '') + (c.prova ? ' · prova em ' + app.brDate(c.prova) : '') + '</p></div><div class="cc-cta"><button class="btn ghost sm" onclick="arqToggle(\'' + c.id + '\')">' + app.ic('i20') + 'Restaurar</button><button class="btn ghost sm" onclick="edRemover(\'' + c.id + '\')">' + app.ic('i29') + 'Apagar de vez</button></div></article>';
   });
   el.innerHTML = h + '</div>';
 };
@@ -146,7 +146,7 @@ app.notaSet = function (id, v) {
     app.notaTimer = null;
     app.DADOS.updatedAt = new Date().toISOString();
     app.saveS();
-    if (st) st.textContent = 'Anotações salvas neste aparelho' + (app.syncState === 'on' ? ' e enviadas para a nuvem.' : '.');
+    if (st) st.textContent = 'Anotações salvas neste aparelho' + (app.syncState === 'on' ? ' — sincronização agendada.' : '.');
   }, 700);
 };
 /* =====================================================================
@@ -172,7 +172,7 @@ app.inscFim = function (c) {
   var achou = '';
   (c.cronograma || []).forEach(function (l) {
     if (achou) return;
-    if (/inscri/i.test(String(l.label || ''))) achou = l.end || l.d || '';
+    if (/inscri/i.test(String(l.label || ''))) {const date=l.end||l.d||'';if(/^\d{4}-\d{2}-\d{2}$/.test(date))achou=date;}
   });
   return achou;
 };
@@ -377,7 +377,7 @@ app.renderAccs = function () {
     })) {
       h += '<div class="pane" data-e="' + c.id + '" data-p="links" role="tabpanel" hidden>' + '<div class="sec" id="' + c.id + '-links">' + app.secHead('links', 'i13', 'Links do edital e do concurso', c.linksSub || '') + '<div class="lk-grid">';
       (c.links || []).forEach(function (l) {
-        h += '<a class="lk" href="' + app.ea(l.u) + '" target="_blank" rel="noopener"><div class="lk-ic">' + app.ic(l.ic || 'i14') + '</div><div class="lk-t"><b>' + app.tx(l.b) + '</b><span>' + app.tx(l.s || '') + '</span></div></a>';
+        h += '<a class="lk" href="' + app.href(l.u) + '" target="_blank" rel="noopener"><div class="lk-ic">' + app.ic(l.ic || 'i14') + '</div><div class="lk-t"><b>' + app.tx(l.b) + '</b><span>' + app.tx(l.s || '') + '</span></div></a>';
       });
       h += '</div></div></div>';
     }
