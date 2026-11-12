@@ -11,6 +11,7 @@ A interface é exclusivamente clara, com composição editorial: formas retas, c
 | Cada concurso | Cor cadastrada | Superfície, borda, símbolo e ação de abrir |
 | Revisões, flashcards, ciclo, edital e questões | Cores das ferramentas | Abas e ícones coerentes dentro do painel |
 
+- Preparação IBGE: Meu plano prioriza próxima sessão e acesso ao cronograma. Estudos começa com a semana; revisões, ciclo e edital ficam abaixo. Sessões e prazos da seleção são grupos distintos. Conclusões de sessões não estimam domínio nem acertos.
 - A cor de destaque personalizada continua aplicada a Concursos e às janelas gerais. Estudos e Comparar mantêm identidades próprias.
 - Cor não é o único identificador: manter texto, ícones e datas. Erro, conflito e urgência continuam com rótulos.
 - Busca em uma única linha, sem painel externo: campo e filtro compacto compartilham a borda. Contagem de resultados fica disponível para leitores de tela.

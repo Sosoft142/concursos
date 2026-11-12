@@ -10,6 +10,7 @@ import './study.js';
 import './pwa.js';
 import './contest-ui.js';
 import './import-ui.js';
+import './ibge-ui.js';
 import { start } from './bootstrap.js';
 import { initializeHistory } from './history.js';
 import { initializeGestures } from './gestures.js';

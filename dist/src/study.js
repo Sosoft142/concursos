@@ -58,7 +58,7 @@ app.stats = function () {
   h += '<div class="pn-stat ' + (g.f ? app.qzClasse(g.p) : '') + '"><span class="l"><span>Questões (alvo ≥' + alvo + '%)</span><span>' + (g.f ? g.p + '%' : '—') + '</span></span><span class="pbar"><i style="width:' + (g.f ? g.p : 0) + '%"></i></span></div>';
   el.innerHTML = h;
   var sub = document.getElementById('pn-sub');
-  if (sub) sub.textContent = app.CC().length > 1 ? 'Um só painel para os ' + app.CC().length + ' concursos — reta final' : 'Seu painel de estudo — reta final';
+  if (sub) sub.textContent = app.CC().length > 1 ? 'Cronograma e ferramentas para os seus concursos' : 'Cronograma, matérias e revisão';
 };
 /* ---- revisões espaçadas ---- */
 app.revDue = function () {

@@ -7,7 +7,7 @@ const write = (file, text) => writeFileSync(resolve(root, file), text);
 const shell = read('dist/index.html');
 // GitHub Pages still serves the repository root. Keep this generated shell so
 // the installed app, origin, storage and existing bookmarks keep their URL.
-const rootShell = shell.replace(/(href|src)="\.\/(concursos\.css|mobile\.css|identity\.css|src\/app\.js|icon[^"/]*\.(?:png|svg))"/g, '$1="./dist/$2"');
+const rootShell = shell.replace(/(href|src)="\.\/(concursos\.css|mobile\.css|identity\.css|plan\.css|src\/app\.js|icon[^"/]*\.(?:png|svg))"/g, '$1="./dist/$2"');
 write('index.html', rootShell);
 const manifest = JSON.parse(read('dist/manifest.webmanifest'));
 manifest.icons = manifest.icons.map(icon => ({...icon, src: './dist/' + icon.src.replace(/^\.\//, '')}));

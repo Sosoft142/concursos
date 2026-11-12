@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Organizador de Concursos · V0.34.0 -->
+<!-- Organizador de Concursos · V0.35.0 -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="./dist/concursos.css" />
 <link rel="stylesheet" href="./dist/mobile.css" />
 <link rel="stylesheet" href="./dist/identity.css" />
+<link rel="stylesheet" href="./dist/plan.css" />
 </head>
 <body>
 <a class="skip-link" href="#main-content">Ir para o conteúdo</a>
@@ -91,7 +92,7 @@
 <div class="tabs" role="tablist" aria-label="Áreas">
 <button class="tab" role="tab" aria-selected="true" aria-controls="view-concursos" id="tab-concursos" onclick="showView('concursos')">
 <span class="tab-symbol"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i36"/></svg></span>
-Concursos
+<span id="home-tab-label">Concursos</span>
 </button>
 <button class="tab" role="tab" aria-selected="false" aria-controls="view-estudo" id="tab-estudo" onclick="showView('estudo')">
 <span class="tab-symbol"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#i2"/></svg></span>
@@ -105,8 +106,10 @@ Comparar
 </div>
 </header>
 <main class="wrap" id="main-content">
+<p id="ibge-message" role="alert" hidden></p>
 <!-- ============ VIEW: CONCURSOS ============ -->
 <section class="view active" id="view-concursos" role="tabpanel" aria-labelledby="tab-concursos">
+<div id="ibge-home"></div>
 <div class="card hero" id="hero">
 <div class="hero-l">
 <span class="hero-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i11"/></svg></span>
@@ -136,6 +139,7 @@ Comparar
 </section>
 <!-- ============ VIEW: ESTUDO ============ -->
 <section class="view" id="view-estudo" role="tabpanel" aria-labelledby="tab-estudo">
+<section class="ibge-calendar-shell" id="ibge-calendar" aria-label="Cronograma de estudos IBGE"></section>
 <div class="area-intro">
 <h2>
 <svg viewBox="0 0 24 24"><use href="#i2"/></svg>
@@ -148,7 +152,7 @@ Estudos
 <div class="pn-top" id="pn-top" onclick="togglePainel()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePainel()}" role="button" tabindex="0" aria-expanded="true" aria-controls="pn-body">
 <div class="pn-title">
 <span class="pn-ic"><svg viewBox="0 0 24 24"><use href="#i19"/></svg></span>
-<div><h3>Painel de preparação</h3><p id="pn-sub">Um só painel para todos os concursos — reta final</p></div>
+<div><h3>Painel de preparação</h3><p id="pn-sub">Seu cronograma, matérias e revisões</p></div>
 </div>
 <div class="pn-fase" id="pn-fase"></div>
 <span class="pn-chev" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i8"/></svg></span>
@@ -193,7 +197,7 @@ Estudos
 <div class="pane" data-e="pn" data-p="quiz" role="tabpanel" hidden>
 <div class="sec" id="pn-quiz">
 <h3 class="bt"><span class="bic"><svg viewBox="0 0 24 24"><use href="#i22"/></svg></span>Registro de questões</h3>
-<p class="bsub">Nesta fase, <b>60–70% do tempo em questões</b> (as das bancas dos seus concursos). Registre cada bateria com a data: eu somo por matéria, mostro a evolução semana a semana e aponto o que está abaixo do seu alvo.</p>
+<p class="bsub">Registre baterias reais de questões, com a data e os acertos. Use os resultados para escolher o que revisar. O alvo é uma meta pessoal de treino, não uma previsão de aprovação.</p>
 <form class="qz-form" id="qz-form" onsubmit="return addQuiz(event)">
 <label class="qz-field">Matéria<select id="qz-mat" aria-label="Matéria"></select></label>
 <label class="qz-field">Questões feitas<input id="qz-f" type="number" min="1" inputmode="numeric" placeholder="Ex.: 20" aria-label="Questões feitas" required/></label>
