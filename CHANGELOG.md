@@ -1,5 +1,13 @@
 # Histórico
 
+## 0.35.0 — 12/11/2026
+
+- Preparação direcionada ao IBGE Recenseador: próxima sessão e progresso semanal na tela inicial; cronograma no início de Estudos e acesso direto no menu.
+- Sugestão de quatro sessões de 60 min por semana, com 50% de Técnicos, 25% de Português e 25% de Matemática; tópicos distribuídos até a revisão final e simulados completos opcionais em 17 e 24/01/2027.
+- Rotina ajustável, navegação semanal, acesso às matérias, marcação de sessões e prazos da seleção separados do plano de estudo.
+- Histórico e rotina entram no backup e no payload da nuvem; falha de gravação preserva estado anterior. Perfil incorporado prepara aparelhos novos e restaura fichas arquivadas sem duplicar ou apagar dados.
+- Revisão em 320/390/760/1024 px e 127 testes automatizados; continuidade de gestos, persistência, documentos legados e funcionamento offline.
+
 ## 0.34.0 — 08/11/2026
 
 - Nova identidade exclusivamente clara: azul-petróleo, verde profundo, terracota e ocre; cartões com cantos discretos, divisórias e cabeçalhos sólidos.

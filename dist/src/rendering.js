@@ -15,7 +15,7 @@ app.renderDrawer = function () {
   function n3(v, e, p, txt) {
     return '<a class="nv nv-3" data-v="' + v + '" data-e="' + e + '" data-p="' + p + '" onclick="goPane(\'' + v + '\',\'' + e + '\',\'' + p + '\')">' + txt + '</a>';
   }
-  var h = n1('concursos', 'i36', 'Concursos') + nAnc('concursos', 'meus-concursos', 'Meus concursos') + (app.oculto('fontes') ? '' : nAnc('concursos', 'novos-concursos', 'Onde encontrar novos')) + n1('estudo', 'i2', 'Estudos') + n2('estudo', 'pn', 'var(--blue)', 'Painel de preparação');
+  var h = n1('concursos', 'i36', 'Concursos') + nAnc('concursos', 'meus-concursos', 'Meus concursos') + (app.oculto('fontes') ? '' : nAnc('concursos', 'novos-concursos', 'Onde encontrar novos')) + '<button class="nv nv-2" data-ibge-action="calendar">' + app.ic('i11') + 'Cronograma IBGE</button>' + n1('estudo', 'i2', 'Estudos') + n2('estudo', 'pn', 'var(--blue)', 'Painel de preparação');
   app.pnVisiveis().forEach(function (s) {
     h += n3('estudo', 'pn', s.p, s.full);
   });
@@ -727,5 +727,6 @@ app.renderTudo = function () {
   app.initQuiz();
   app.renderAll();
   app.aplicarOcultos();
+  app.renderIbgePlan?.();
   if (typeof app.explInit === 'function') app.explInit();
 };

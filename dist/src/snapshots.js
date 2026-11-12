@@ -1,5 +1,6 @@
 // Validate before replacing any saved state. Missing optional legacy fields are
 // migrated later; malformed collections must never reach rendering or storage.
+import {validDate} from './ibge-plan.js';
 const record=value=>!!value&&typeof value==='object'&&!Array.isArray(value);
 const own=(value,key)=>Object.prototype.hasOwnProperty.call(value,key);
 function requireShape(ok, field='') {if(!ok)throw new Error('Os dados do arquivo estão incompletos ou em formato inválido. Nada foi substituído.'+(field?' Campo: '+field+'.':''));}
@@ -50,6 +51,14 @@ export function validateSnapshot(value,{complete=false}={}) {
   }
   for(const key of ['metas','ciclo'])if(data[key]!=null)requireShape(record(data[key]));
   if(data.ciclo)rows(data.ciclo,'blocos');
+  if(data.planoIBGE!=null){
+   const plan=data.planoIBGE;
+   requireShape(record(plan),'d.planoIBGE');
+   if(plan.start!=null)requireShape(validDate(plan.start),'d.planoIBGE.start');
+   if(plan.days!=null)requireShape(Array.isArray(plan.days)&&plan.days.length>0&&plan.days.length<=7&&plan.days.every(d=>Number.isInteger(d)&&d>=0&&d<=6),'d.planoIBGE.days');
+   if(plan.minutes!=null)requireShape([30,45,60,90].includes(plan.minutes),'d.planoIBGE.minutes');
+   if(plan.done!=null)requireShape(record(plan.done)&&Object.values(plan.done).every(s=>record(s)&&validDate(s.date)&&validDate(s.at)&&typeof s.label==='string'&&Number.isInteger(s.minutes)&&s.minutes>0),'d.planoIBGE.done');
+  }
   for(const source of data.fontes||[])rows(source,'itens');
  }
  return value;

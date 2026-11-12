@@ -7,6 +7,7 @@
 | Fontes, instalação e licenças visuais | `dist/fonts/`, `dist/icon*`, `dist/THIRD-PARTY-NOTICES.txt` | `offline.test.mjs`, navegador |
 | Paletas do modo claro e preferências | `dist/src/appearance.js`, `settings.js` | `appearance.test.mjs`, navegador |
 | Entrada e inicialização | `dist/src/app.js`, `bootstrap.js`, `state.js` | sintaxe, imports, regressão de dados |
+| Plano IBGE, rotina, calendário e perfil incorporado | `dist/src/ibge-plan.js`, `ibge-ui.js`, `ibge-data.js`, `dist/plan.css` | `ibge-plan.test.mjs`, `ibge-persistence.test.mjs`, navegador |
 | Dados, datas e formatação | `dist/src/domain.js` | `data.test.mjs` |
 | Busca e próximo prazo | `dist/src/catalog.js` | `catalog.test.mjs` |
 | Cartões e gerenciamento | `dist/src/contest-ui.js` | `contest-rendering.test.mjs`, navegador |

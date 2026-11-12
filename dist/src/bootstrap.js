@@ -2,7 +2,7 @@ import { app } from './state.js';
 import { ACCENTS, ACCENT_TEXT } from './appearance.js';
 
 export function start() {
-  app.APP_VERSAO = '0.34.0';
+  app.APP_VERSAO = '0.35.0';
   app.SEED = {
     materias: [{
       id: 'lp',
@@ -454,7 +454,7 @@ export function start() {
   (function stamp() {
     try {
       var d = new Date();
-      var s = '08/11/2026';
+      var s = '12/11/2026';
       var el = document.getElementById('upd');
       if (el) el.textContent = s;
       var v = document.getElementById('appver');
@@ -488,6 +488,7 @@ export function start() {
       app.renderFlash();
       app.renderCiclo();
       app.pnBadges();
+      app.renderIbgePlan();
     }
     setInterval(conferir, 300000);
     document.addEventListener('visibilitychange', function () {
